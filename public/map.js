@@ -22,6 +22,7 @@ geocoder.on('result', function(e) {
     geocoder_lat = e.result.center[1];
 });
 
+//検索結果 or GPSのデータを使用する場合
 var geolocate_lng, geolocate_lat;
 var geoLocate = new mapboxgl.GeolocateControl({ positionOptions: { enableHighAccuracy: true}, trackUserLocation: true});
 map.addControl(geoLocate);
@@ -34,6 +35,10 @@ geoLocate.on('geoLocate', function(e) {
     zoom:16
   });
 });
+
+//検索結果だけを使用する場合
+// map.addControl(new mapboxgl.NavigationControl());
+
 
 map.on('load', () => { 
     axios.get('/sound')

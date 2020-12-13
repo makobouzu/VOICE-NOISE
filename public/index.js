@@ -4,6 +4,7 @@ function __log(e, data) {
 
 var audio_context;
 var recorder;
+var gainNode;
 var recNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
@@ -62,23 +63,27 @@ function startRecording(button) {
           })
           .then(function(){
               recorder && recorder.record();
+              gainNode.gain.value = 1;
               __log('Recording...');
           });
     }else{
         recorder.clear();
         recorder && recorder.record();
+        gainNode.gain.value = 1;
         __log('Recording...');
     }
 };
 
 function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
-	rnnoise = new RNNoiseNode(audio_context);
+    rnnoise = new RNNoiseNode(audio_context);
+    gainNode = audio_context.createGain();
 	input.connect(rnnoise);
     audio_context.resume();
     __log('Media stream created.');
 
-	rnnoise.connect(audio_context.destination);
+    rnnoise.connect(gainNode);
+    gainNode.connect(audio_context.destination);
 	updateNoise(rnnoise);
     __log('Input connected to audio context destination.');
 
@@ -91,6 +96,7 @@ function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
+    gainNode.gain.value = 0;
     __log('Stopped recording.');
     recNum = 1;
 }
