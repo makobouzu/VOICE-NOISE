@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>VOICE | NOISE demo</title>
+  <link rel="icon" type="image/png" href="dist/icon.png">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js' defer></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+  <script src="./dist/rnnoise-runtime.js" defer></script>
+  <script src="./dist/recorder.js" defer></script>
+  <script src="map.js" defer></script>
+  <script src="index.js" defer></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"></script>
+  
+  <style>
+    body { margin: 0; padding: 0; font-family: Helvetica}  
+    #map { position: absolute; top: 0; bottom: 0; width: 100%;}
+    .mapboxgl-popup-content {position: relative; background: #f7f8f9; border-radius: 3px; box-shadow: 0 1px 2px #222529; padding: 10px 10px 10px; pointer-events: auto;}
+    .mapboxgl-ctrl-geocoder {width: 40px!important;}
+    .mapboxgl-ctrl-group button {width: 40px; height: 40px;}
+    #geocoder-container > div { min-width: 50%; margin-left: 25%;}
+    audio { width: 200px; }
+    #contents { position: fixed; z-index: 1; margin: 10px; border: 2.5px solid rgba(0,0,0,0.1);; border-radius: 9px;}
+    p { margin: 0px 0px 10px 3px; font-size: 17px;}
+    #slider { position: fixed; z-index: 1; width: 100%; bottom: 80px}
+    #noise { text-align: center; margin: 0px auto; display: block; transform: scale(1.5); width: 30%; bottom: 20px; position: relative;}
+    .modal-backdrop {position: static; background-color: transparent;}
+    .modal-footer { display: block;}
+    /* .modal-footer>:not(:first-child) {margin-top: .25rem; margin-left: .0rem;} */
+    .modal-body { padding: 1rem 1rem 0rem 1rem;}
+    .progress-bar {background-color: #222529;}
+    #complete {margin: 5px 0px 0px 3px; font-size: 13px;}
+    input[type="range"] {-webkit-appearance: none; background-color: #222529; height: 5px; border-radius: 5px; outline: 0;}
+    input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #f7f8f9; width: 23px; height: 23px; border-radius: 50%; border: 3px solid #222529; cursor: pointer; transition: .3s ease-in-out;}​
+    input[type="range"]::-webkit-slider-thumb:hover {background-color: #222529; border: 2px solid #f7f8f9;}
+    input[type="range"]::-webkit-slider-thumb:active {transform: scale(1.4);}
+  </style>
+</head>
+
+<body>
+  <div id='map'></div>
+  <div id="slider">
+    <label for="noise" class="form-label"></label>
+    <input type="range" class="form-range" min="0" max="1" step="0.1" value=0 id="noise">
+  </div>
+
+<div id='contents'>
+  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group me-2" role="group" aria-label="Second group"></div>
+    <div class="btn-group-vertical btn-group-lg">
+      <button type="button" class="btn btn-light" id='start' onclick="startRecording(this);"><i class="fas fa-microphone"></i></button>
+      <button type="button" class="btn btn-light" id='stop' onclick="stopRecording(this);"><i class="far fa-pause-circle"></i></button>
+      <button type="button" class="btn btn-light" data-toggle="modal" data-target="#uploadModal"><i class="fas fa-upload"></i></button>
+    </div>
+    </div>
+  </div>  
+  <!-- <input type="range" class="input-range" min="0" max="2" id="noise" value="0" data-unit="%"> -->
+</div>
+
+  <!-- Upload Modal -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Upload Recording Data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3" id="fileinput">
+            <span class="input-group-text" id="inputGroup-sizing-default">Audio Name</span>
+            <input id="db_filename" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="progress">
+            <div id="progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+          </div>
+          <p id="complete">Upload Complete!!</p>
+          </br>
+          <button type="button" class="btn btn-secondary btn-sm" id="upload" onclick="uploadRecording(this);">Upload</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="close" data-dismiss="modal" onclick="reload(this)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

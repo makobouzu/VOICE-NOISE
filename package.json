@@ -1,0 +1,28 @@
+{
+  "name": "VoiceNoise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "fs": "^0.0.1-security",
+    "mapbox-gl-compare": "^0.4.0",
+    "mongoose": "^5.11.4",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0"
+  }
+}
