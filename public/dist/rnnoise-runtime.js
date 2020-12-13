@@ -1,16 +1,14 @@
 'use strict'; {
-  const g = document.currentScript.src.match(/(.*\/)?/)[0], //http://localhost:8080/dist/
+  const g = document.currentScript.src.match(/(.*\/)?/)[0],
     h = (WebAssembly.compileStreaming || (async a1 => await WebAssembly.compile(await (await a1).arrayBuffer())))(fetch("dist/rnnoise-processor.wasm"));//wasmファイル選択
   let k, c, e;
 
-  // console.log(h);
-  //AudioWorkletはWeb Audio APIをカスタムできる仕組み、プログラムのメインスレッドで走らせる AudioWorkletNode と音声処理スレッドで実行する AudioWorkletProcessorの二つで構成される。
   window.RNNoiseNode = (window.AudioWorkletNode || (window.AudioWorkletNode = window.webkitAudioWorkletNode)) && class extends AudioWorkletNode {
 
     static async register(a) {
       k = await h;
-      console.log("register" + k)
-      await a.audioWorklet.addModule("dist/rnnoise-processor.js")// 音声処理側のAudioWorkletProcessorのファイル
+      console.log("register: " + k)
+      await a.audioWorklet.addModule("dist/rnnoise-processor.js");
     }
 
     constructor(a) {
@@ -35,10 +33,9 @@
     }
 
     update(a) {
-      this.port.postMessage(a)//ポートからのメッセージを送信
+      this.port.postMessage(a)
     }
 
-  //ScriptProcessorNodeはAudioWorkletの前に開発されていたもの　バージョン違いにも対応させている?
   } || (window.ScriptProcessorNode || (window.ScriptProcessorNode = window.webkitScriptProcessorNode)) && Object.assign(function (a) {
     const b = a.createScriptProcessor(512, 1, 1);
     const d = c.newState(1.0, 0.0);

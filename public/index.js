@@ -6,6 +6,7 @@ var audio_context;
 var recorder;
 var recNum = 0;
 document.getElementById("complete").style = "display: none;";
+var now = new Date();
 
 function startRecording(button) {
     button.disabled = true;
@@ -38,18 +39,17 @@ function startRecording(button) {
             __log('Audio context set up.');
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
-
           } catch (e) {
             alert('No web audio support in this browser!');
             alert("このブラウザは対応していません。Safariをご利用ください。");
           }
-      
+          
           navigator.mediaDevices.getUserMedia({
               audio: {
                   channelCount: { ideal: 1 },
-                  noiseSuppression: { ideal: false },//ノイズの抑制
-                  echoCancellation: { ideal: true },//エコーの抑制
-                  autoGainControl: { ideal: false },//入出力音声の自動調整
+                  noiseSuppression: { ideal: false },
+                  echoCancellation: { ideal: true },
+                  autoGainControl: { ideal: false },
                   sampleRate: { ideal: 48000 }
               }
           })
@@ -61,7 +61,6 @@ function startRecording(button) {
               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
           })
           .then(function(){
-              recorder.clear();
               recorder && recorder.record();
               __log('Recording...');
           });
@@ -111,7 +110,7 @@ function updateNoise(rnnoise){
 			rnnoise.change(voice, noise);
             __log("Voice: "+ voice +" - Noise: " + noise);   
 		});
-    } catch (e) { //error try catch
+    } catch (e) {
         context.close();
         console.error(e);
         alert("RNNoiseの処理がアップデートできませんでした。");
