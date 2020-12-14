@@ -3,7 +3,7 @@ const router = Router();
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const connectionString = process.env.DATABASE_URL ||'postgres://amako:null@localhost:5432/voice_noise';
+const connectionString = 'postgres://zkwjehivxofixc:5596647465f6049b85e989b64f2050d3c03f127be32822bb9e8e3933cc9f9837@ec2-52-6-75-198.compute-1.amazonaws.com:5432/ddtfst4av9fgu1';
 
 const pool = new Pool({
     connectionString: connectionString
