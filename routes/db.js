@@ -7,10 +7,7 @@ const connectionString = process.env.DATABASE_URL;
 // "postgres://amako:null@localhost:5432/voice_noise"
 
 const pool = new Pool({
-    connectionString: connectionString,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    connectionString: connectionString
 });
 
 pool.connect();
