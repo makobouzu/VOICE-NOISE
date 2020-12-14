@@ -103,7 +103,7 @@ function startRecording(button) {
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
           } catch (e) {
-            alert('No web audio support in this browser!');
+            __log('No web audio support in this browser!');
             alert("このブラウザは対応していません。Safariをご利用ください。");
           }
           
@@ -198,18 +198,6 @@ function uploadRecording(button) {
         lng = geoLocate._lastKnownPosition.coords.longitude;
         lat = geoLocate._lastKnownPosition.coords.latitude;
     }
-
-    //検索だけを使用する場合
-    // if(typeof geocoder_lng === "undefined"){
-    //     console.log("no value of lng & lat");
-    //     alert("録音を行なった地点を検索してください。");
-    //     console.log(dbName);
-    //     button.disabled = false;
-    //     return;
-    // }else{
-    //     lng = geocoder_lng;
-    //     lat = geocoder_lat;
-    // }
     
     recorder && recorder.exportWAV(function(blob) {
         const data = new FormData();

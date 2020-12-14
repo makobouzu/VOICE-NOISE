@@ -37,10 +37,6 @@ geoLocate.on('geoLocate', function(e) {
   });
 });
 
-//検索結果だけを使用する場合
-// map.addControl(new mapboxgl.NavigationControl());
-
-
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
