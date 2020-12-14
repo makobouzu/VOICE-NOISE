@@ -3,20 +3,10 @@ const router = Router();
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// const pool = new Pool({
-//     host: process.env.PG_HOST,
-//     username: process.env.PG_USER,
-//     database: process.env.PG_DATABASE,
-//     port: process.env.PG_PORT,
-//     password: process.env.PG_PASSWORD
-// });
+const connectionString = process.env.DATABASE_URL ||'postgres://amako:null@localhost:5432/voice_noise';
 
 const pool = new Pool({
-    host: process.env.ENV_HOST,
-    username: process.env.ENV_USER,
-    database: process.env.ENV_DATABASE,
-    port: process.env.ENV_PORT,
-    password: process.env.ENV_PASSWORD
+    connectionString: connectionString
 });
 
 // ("name", "(lan, lat)", "audio/" + "filename.wav", num)
