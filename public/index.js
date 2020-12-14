@@ -145,7 +145,11 @@ function stopRecording(button) {
     button.previousElementSibling.disabled = false;
     document.getElementById("sound").disabled = false;
     document.getElementById("start").style = "color: black;";
-    gainNode.gain.value = 0;
+    if(typeof gainNode === "undefined"){
+        return;
+    }else{
+        gainNode.gain.value = 0;
+    }
     __log('Stopped recording.');
     recNum = 1;
 }

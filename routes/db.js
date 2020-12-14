@@ -1,7 +1,23 @@
 const { Router } = require('express');
 const router = Router();
 const { Pool } = require('pg');
-const pool = new Pool();
+require('dotenv').config();
+
+// const pool = new Pool({
+//     host: process.env.PG_HOST,
+//     username: process.env.PG_USER,
+//     database: process.env.PG_DATABASE,
+//     port: process.env.PG_PORT,
+//     password: process.env.PG_PASSWORD
+// });
+
+const pool = new Pool({
+    host: process.env.ENV_HOST,
+    username: process.env.ENV_USER,
+    database: process.env.ENV_DATABASE,
+    port: process.env.ENV_PORT,
+    password: process.env.ENV_PASSWORD
+});
 
 // ("name", "(lan, lat)", "audio/" + "filename.wav", num)
 router.get('/', async (req, res) => {
