@@ -3,7 +3,6 @@ const app = express();
 const axios = require('axios');
 const fileUpload = require('express-fileupload');
 const dbRouter = require('./routes/db');
-require('dotenv').config();
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +25,6 @@ app.post('/upload', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8000, () => {
     console.log('server started')
 });
