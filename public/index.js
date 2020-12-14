@@ -9,6 +9,68 @@ var recNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
+function inputSound(button) {
+    button.disabled = true;
+    document.getElementById("stop").disabled = false;
+    document.getElementById("upload").disabled = false;
+    document.getElementById("progress").style = "width: 0%;";
+    document.getElementById("progress").innerHTML = "0%";
+    document.getElementById("complete").style = "display: none;";
+    if(recNum == 0){
+        try {
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (navigator.mediaDevices === undefined) {
+              navigator.mediaDevices = {};
+            }
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+                navigator.mediaDevices.getUserMedia = function(constraints) {
+                    let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    }
+                    return new Promise(function(resolve, reject) {
+                        getUserMedia.call(navigator, constraints, resolve, reject);
+                    });
+                }
+            }
+            window.URL = window.URL || window.webkitURL;
+      
+            audio_context = new AudioContext({sampleRate: 48000});
+            __log('Audio context set up.');
+            __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
+            RNNoiseNode.register(audio_context);
+          } catch (e) {
+            alert('No web audio support in this browser!');
+            alert("このブラウザは対応していません。Safariをご利用ください。");
+          }
+          
+          navigator.mediaDevices.getUserMedia({
+              audio: {
+                  channelCount: { ideal: 1 },
+                  noiseSuppression: { ideal: false },
+                  echoCancellation: { ideal: true },
+                  autoGainControl: { ideal: false },
+                  sampleRate: { ideal: 48000 }
+              }
+          })
+          .then(function(stream) {
+              startUserMedia(stream);
+          })
+          .catch(function(e) {
+              __log('No live audio input: ' + e);
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+          })
+          .then(function(){
+              gainNode.gain.value = 1;
+              __log('Sound Input...');
+              recNum = 1;
+          });
+    }else{
+        gainNode.gain.value = 1;
+        __log('Sound Input...');
+    }
+}
+
 function startRecording(button) {
     button.disabled = true;
     button.nextElementSibling.disabled = false;
@@ -63,39 +125,26 @@ function startRecording(button) {
           })
           .then(function(){
               recorder && recorder.record();
+              document.getElementById("start").style = "color: red;";
               gainNode.gain.value = 1;
+              recNum = 1;
               __log('Recording...');
           });
     }else{
         recorder.clear();
         recorder && recorder.record();
+        document.getElementById("start").style = "color: red;";
         gainNode.gain.value = 1;
         __log('Recording...');
     }
 };
 
-function startUserMedia(stream) {
-    var input = audio_context.createMediaStreamSource(stream);
-    rnnoise = new RNNoiseNode(audio_context);
-    gainNode = audio_context.createGain();
-	input.connect(rnnoise);
-    audio_context.resume();
-    __log('Media stream created.');
-
-    rnnoise.connect(gainNode);
-    gainNode.connect(audio_context.destination);
-	updateNoise(rnnoise);
-    __log('Input connected to audio context destination.');
-
-    recorder = new Recorder(rnnoise);
-    __log('Recorder initialised.');
-    __log("Voice: 1.0 - Noise: 0.0");
-}
-
 function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
+    document.getElementById("sound").disabled = false;
+    document.getElementById("start").style = "color: black;";
     gainNode.gain.value = 0;
     __log('Stopped recording.');
     recNum = 1;
@@ -211,6 +260,7 @@ function uploadRecording(button) {
     recorder.clear();
 }
 
+//------------------detail
 function reload(button){
     if(document.getElementById("progress").innerHTML === "0%"){
         console.log("");
@@ -218,3 +268,21 @@ function reload(button){
         location.reload(true);
     }
 };
+
+function startUserMedia(stream) {
+    var input = audio_context.createMediaStreamSource(stream);
+    rnnoise = new RNNoiseNode(audio_context);
+    gainNode = audio_context.createGain();
+	input.connect(rnnoise);
+    audio_context.resume();
+    __log('Media stream created.');
+
+    rnnoise.connect(gainNode);
+    gainNode.connect(audio_context.destination);
+	updateNoise(rnnoise);
+    __log('Input connected to audio context destination.');
+
+    recorder = new Recorder(rnnoise);
+    __log('Recorder initialised.');
+    __log("Voice: 1.0 - Noise: 0.0");
+}

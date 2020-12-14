@@ -8,6 +8,7 @@ zoom: 13
 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
+    collapsed: true,
     language: 'ja',
     placeholder: 'Recorded at.',
     marker: {
@@ -48,7 +49,7 @@ map.on('load', () => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML('<p>'+ s.name + '</p><audio src ="' + s.path + '"controls>'))
+                .setHTML('<p class="fw-bold">'+ s.name + '</p><audio src ="' + s.path + '"controls>'))
                 .addTo(map);
         });
     })
