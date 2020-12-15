@@ -228,7 +228,7 @@ function uploadRecording(button) {
             .then(result => {
                 __log("audio uploaded")
                 console.log(result);
-                path = result.url;
+                path = result.config.url;
                 document.getElementById("close").disabled = false;
             })
             .catch(error => {
