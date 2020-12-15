@@ -11,7 +11,6 @@ document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
 function inputSound(button) {
-    button.disabled = true;
     document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -94,6 +93,7 @@ function startRecording(button) {
 
     if(volNum === 0){
         alert("音声をオンにしてください。");
+        button.disabled = false;
     }else{
         recorder && recorder.record();
         document.getElementById("start").style = "color: red;";
@@ -107,7 +107,6 @@ function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
-    document.getElementById("sound").disabled = false;
     document.getElementById("start").style = "color: black;";
     __log('Stopped recording.');
     recNum = 1;
