@@ -276,7 +276,13 @@ function uploadRecording(button) {
         'Content-Type': 'multipart/form-data'
     };
     axios.post("/sound", dbData, {
-        header: dbHead
+        header: dbHead,
+        onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
+            document.getElementById("progress").innerHTML = percentCompleted + "%";
+            document.getElementById("close").disabled = true;
+        }
     })
     .then(function (response) {
         console.log(response);
