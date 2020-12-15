@@ -226,8 +226,9 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded")
-                console.log(result.config.url);
+                console.log(result);
                 path = result.config.url;
+                dbUpload(dbName, lng, lat, path);
                 document.getElementById("close").disabled = false;
             })
             .catch(error => {
@@ -237,35 +238,6 @@ function uploadRecording(button) {
         .catch(error => {
             __log(JSON.stringify(error));
         });
-    });
-
-    const dbData = new URLSearchParams();
-    dbData.append("name", dbName);
-    dbData.append("location", "(" + lng + "," + lat + ")");
-    // dbData.append("path", "audio/" + name + ".wav");
-    __log(path);
-    dbData.append("path", "aaa");
-    dbData.append("num", 0);
-    const dbHead = {
-        method: 'post',
-        data: dbData,
-        'Content-Type': 'multipart/form-data'
-    };
-    axios.post("/sound", dbData, {
-        header: dbHead,
-        onUploadProgress: function (progressEvent) {
-            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
-            document.getElementById("progress").innerHTML = percentCompleted + "%";
-            document.getElementById("close").disabled = true;
-        }
-    })
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-        alert("データベースのアクセスに失敗しました。");
     });
     recorder.clear();
 }
@@ -297,37 +269,33 @@ function startUserMedia(stream) {
     __log("Voice: 1.0 - Noise: 0.0");
 }
 
-function handleaudiofile(ev){
-    let file = ev;
-    let fileName = ev.name;
-    let fileType = ev.type;
-    axios.post("/sign_s3",{
-        fileName : fileName,
-        fileType : fileType
-    })
-    .then(response => {
-        var returnData = response.data.data.returnData;
-        var signedRequest = returnData.signedRequest;
-        var url = returnData.url;
-        var options = {
-            headers: {
-                'Content-Type': fileType,
-            }
+function dbUpload(dbName, lng, lat, path) {
+    const dbData = new URLSearchParams();
+    dbData.append("name", dbName);
+    dbData.append("location", "(" + lng + "," + lat + ")");
+    // dbData.append("path", "audio/" + name + ".wav");
+    dbData.append("path", path);
+    dbData.append("num", 0);
+    const dbHead = {
+        method: 'post',
+        data: dbData,
+        'Content-Type': 'multipart/form-data'
     };
-
-    axios.put(signedRequest,file,options)
-    .then(result => {
-        this.setState({audio: url,
-    },()=> console.log(this.state.audio))
-        alert("audio uploaded")
-        document.getElementById("close").disabled = false;
+    axios.post("/sound", dbData, {
+        header: dbHead,
+        onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
+            document.getElementById("progress").innerHTML = percentCompleted + "%";
+            document.getElementById("close").disabled = true;
+        }
     })
-    .catch(error => {
-        alert("ERROR " + JSON.stringify(error));
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("データベースのアクセスに失敗しました。");
     });
-    })
-    .catch(error => {
-        alert(JSON.stringify(error));
-    })
 }
     
