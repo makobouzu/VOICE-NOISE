@@ -203,7 +203,6 @@ function uploadRecording(button) {
         lat = geoLocate._lastKnownPosition.coords.latitude;
     }
 
-    let url;
     recorder && recorder.exportWAV(function(blob) {
         const blobUrl = URL.createObjectURL(blob);
 
@@ -227,7 +226,7 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded")
-                console.log(result);
+                console.log(result.config.url);
                 path = result.config.url;
                 document.getElementById("close").disabled = false;
             })
@@ -238,30 +237,6 @@ function uploadRecording(button) {
         .catch(error => {
             __log(JSON.stringify(error));
         });
-
-        // const data = new FormData();
-        // data.append("wav", blob, name);
-        // const head = {
-        //     method: 'post',
-        //     data: data,
-        //     'Content-Type': 'multipart/form-data'
-        // };
-        // axios.post("/upload", data, {
-        //     header: head,
-        //     onUploadProgress: function (progressEvent) {
-        //         var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        //         document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
-        //         document.getElementById("progress").innerHTML = percentCompleted + "%";
-        //         document.getElementById("close").disabled = true;
-        //     }
-        // }).then(function (response) {
-        //     console.log(response);
-        //     document.getElementById("close").disabled = false;
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        //     alert("音声ファイルのアップロードに失敗しました。");
-        // });
     });
 
     const dbData = new URLSearchParams();
