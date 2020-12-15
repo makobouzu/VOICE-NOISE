@@ -268,6 +268,7 @@ function uploadRecording(button) {
     dbData.append("name", dbName);
     dbData.append("location", "(" + lng + "," + lat + ")");
     // dbData.append("path", "audio/" + name + ".wav");
+    __log(path);
     dbData.append("path", path);
     dbData.append("num", 0);
     const dbHead = {

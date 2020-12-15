@@ -7,7 +7,8 @@ const connectionString = process.env.DATABASE_URL;
 // const connectionString = "postgres://amako:null@localhost:5432/voice_noise";
 
 const pool = new Pool({
-    connectionString: connectionString
+    connectionString: connectionString,
+    ssl: true
     // host: process.env.ENV_HOST,
     // database: process.env.ENV_DB,
     // user: process.env.ENV_USER,
@@ -15,7 +16,7 @@ const pool = new Pool({
     // password: process.env.ENV_PASSWORD
 });
 
-pool.connect();
+// pool.connect();
 
 // ("name", "(lan, lat)", "audio/" + "filename.wav", num)
 router.get('/', async (req, res) => {
