@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/sound', dbRouter);
 app.use(fileUpload());
 
-var sign_s3 = require('./routes/sign_s3');
+var sign_s3 = require('./routes/s3');
 app.use('/sign_s3', sign_s3.sign_s3);
 
 // app.post('/upload', (req, res) => {
