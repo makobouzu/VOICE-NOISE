@@ -202,37 +202,74 @@ function uploadRecording(button) {
         lng = geoLocate._lastKnownPosition.coords.longitude;
         lat = geoLocate._lastKnownPosition.coords.latitude;
     }
-    
+
+    let url;
     recorder && recorder.exportWAV(function(blob) {
-        const data = new FormData();
-        data.append("wav", blob, name);
-        const head = {
-            method: 'post',
-            data: data,
-            'Content-Type': 'multipart/form-data'
-        };
-        axios.post("/upload", data, {
-            header: head,
-            onUploadProgress: function (progressEvent) {
-                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
-                document.getElementById("progress").innerHTML = percentCompleted + "%";
-                document.getElementById("close").disabled = true;
-            }
-        }).then(function (response) {
-            console.log(response);
-            document.getElementById("close").disabled = false;
+        const blobUrl = URL.createObjectURL(blob);
+
+        const file = new File([blob], name.valueOf(),{ type:"audio/wav" })
+        let fileName = file.name;
+        let fileType = file.type;
+
+        axios.post("/sign_s3",{
+            fileName : fileName,
+            fileType : fileType
         })
-        .catch(function (error) {
-            console.log(error);
-            alert("音声ファイルのアップロードに失敗しました。");
+        .then(response => {
+            var returnData = response.data.data.returnData;
+            var signedRequest = returnData.signedRequest;
+            var url = returnData.url;
+            var options = {
+                headers: {
+                    'Content-Type': fileType,
+                }
+            };
+        
+
+            axios.put(signedRequest,file,options)
+            .then(result => {
+                __log("audio uploaded")
+                console.log(result.url);
+                document.getElementById("close").disabled = false;
+            })
+            .catch(error => {
+                __log("ERROR " + JSON.stringify(error));
+            })
+        })
+        .catch(error => {
+            __log(JSON.stringify(error));
         });
+
+        // const data = new FormData();
+        // data.append("wav", blob, name);
+        // const head = {
+        //     method: 'post',
+        //     data: data,
+        //     'Content-Type': 'multipart/form-data'
+        // };
+        // axios.post("/upload", data, {
+        //     header: head,
+        //     onUploadProgress: function (progressEvent) {
+        //         var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        //         document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
+        //         document.getElementById("progress").innerHTML = percentCompleted + "%";
+        //         document.getElementById("close").disabled = true;
+        //     }
+        // }).then(function (response) {
+        //     console.log(response);
+        //     document.getElementById("close").disabled = false;
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        //     alert("音声ファイルのアップロードに失敗しました。");
+        // });
     });
 
     const dbData = new URLSearchParams();
     dbData.append("name", dbName);
     dbData.append("location", "(" + lng + "," + lat + ")");
-    dbData.append("path", "audio/" + name + ".wav");
+    // dbData.append("path", "audio/" + name + ".wav");
+    dbData.append("path", url);
     dbData.append("num", 0);
     const dbHead = {
         method: 'post',
@@ -259,7 +296,7 @@ function reload(button){
     }else if(document.getElementById("progress").innerHTML === "100%"){
         location.reload(true);
     }
-};
+}
 
 function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
@@ -278,3 +315,38 @@ function startUserMedia(stream) {
     __log('Recorder initialised.');
     __log("Voice: 1.0 - Noise: 0.0");
 }
+
+function handleaudiofile(ev){
+    let file = ev;
+    let fileName = ev.name;
+    let fileType = ev.type;
+    axios.post("/sign_s3",{
+        fileName : fileName,
+        fileType : fileType
+    })
+    .then(response => {
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var url = returnData.url;
+        var options = {
+            headers: {
+                'Content-Type': fileType,
+            }
+    };
+
+    axios.put(signedRequest,file,options)
+    .then(result => {
+        this.setState({audio: url,
+    },()=> console.log(this.state.audio))
+        alert("audio uploaded")
+        document.getElementById("close").disabled = false;
+    })
+    .catch(error => {
+        alert("ERROR " + JSON.stringify(error));
+    });
+    })
+    .catch(error => {
+        alert(JSON.stringify(error));
+    })
+}
+    
