@@ -93,11 +93,14 @@ function startRecording(button) {
 
     if(volNum === 0){
         alert("音声をオンにしてください。");
+        gainNode.gain.value = 0;
+        volNum = 0;
         button.disabled = false;
     }else{
         recorder && recorder.record();
         document.getElementById("start").style = "color: red;";
         gainNode.gain.value = 1;
+        volNum = 1;
         recNum = 1;
         __log('Recording...');
     }
