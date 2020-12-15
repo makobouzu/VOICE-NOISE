@@ -72,14 +72,12 @@ function inputSound(button) {
             document.getElementById("sound").style = "color: red;";
             gainNode.gain.value = 1;
             __log('Volume up...');
-            recNum = 1;
             volNum = 1;
             
         }else if(volNum === 1){
             document.getElementById("sound").style = "color: black;";
             gainNode.gain.value = 0;
             __log('Volume down...');
-            recNum = 1;
             volNum = 0;
         }
     }
@@ -92,18 +90,73 @@ function startRecording(button) {
     document.getElementById("progress").innerHTML = "0%";
     document.getElementById("complete").style = "display: none;";
 
-    if(volNum === 0){
-        gainNode.gain.value = 0;
-        recNum = 1;
-        alert("音声をオンにしてください。");
-    }else if(volNum === 1){
+    if(recNum == 0){
+        try {
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (navigator.mediaDevices === undefined) {
+              navigator.mediaDevices = {};
+            }
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+                navigator.mediaDevices.getUserMedia = function(constraints) {
+                    let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    }
+                    return new Promise(function(resolve, reject) {
+                        getUserMedia.call(navigator, constraints, resolve, reject);
+                    });
+                }
+            }
+            window.URL = window.URL || window.webkitURL;
+      
+            audio_context = new AudioContext({sampleRate: 48000});
+            __log('Audio context set up.');
+            __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
+            RNNoiseNode.register(audio_context);
+          } catch (e) {
+            alert('No web audio support in this browser!');
+            alert("このブラウザは対応していません。Safariをご利用ください。");
+          }
+          
+          navigator.mediaDevices.getUserMedia({
+              audio: {
+                  channelCount: { ideal: 1 },
+                  noiseSuppression: { ideal: false },
+                  echoCancellation: { ideal: true },
+                  autoGainControl: { ideal: false },
+                  sampleRate: { ideal: 48000 }
+              }
+          })
+          .then(function(stream) {
+              startUserMedia(stream);
+          })
+          .catch(function(e) {
+              __log('No live audio input: ' + e);
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+          })
+          .then(function(){
+              document.getElementById("sound").style = "color: red;";
+              gainNode.gain.value = 1;
+              __log('Sound Input...');
+              recNum = 1;
+              volNum = 1;
+              button.disabled = true;
+              recorder && recorder.record();
+              document.getElementById("start").style = "color: red;";
+              recNum = 1;
+              __log('Recording...');
+          });
+    }else{
+        if(volNum === 0){
+            document.getElementById("sound").style = "color: red;";
+            gainNode.gain.value = 1;
+            volNum = 1;
+        }
         button.disabled = true;
         recorder && recorder.record();
         document.getElementById("start").style = "color: red;";
-        gainNode.gain.value = 1;
         recNum = 1;
         __log('Recording...');
-    }
 };
 
 function stopRecording(button) {
