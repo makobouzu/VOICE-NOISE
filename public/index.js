@@ -229,7 +229,6 @@ function uploadRecording(button) {
                 console.log(result);
                 path = result.config.url;
                 dbUpload(dbName, lng, lat, path);
-                document.getElementById("close").disabled = false;
             })
             .catch(error => {
                 alert("ERROR " + JSON.stringify(error));
@@ -292,6 +291,7 @@ function dbUpload(dbName, lng, lat, path) {
     })
     .then(function (response) {
         console.log(response);
+        document.getElementById("close").disabled = false;
     })
     .catch(function (error) {
         console.log(error);
