@@ -157,6 +157,7 @@ function startRecording(button) {
         document.getElementById("start").style = "color: red;";
         recNum = 1;
         __log('Recording...');
+    }
 };
 
 function stopRecording(button) {
