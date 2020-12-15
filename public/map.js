@@ -8,7 +8,7 @@ zoom: 13
 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
-    collapsed: true,
+    // collapsed: true,
     language: 'ja',
     placeholder: 'Recorded at.',
     marker: {
