@@ -28,29 +28,30 @@
   <style>
     body { margin: 0; padding: 0; font-family: Helvetica}  
     #map { position: absolute; top: 0; bottom: 0; width: 100%;}
-    .mapboxgl-popup-content {position: relative; background: #f7f8f9; border-radius: 3px; box-shadow: 0 1px 2px #222529; padding: 10px 10px 10px; pointer-events: auto;}
-    .mapboxgl-ctrl-geocoder {width: 40px!important;}
-    .mapboxgl-ctrl-group button {width: 40px; height: 40px;}
+    .mapboxgl-popup-content { position: relative; background: #f7f8f9; border-radius: 3px; box-shadow: 0 1px 2px #222529; padding: 10px 10px 10px; pointer-events: auto;}
+    .mapboxgl-ctrl-geocoder { width: 40px!important;}
+    .mapboxgl-ctrl-group button { width: 40px; height: 40px;}
     .mapboxgl-ctrl-geocoder--icon-search { left: 8px; width: 22px; height: 22px; color: black;}
     .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed { border: 2px solid rgba(0,0,0,0.15); border-radius: 7px;}
     #geocoder-container > div { min-width: 50%; margin-left: 25%;}
     audio { width: 200px; }
     #contents { position: fixed; z-index: 1; margin: 10px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 7px;}
-    .btn-light {border: 1px solid rgba(0,0,0,0.1);}
+    .btn-light { border: 1px solid rgba(0,0,0,0.1);}
     p { margin: 0px 0px 10px 3px; font-size: 17px;}
     #slider { position: fixed; z-index: 1; width: 100%; bottom: 80px}
     #noise { text-align: center; margin: 0px auto; display: block; transform: scale(1.5); width: 30%; bottom: 20px; position: relative;}
-    .modal-backdrop {position: static; background-color: transparent;}
-    .modal-header {padding: 1rem 1rem 0rem 1rem;}
+    .modal-backdrop { position: static; background-color: transparent;}
+    .modal-header { padding: 1rem 1rem 0rem 1rem;}
+    .modal-title { margin-bottom: 10px;}
     .modal-body { padding: 1rem 1rem 0rem 1rem;}
     .input-group-text { border-radius: .25rem 0 0 .25rem;}
     .modal-footer { display: block;}
-    .progress-bar {background-color: #222529;}
-    #complete {margin: 5px 0px 0px 3px; font-size: 13px;}
-    input[type="range"] {-webkit-appearance: none; background-color: #222529; height: 5px; border-radius: 5px; outline: 0;}
-    input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background: url("dist/sound.svg") 0 0; background-color: #f7f8f9; width: 25px; height: 25px; border-radius: 50%; border: 3px solid #222529; cursor: pointer; transition: .3s ease-in-out;}​
-    input[type="range"]::-webkit-slider-thumb:hover {background-color: #222529; border: 2px solid #f7f8f9;}
-    input[type="range"]::-webkit-slider-thumb:active {transform: scale(1.4);}
+    .progress-bar { background-color: #222529;}
+    #complete { margin: 5px 0px 0px 3px; font-size: 13px;}
+    input[type="range"] { -webkit-appearance: none; background-color: #222529; height: 5px; border-radius: 5px; outline: 0;}
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background: url("dist/sound.svg") 0 0; background-color: #f7f8f9; width: 25px; height: 25px; border-radius: 50%; border: 3px solid #222529; cursor: pointer; transition: .3s ease-in-out;}​
+    input[type="range"]::-webkit-slider-thumb:hover { background-color: #222529; border: 2px solid #f7f8f9;}
+    input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.4);}
   </style>
 </head>
 
