@@ -272,7 +272,6 @@ function dbUpload(dbName, lng, lat, path) {
     const dbData = new URLSearchParams();
     dbData.append("name", dbName);
     dbData.append("location", "(" + lng + "," + lat + ")");
-    // dbData.append("path", "audio/" + name + ".wav");
     dbData.append("path", path);
     dbData.append("num", 0);
     const dbHead = {
