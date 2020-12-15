@@ -227,7 +227,7 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded")
-                console.log(result.url);
+                console.log(result);
                 path = result.url;
                 document.getElementById("close").disabled = false;
             })
