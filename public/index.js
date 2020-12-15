@@ -180,7 +180,7 @@ function uploadRecording(button) {
     button.disabled = true;
     const name = new Date().toISOString();
     const dbName = document.getElementById("db_filename").value;
-    let lng, lat;
+    let lng, lat, path;
     if(dbName === ""){
         alert("音声ファイルに名前をつけてください。");
         button.disabled = false;
@@ -227,11 +227,12 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded")
-                console.log(result);
+                console.log(result.url);
+                path = result.url;
                 document.getElementById("close").disabled = false;
             })
             .catch(error => {
-                __log("ERROR " + JSON.stringify(error));
+                alert("ERROR " + JSON.stringify(error));
             })
         })
         .catch(error => {
@@ -267,7 +268,7 @@ function uploadRecording(button) {
     dbData.append("name", dbName);
     dbData.append("location", "(" + lng + "," + lat + ")");
     // dbData.append("path", "audio/" + name + ".wav");
-    dbData.append("path", url);
+    dbData.append("path", path);
     dbData.append("num", 0);
     const dbHead = {
         method: 'post',
