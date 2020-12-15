@@ -84,7 +84,6 @@ function inputSound(button) {
 }
 
 function startRecording(button) {
-    button.disabled = true;
     button.nextElementSibling.disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -92,15 +91,13 @@ function startRecording(button) {
     document.getElementById("complete").style = "display: none;";
 
     if(volNum === 0){
-        alert("音声をオンにしてください。");
         gainNode.gain.value = 0;
-        volNum = 0;
-        button.disabled = false;
-    }else{
+        alert("音声をオンにしてください。");
+    }else if(volNum === 1){
+        button.disabled = true;
         recorder && recorder.record();
         document.getElementById("start").style = "color: red;";
         gainNode.gain.value = 1;
-        volNum = 1;
         recNum = 1;
         __log('Recording...');
     }
