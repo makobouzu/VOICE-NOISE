@@ -227,7 +227,7 @@ function uploadRecording(button) {
             .then(result => {
                 __log("audio uploaded")
                 console.log(result);
-                path = result.config.url;
+                path = "https://voicenoise.s3.amazonaws.com/" + fileName;
                 dbUpload(dbName, lng, lat, path);
             })
             .catch(error => {
