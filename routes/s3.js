@@ -8,7 +8,7 @@ aws.config.update({
 });
 const S3_BUCKET = process.env.S3_BUCKET;
 
-exports.sign_s3 = (req,res) => {
+exports.s3 = (req,res) => {
     const s3 = new aws.S3();
     const fileName = req.body.fileName;
     const fileType = req.body.fileType;
@@ -34,6 +34,7 @@ exports.sign_s3 = (req,res) => {
             signedRequest: data,
             url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
         };
+        console.log(returnData);
         res.json({data:{returnData}});
     });
 }

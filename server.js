@@ -12,7 +12,7 @@ app.use('/sound', dbRouter);
 app.use(fileUpload());
 
 var sign_s3 = require('./routes/s3');
-app.use('/sign_s3', sign_s3.sign_s3);
+app.use('/sign_s3', s3.s3);
 
 // app.post('/upload', (req, res) => {
 //     if (!req.files || Object.keys(req.files).length === 0) {
