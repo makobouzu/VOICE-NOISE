@@ -72,12 +72,14 @@ function inputSound(button) {
             document.getElementById("sound").style = "color: red;";
             gainNode.gain.value = 1;
             __log('Volume up...');
+            recNum = 1;
             volNum = 1;
             
         }else if(volNum === 1){
             document.getElementById("sound").style = "color: black;";
             gainNode.gain.value = 0;
             __log('Volume down...');
+            recNum = 1;
             volNum = 0;
         }
     }
@@ -91,15 +93,17 @@ function startRecording(button) {
     document.getElementById("complete").style = "display: none;";
 
     if(volNum === 0){
+        gainNode.gain.value = 0;
+        recNum = 1;
+        alert("音声をオンにしてください。");
+    }else if(volNum === 1){
+        button.disabled = true;
+        recorder && recorder.record();
+        document.getElementById("start").style = "color: red;";
         gainNode.gain.value = 1;
-        document.getElementById("sound").style = "color: red;";
-        volNum = 1;
+        recNum = 1;
+        __log('Recording...');
     }
-    button.disabled = true;
-    recorder && recorder.record();
-    document.getElementById("start").style = "color: red;";
-    recNum = 1;
-    __log('Recording...');
 };
 
 function stopRecording(button) {
