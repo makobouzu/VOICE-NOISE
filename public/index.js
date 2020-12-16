@@ -10,7 +10,7 @@ var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
-window.load = function init(){
+window.onload = function init(){
     document.getElementById("info").click();
 }
 
