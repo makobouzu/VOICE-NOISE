@@ -10,6 +10,10 @@ var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
+window.load = function init(){
+    document.getElementById("info").onclick = true;
+}
+
 function inputSound(button) {
     document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
