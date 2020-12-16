@@ -55,19 +55,17 @@ function inputSound(button) {
           })
           .then(function(stream) {
               startUserMedia(stream);
+              document.getElementById("sound").style = "color: red;";
+              gainNode.gain.value = 1;
+              __log('Sound Input...');
+              recNum = 1;
+              volNum = 1;
           })
           .catch(function(e) {
               __log('No live audio input: ' + e);
               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
               document.getElementById("sound").style = "color: black;";
               return;
-          })
-          .then(function(){
-              document.getElementById("sound").style = "color: red;";
-              gainNode.gain.value = 1;
-              __log('Sound Input...');
-              recNum = 1;
-              volNum = 1;
           });
     }else{
         if(volNum === 0){
@@ -131,14 +129,6 @@ function startRecording(button) {
           })
           .then(function(stream) {
               startUserMedia(stream);
-          })
-          .catch(function(e) {
-              __log('No live audio input: ' + e);
-              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
-              document.getElementById("sound").style = "color: black;";
-              return;
-          })
-          .then(function(){
               document.getElementById("sound").style = "color: red;";
               gainNode.gain.value = 1;
               __log('Sound Input...');
@@ -149,6 +139,12 @@ function startRecording(button) {
               document.getElementById("start").style = "color: red;";
               recNum = 1;
               __log('Recording...');
+          })
+          .catch(function(e) {
+              __log('No live audio input: ' + e);
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+              document.getElementById("sound").style = "color: black;";
+              return;
           });
     }else{
         if(volNum === 0){
