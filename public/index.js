@@ -11,7 +11,7 @@ document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
 window.load = function init(){
-    document.getElementById("info").onclick();
+    document.getElementById("info").click();
 }
 
 function inputSound(button) {
