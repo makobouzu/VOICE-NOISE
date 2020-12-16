@@ -59,6 +59,8 @@ function inputSound(button) {
           .catch(function(e) {
               __log('No live audio input: ' + e);
               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+              document.getElementById("sound").style = "color: black;";
+              return;
           })
           .then(function(){
               document.getElementById("sound").style = "color: red;";
@@ -133,6 +135,8 @@ function startRecording(button) {
           .catch(function(e) {
               __log('No live audio input: ' + e);
               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+              document.getElementById("sound").style = "color: black;";
+              return;
           })
           .then(function(){
               document.getElementById("sound").style = "color: red;";
