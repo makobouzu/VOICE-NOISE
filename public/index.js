@@ -9,13 +9,13 @@ var recNum = 0;
 var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
-var load = localStorage.setItem('First');
+localStorage.setItem('time', 'First');
 
 window.onload = function init(){
-    if(typeof load === "First"){
+    if(localStorage.getItem('time') === 'First'){
         document.getElementById("info").click();
-        localStorage.removeItem("First");
-        localStorage.setItem('Second');
+        localStorage.removeItem('time');
+        localStorage.setItem('time', 'Second');
     }
 }
 
