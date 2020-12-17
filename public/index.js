@@ -5,13 +5,17 @@ function __log(e, data) {
 var audio_context;
 var recorder;
 var gainNode;
+var reload;
 var recNum = 0;
 var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
 window.onload = function init(){
-    document.getElementById("info").click();
+    if(typeof reload === "undefined"){
+        document.getElementById("info").click();
+        reload = "reload";
+    }
 }
 
 function inputSound(button) {
@@ -173,6 +177,27 @@ function stopRecording(button) {
     recNum = 1;
 }
 
+function uploadRec() {
+    recorder && recorder.exportWAV(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var au = document.createElement('audio');
+
+        au.controls = true;
+	    au.src = url;
+        audio_comfirm.appendChild(au);
+    });
+}
+
+function reload(button){
+    if(document.getElementById("progress").innerHTML === "0%"){
+        console.log("");
+        audio_comfirm.removeChild(au);
+    }else if(document.getElementById("progress").innerHTML === "100%"){
+        audio_comfirm.removeChild(au);
+        location.reload(false);
+    }
+}
+
 function updateNoise(rnnoise){
 	try{
         (function a() {
@@ -261,13 +286,6 @@ function uploadRecording(button) {
 }
 
 //------------------detail
-function reload(button){
-    if(document.getElementById("progress").innerHTML === "0%"){
-        console.log("");
-    }else if(document.getElementById("progress").innerHTML === "100%"){
-        location.reload(true);
-    }
-}
 
 function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
