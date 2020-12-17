@@ -193,8 +193,9 @@ function uploadRec() {
 function reload(button){
     if(document.getElementById("progress").innerHTML === "0%"){
         const sample = document.getElementById("sample");
-        console.log(sample);
-        audio_comfirm.removeChild(sample);
+        if(sample != null){
+            audio_comfirm.removeChild(sample);
+        }
     }else if(document.getElementById("progress").innerHTML === "100%"){
         const sample = document.getElementById("sample");
         audio_comfirm.removeChild(sample);
