@@ -199,8 +199,7 @@ function refresh(button){
     if(document.getElementById("progress").innerHTML === "0%"){
         button.disabled = false;
     }else if(document.getElementById("progress").innerHTML === "100%"){
-        button.disabled = false;
-        location.reload(false);
+        button.disabled = true;
     }else{
         button.disabled = true;
     }
@@ -221,8 +220,8 @@ function updateNoise(rnnoise){
             });
         })();
 
-        document.getElementById("noise").addEventListener("input", async () => {
-            var noise = Math.round(document.getElementById("noise").value * 10) / 10;
+        document.getElementById("voice-noise").addEventListener("input", async () => {
+            var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
             var voice = Math.round((1 - noise) * 10) / 10;
 			rnnoise.change(voice, noise);
             __log("Voice: "+ voice +" - Noise: " + noise);   
