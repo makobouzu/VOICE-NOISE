@@ -12,6 +12,7 @@ document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
 window.onload = function init(){
+    console.log(reload);
     if(typeof reload === "undefined"){
         document.getElementById("info").click();
         reload = "reload";
