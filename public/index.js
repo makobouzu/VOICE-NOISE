@@ -195,6 +195,7 @@ function uploadRec() {
 }
 
 function refresh(button){
+    console.log(recorder);
     recorder.clear();
     if(document.getElementById("progress").innerHTML === "0%"){
         button.disabled = false;
