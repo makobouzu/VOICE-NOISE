@@ -41,7 +41,7 @@
     p { margin: 0px 0px 10px 3px; font-size: 13px;}
     #slider { position: fixed; z-index: 1; width: 100%; bottom: 110px; display: flex; flex-wrap: wrap; justify-content: center;}
     #voice-noise { margin: 0px auto; transform: scale(1.5); width: 30%; position: relative;}
-    svg { display: block; margin: 0px auto; width: 80%; overflow: visible; }
+    svg { display: block; margin: 0px auto; width: 100%; overflow: visible; }
     .foreground { fill: #f7f8f9; text-align: center;}
     .background { stroke: #222529; stroke-width: 8; stroke-linejoin: round; text-align: center;}
     #sample { width: 100%; margin-bottom: 10px;}
@@ -67,8 +67,8 @@
     <label for="voice-noise" class="form-label"></label>
     <input type="range" class="form-range" min="0" max="1" step="0.1" value=0 id="voice-noise">
     <svg viewBox="0 0 200 100">
-      <text class="background" x="0" y="50%">VOICE | NOISE</text>
-      <text class="foreground" x="0" y="50%">VOICE | NOISE</text>
+      <text class="background" x="50%" y="50%">VOICE | NOISE</text>
+      <text class="foreground" x="50%" y="50%">VOICE | NOISE</text>
     </svg>
   </div>
 
