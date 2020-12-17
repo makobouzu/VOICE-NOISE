@@ -194,10 +194,20 @@ function uploadRec() {
     });
 }
 
-function reload(button){
+function refresh(button){
+    recorder.clear();
     if(document.getElementById("progress").innerHTML === "0%"){
-        
+        button.disabled = false;
     }else if(document.getElementById("progress").innerHTML === "100%"){
+        button.disabled = false;
+        location.reload(false);
+    }else{
+        button.disabled = true;
+    }
+}
+
+function reload(button){
+    if(document.getElementById("progress").innerHTML === "100%"){
         location.reload(false);
     }
 }
