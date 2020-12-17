@@ -39,9 +39,7 @@
     .btn-light { border: 1px solid rgba(0,0,0,0.1);}
     p { margin: 0px 0px 10px 3px; font-size: 13px;}
     #slider { position: fixed; z-index: 1; width: 100%; bottom: 80px}
-    #voice-noise { text-align: center; margin: 0px auto; display: block; transform: scale(1.5); width: 30%; bottom: 20px; position: relative;}
-    #voice_text { text-align: center; display: block;}
-    #noise_text { text-align: center; display: block;}
+    #voice-noise { margin: 0px auto; display: block; transform: scale(1.5); width: 30%; bottom: 20px; position: relative;}
     #sample { width: 100%; margin-bottom: 10px;}
     .modal-backdrop { position: static; background-color: transparent;}
     .modal-header { padding: 1rem 1rem 0rem 1rem;}
@@ -62,10 +60,8 @@
 <body>
   <div id='map'></div>
   <div id="slider">
-    <p id="voice_text">VOICE</p>
     <label for="noise" class="form-label"></label>
     <input type="range" class="form-range" min="0" max="1" step="0.1" value=0 id="voice-noise">
-    <p id="noise_text">NOISE</p>
   </div>
 
 <div id='contents'>
