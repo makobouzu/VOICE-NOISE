@@ -191,11 +191,11 @@ function uploadRec() {
 
 function reload(button){
     if(document.getElementById("progress").innerHTML === "0%"){
-        console.log("");
         const sample = document.getElementById("sample");
         audio_comfirm.removeChild(sample);
     }else if(document.getElementById("progress").innerHTML === "100%"){
-        audio_comfirm.removeChild(au);
+        const sample = document.getElementById("sample");
+        audio_comfirm.removeChild(sample);
         location.reload(false);
     }
 }
