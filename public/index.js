@@ -183,7 +183,8 @@ function uploadRec() {
         var au = document.createElement('audio');
 
         au.controls = true;
-	    au.src = url;
+        au.src = url;
+        au.id = "sample"
         audio_comfirm.appendChild(au);
     });
 }
@@ -191,7 +192,8 @@ function uploadRec() {
 function reload(button){
     if(document.getElementById("progress").innerHTML === "0%"){
         console.log("");
-        audio_comfirm.removeChild(au);
+        const sample = document.getElementById("sample");
+        audio_comfirm.removeChild(sample);
     }else if(document.getElementById("progress").innerHTML === "100%"){
         audio_comfirm.removeChild(au);
         location.reload(false);
