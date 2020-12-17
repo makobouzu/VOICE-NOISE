@@ -12,8 +12,7 @@ var now = new Date();
 localStorage.setItem('time1', 'First');
 
 window.onload = function init(){
-    console.log(localStorage.getItem('time2'));
-    if(typeof localStorage.getItem('time2') === 'undefined'){
+    if(localStorage.getItem('time2') === null){
         document.getElementById("info").click();
         localStorage.setItem('time2', 'Second');   
     }
