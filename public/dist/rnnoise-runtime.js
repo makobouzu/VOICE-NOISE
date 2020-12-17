@@ -38,7 +38,7 @@
 
   } || (window.ScriptProcessorNode || (window.ScriptProcessorNode = window.webkitScriptProcessorNode)) && Object.assign(function (a) {
     const b = a.createScriptProcessor(512, 1, 1);
-    const d = c.newState(1.0, 0.0);
+    const d = c.newState(0.5, 0.5);
     let f = !0;
     b.onaudioprocess = ({
       inputBuffer: b,
