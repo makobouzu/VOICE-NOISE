@@ -195,7 +195,6 @@ function uploadRec() {
 }
 
 function refresh(button){
-    console.log(recorder);
     if(typeof recorder != "undefined"){
         recorder.clear();
     }
