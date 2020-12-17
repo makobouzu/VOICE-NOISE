@@ -213,28 +213,6 @@ function reload(button){
     }
 }
 
-function updateNoise(rnnoise){
-	try{
-        (function a() {
-            requestAnimationFrame(() => {
-                rnnoise.update(true);
-				a();
-            });
-        })();
-
-        document.getElementById("voice-noise").addEventListener("input", async () => {
-            var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
-            var voice = Math.round((1 - noise) * 10) / 10;
-			rnnoise.change(voice, noise);
-            __log("Voice: "+ voice +" - Noise: " + noise);   
-		});
-    } catch (e) {
-        context.close();
-        console.error(e);
-        alert("RNNoiseの処理がアップデートできませんでした。");
-	}
-}
-
 function uploadRecording(button) {
     button.disabled = true;
     const name = new Date().toISOString();
@@ -318,6 +296,28 @@ function startUserMedia(stream) {
     recorder = new Recorder(rnnoise);
     __log('Recorder initialised.');
     __log("Voice: 1.0 - Noise: 0.0");
+}
+
+function updateNoise(rnnoise){
+	try{
+        (function a() {
+            requestAnimationFrame(() => {
+                rnnoise.update(true);
+				a();
+            });
+        })();
+
+        document.getElementById("voice-noise").addEventListener("input", async () => {
+            var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
+            var voice = Math.round((1 - noise) * 10) / 10;
+			rnnoise.change(voice, noise);
+            __log("Voice: "+ voice +" - Noise: " + noise);   
+		});
+    } catch (e) {
+        context.close();
+        console.error(e);
+        alert("RNNoiseの処理がアップデートできませんでした。");
+	}
 }
 
 function dbUpload(dbName, lng, lat, path) {
