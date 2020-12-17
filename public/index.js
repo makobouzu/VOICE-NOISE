@@ -12,7 +12,8 @@ var now = new Date();
 localStorage.setItem('time1', 'First');
 
 window.onload = function init(){
-    if(localStorage.getItem('time2') === 'undefined'){
+    console.log(localStorage.getItem('time2'));
+    if(typeof localStorage.getItem('time2') === 'undefined'){
         document.getElementById("info").click();
         localStorage.setItem('time2', 'Second');   
     }
@@ -196,13 +197,8 @@ function uploadRec() {
 
 function reload(button){
     if(document.getElementById("progress").innerHTML === "0%"){
-        const sample = document.getElementById("sample");
-        if(sample != null){
-            audio_comfirm.removeChild(sample);
-        }
+        
     }else if(document.getElementById("progress").innerHTML === "100%"){
-        const sample = document.getElementById("sample");
-        audio_comfirm.removeChild(sample);
         location.reload(false);
     }
 }
