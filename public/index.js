@@ -9,13 +9,12 @@ var recNum = 0;
 var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
-localStorage.setItem('time', 'First');
+localStorage.setItem('time1', 'First');
 
 window.onload = function init(){
-    if(localStorage.getItem('time') === 'First'){
+    if(localStorage.getItem('time2') === 'undefined'){
         document.getElementById("info").click();
-        localStorage.removeItem('time');
-        localStorage.setItem('time', 'Second');
+        localStorage.setItem('time2', 'Second');   
     }
 }
 
@@ -179,6 +178,11 @@ function stopRecording(button) {
 }
 
 function uploadRec() {
+    const sample = document.getElementById("sample");
+    if(sample != null){
+        audio_comfirm.removeChild(sample);
+    }
+
     recorder && recorder.exportWAV(function(blob) {
         var url = URL.createObjectURL(blob);
         var au = document.createElement('audio');
