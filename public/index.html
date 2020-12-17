@@ -40,9 +40,10 @@
     .btn-light { border: 1px solid rgba(0,0,0,0.1);}
     p { margin: 0px 0px 10px 3px; font-size: 13px;}
     #slider { position: fixed; z-index: 1; width: 100%; bottom: 110px; display: flex; flex-wrap: wrap; justify-content: center;}
-    #voice-noise { margin: 0px auto; order: 2; transform: scale(1.5); width: 30%; position: relative;}
-    .voice_circle { background: url("dist/sound.svg") 0 0; background-color: #f7f8f9; width: 25px; height: 25px; border-radius: 50%; border: 3px solid #222529; order: 1; margin-left: 23%;}
-    .noise_circle { background: url("dist/sound.svg") 0 0; background-color: #f7f8f9; width: 25px; height: 25px; border-radius: 50%; border: 3px solid #222529; order: 3; margin-right: 23%;}
+    #voice-noise { margin: 0px auto; transform: scale(1.5); width: 30%; position: relative;}
+    svg { display: inline-block; width: 250px; height: auto; overflow: visible; }
+    .foreground { fill: #fff; text-align: center;}
+    .background { stroke: #000; stroke-width: 8; stroke-linejoin: round; text-align: center;}
     #sample { width: 100%; margin-bottom: 10px;}
     .modal-backdrop { position: static; background-color: transparent;}
     .modal-header { padding: 1rem 1rem 0rem 1rem;}
@@ -63,10 +64,12 @@
 <body>
   <div id='map'></div>
   <div id="slider">
-    <!-- <p class="voice_circle"></p> -->
     <label for="voice-noise" class="form-label"></label>
     <input type="range" class="form-range" min="0" max="1" step="0.1" value=0 id="voice-noise">
-    <!-- <p class="noise_circle"></p> -->
+    <svg viewBox="0 0 200 100">
+      <text class="background" x="0" y="50%">VOICE | NOISE</text>
+      <text class="foreground" x="0" y="50%">VOICE | NOISE</text>
+    </svg>
   </div>
 
 <div id='contents'>
@@ -139,13 +142,6 @@
             <div class="embed-responsive embed-responsive-16by9">
               <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/aJenM9Pt93w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div></br>
-            <!-- <div>
-              <p id="credit">情報科学芸術大学院大学 メディア表現研究科</p>
-              <p id="credit">Archival Archetyping Project 所属</p>
-              <p id="credit">M1</p>
-              <p id="credit">天野真</p>
-            </br>
-            </div> -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-sm" id="close" data-dismiss="modal">Close</button>
