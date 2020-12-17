@@ -5,17 +5,17 @@ function __log(e, data) {
 var audio_context;
 var recorder;
 var gainNode;
-var reload;
+var load;
 var recNum = 0;
 var volNum = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 
 window.onload = function init(){
-    console.log(reload);
-    if(typeof reload === "undefined"){
+    console.log(load);
+    if(typeof load === "undefined"){
         document.getElementById("info").click();
-        reload = "reload";
+        load = "reload";
     }
 }
 
