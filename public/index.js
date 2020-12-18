@@ -247,6 +247,8 @@ function uploadRecording(button) {
         let fileName = file.name;
         let fileType = file.type;
 
+        console.log(file);
+
         axios.post("/sign_s3",{
             fileName : fileName,
             fileType : fileType
@@ -262,8 +264,7 @@ function uploadRecording(button) {
             };
             axios.put(signedRequest,file,options)
             .then(result => {
-                __log("audio uploaded")
-                console.log(result);
+                __log("audio uploaded");
                 path = "https://voicenoise.s3.amazonaws.com/" + fileName;
                 dbUpload(dbName, lng, lat, path);
             })
