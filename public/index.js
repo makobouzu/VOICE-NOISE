@@ -215,7 +215,7 @@ function reload(button){
 
 function uploadRecording(button) {
     button.disabled = true;
-    const name = new Date().toISOString();
+    const name = new Date().getTime().toString(16);
     const dbName = document.getElementById("db_filename").value;
     let lng, lat, path;
     if(dbName === ""){
@@ -241,13 +241,18 @@ function uploadRecording(button) {
     }
 
     recorder && recorder.exportWAV(function(blob) {
+
+        if(typeof blob === "undefined"){
+            button.disabled = true;
+            alert("データが取得できませんでした。");
+            return;
+        }
+
         const blobUrl = URL.createObjectURL(blob);
 
         const file = new File([blob], name.valueOf(),{ type:"audio/wav" })
         let fileName = file.name;
         let fileType = file.type;
-
-        console.log(file);
 
         axios.post("/sign_s3",{
             fileName : fileName,
@@ -259,7 +264,7 @@ function uploadRecording(button) {
             var url = returnData.url;
             var options = {
                 headers: {
-                    'Content-Type': fileType,
+                    'Content-Type': fileType
                 }
             };
             axios.put(signedRequest,file,options)
