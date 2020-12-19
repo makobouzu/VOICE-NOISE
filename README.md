@@ -1,6 +1,10 @@
 # VOICE-NOISE
+[![](https://img.shields.io/badge/Safari-Passing-gre.svg?logo=Safari&style=plastic)]() [![](https://img.shields.io/badge/Chrome-Failed-red.svg?logo=Google%20Chrome&style=plastic)]() [![](https://img.shields.io/badge/Firefox-Failed-red.svg?logo=Firefox&style=plastic)]()
+
+
 "VOICE | NOISE" is a sound mapping and recording tool using RNNoise, Recorder.js, and mapbox.  
-It works in Safari.
+
+[https://www.voice-noise.com](https://www.voice-noise.com)
 
 ## Install
 ```sh:fish
@@ -14,7 +18,7 @@ You need to create a .env file and database with a postgresql.
 
 ```sh:fish
 cd VoiceNoise
-npm run devStart 
+npm run devStart
 ```
 ![preview](img/preview.png "preview")
 
@@ -30,4 +34,3 @@ npm run devStart
 Copyright (c) 2007-2017, Jean-Marc Valin  
 Copyright (c) 2005-2017, Xiph.Org Foundation  
 Copyright (c) 2003-2004, Mark Borgerding  
-

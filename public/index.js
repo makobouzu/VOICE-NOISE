@@ -315,8 +315,7 @@ function uploadRecording(button) {
     recorder.clear();
 }
 
-//------------------detail
-
+//detail
 function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
     rnnoise = new RNNoiseNode(audio_context);
