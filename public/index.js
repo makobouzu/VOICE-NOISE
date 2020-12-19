@@ -257,6 +257,13 @@ function uploadRecording(button) {
         axios.post("/sign_s3",{
             fileName : fileName,
             fileType : fileType
+        }, {
+            onUploadProgress: function (progressEvent) {
+                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
+                document.getElementById("progress").innerHTML = percentCompleted + "%";
+                document.getElementById("close").disabled = true;
+            }
         })
         .then(response => {
             var returnData = response.data.data.returnData;
@@ -338,13 +345,7 @@ function dbUpload(dbName, lng, lat, path) {
         'Content-Type': 'multipart/form-data'
     };
     axios.post("/sound", dbData, {
-        header: dbHead,
-        onUploadProgress: function (progressEvent) {
-            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
-            document.getElementById("progress").innerHTML = percentCompleted + "%";
-            document.getElementById("close").disabled = true;
-        }
+        header: dbHead
     })
     .then(function (response) {
         console.log(response);
