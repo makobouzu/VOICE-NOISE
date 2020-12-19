@@ -254,6 +254,7 @@ function uploadRecording(button) {
         let fileName = file.name;
         let fileType = file.type;
 
+        //aws s3 wavfile upload
         axios.post("/sign_s3",{
             fileName : fileName,
             fileType : fileType
@@ -277,16 +278,39 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded");
+                document.getElementById("close").disabled = false;
             })
             .catch(error => {
                 alert("ERROR " + JSON.stringify(error));
             });
-            path = "https://voicenoise.s3.amazonaws.com/" + fileName;
-            dbUpload(dbName, lng, lat, path);
         })
         .catch(error => {
             __log(JSON.stringify(error));
         });
+
+        //database upload
+        const dbData = new URLSearchParams();
+        dbData.append("name", dbName);
+        dbData.append("location", "(" + lng + "," + lat + ")");
+        path = "https://voicenoise.s3.amazonaws.com/" + fileName;
+        dbData.append("path", path);
+        dbData.append("num", 0);
+        const dbHead = {
+            method: 'post',
+            data: dbData,
+            'Content-Type': 'multipart/form-data'
+        };
+        axios.post("/sound", dbData, {
+            header: dbHead
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+            alert("データベースのアクセスに失敗しました。");
+        });
+
     });
     recorder.clear();
 }
