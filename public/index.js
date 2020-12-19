@@ -277,12 +277,12 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded");
-                path = "https://voicenoise.s3.amazonaws.com/" + fileName;
-                dbUpload(dbName, lng, lat, path);
             })
             .catch(error => {
                 alert("ERROR " + JSON.stringify(error));
-            })
+            });
+            path = "https://voicenoise.s3.amazonaws.com/" + fileName;
+            dbUpload(dbName, lng, lat, path);
         })
         .catch(error => {
             __log(JSON.stringify(error));
