@@ -41,10 +41,11 @@ geoLocate.on('geoLocate', function(e) {
         'event_category': 'geolocate_on',
         'non_interaction': true
     });
-   map.flyTo({
-    center:[e.coords.longitude, e.coords.latitude], 
-    zoom:16
-  });
+    
+    map.flyTo({
+        center:[e.coords.longitude, e.coords.latitude], 
+        zoom:16
+    });
 });
 
 map.on('load', () => { 
