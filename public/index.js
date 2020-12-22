@@ -21,7 +21,7 @@ window.onload = function init(){
 function inputSound(button) {
     gtag('event', 'Click', {
         'event_label': 'mic_on',
-        'event_category': 'click_event',
+        'event_category': 'mic_on',
         'non_interaction': true
     });
     document.getElementById("stop").disabled = false;
@@ -99,7 +99,7 @@ function inputSound(button) {
 function startRecording(button) {
     gtag('event', 'Click', {
         'event_label': 'rec_on',
-        'event_category': 'click_event',
+        'event_category': 'rec_on',
         'non_interaction': true
     });
     button.nextElementSibling.disabled = false;
@@ -181,7 +181,7 @@ function startRecording(button) {
 function stopRecording(button) {
     gtag('event', 'Click', {
         'event_label': 'stop_on',
-        'event_category': 'click_event',
+        'event_category': 'stop_on',
         'non_interaction': true
     });
     recorder && recorder.stop();
@@ -195,7 +195,7 @@ function stopRecording(button) {
 function uploadRec() {
     gtag('event', 'Click', {
         'event_label': 'data_preview_on',
-        'event_category': 'click_event',
+        'event_category': 'data_preview_on',
         'non_interaction': true
     });
     const sample = document.getElementById("sample");
@@ -219,7 +219,7 @@ function uploadRec() {
 function refresh(button){
     gtag('event', 'Click', {
         'event_label': 'refresh_on',
-        'event_category': 'click_event',
+        'event_category': 'refresh_on',
         'non_interaction': true
     });
     if(typeof recorder != "undefined"){
@@ -243,7 +243,7 @@ function reload(button){
 function uploadRecording(button) {
     gtag('event', 'Click', {
         'event_label': 'upload_on',
-        'event_category': 'click_event',
+        'event_category': 'upload_on',
         'non_interaction': true
     });
     button.disabled = true;
