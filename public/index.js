@@ -184,7 +184,7 @@ function uploadRec() {
     }
 
     recorder && recorder.exportWAV(function(blob) {
-        console.log(blob);
+        console.log(blob.size);
         var url = URL.createObjectURL(blob);
         var au = document.createElement('audio');
 
