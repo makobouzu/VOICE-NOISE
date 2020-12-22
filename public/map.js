@@ -47,7 +47,7 @@ map.on('load', () => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML(`<p class="fw-bold">${s.name}</p><audio src ="${s.path}" onplay="gtag('event', 'Click', {'event_category': 'maker_${s.name}', 'event_label': 'maker_${s.name}', 'non_interaction': true});" controls>`))
+                .setHTML(`<p class="fw-bold">${s.name}</p><audio src ="${s.path}" controls>`))
                 .addTo(map);
         });
     })
@@ -67,6 +67,14 @@ map.on('load', () => {
         gtag('event', 'Click', {
             'event_label': 'geolocate_on',
             'event_category': 'geolocate_on',
+            'non_interaction': true
+        });
+    });
+
+    document.querySelector('.mapboxgl-marker').addEventListener('click', () =>{
+        gtag('event', 'Click', {
+            'event_label': 'marker_on',
+            'event_category': 'marker_on',
             'non_interaction': true
         });
     });
