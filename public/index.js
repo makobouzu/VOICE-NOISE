@@ -184,14 +184,15 @@ function uploadRec() {
     }
 
     recorder && recorder.exportWAV(function(blob) {
-        console.log(blob.size);
-        var url = URL.createObjectURL(blob);
-        var au = document.createElement('audio');
+        if(blob.size > 45){
+            var url = URL.createObjectURL(blob);
+            var au = document.createElement('audio');
 
-        au.controls = true;
-        au.src = url;
-        au.id = "sample"
-        audio_comfirm.appendChild(au);
+            au.controls = true;
+            au.src = url;
+            au.id = "sample"
+            audio_comfirm.appendChild(au);
+        }
     });
 }
 
