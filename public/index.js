@@ -425,7 +425,7 @@ function dbUpload(dbName, lng, lat, path) {
     });
 }
 
-iframe.document.addEventListener('click', function(event) {
+document.getElementById("intro_movie").contentDocument.addEventListener('click', function(event) {
     gtag('event', 'Click', {
         'event_label': 'intro_movie_on',
         'event_category': 'intro_movie_on',
