@@ -19,6 +19,11 @@ window.onload = function init(){
 }
 
 function inputSound(button) {
+    gtag('event', 'Click', {
+        'event_label': 'mic_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -92,6 +97,11 @@ function inputSound(button) {
 }
 
 function startRecording(button) {
+    gtag('event', 'Click', {
+        'event_label': 'rec_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     button.nextElementSibling.disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -169,6 +179,11 @@ function startRecording(button) {
 };
 
 function stopRecording(button) {
+    gtag('event', 'Click', {
+        'event_label': 'stop_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
@@ -178,6 +193,11 @@ function stopRecording(button) {
 }
 
 function uploadRec() {
+    gtag('event', 'Click', {
+        'event_label': 'data_preview_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     const sample = document.getElementById("sample");
     if(sample != null){
         audio_comfirm.removeChild(sample);
@@ -197,6 +217,11 @@ function uploadRec() {
 }
 
 function refresh(button){
+    gtag('event', 'Click', {
+        'event_label': 'refresh_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     if(typeof recorder != "undefined"){
         recorder.clear();
     }
@@ -216,6 +241,11 @@ function reload(button){
 }
 
 function uploadRecording(button) {
+    gtag('event', 'Click', {
+        'event_label': 'upload_on',
+        'event_category': 'click_event',
+        'non_interaction': true
+    });
     button.disabled = true;
     const name = new Date().getTime().toString(16);
     const dbName = document.getElementById("db_filename").value;
