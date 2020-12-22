@@ -47,7 +47,7 @@ map.on('load', () => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML('<p class="fw-bold">'+ s.name + '</p><audio src ="' + s.path + '"controls>'))
+                .setHTML('<p class="fw-bold">'+ s.name + '</p><audio src ="' + s.path + '" onplay="gtag("event", "Click", {"event_category": "' + "marker_" + s.name + '", "event_label": "' + "marker_" + s.name + '", "non_interaction": true});' + '" controls>'));
                 .addTo(map);
         });
     })
