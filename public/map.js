@@ -3,7 +3,7 @@ var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/light-v10',
 center: [136.6401445,35.3682434],
-zoom: 15
+zoom: 14
 });
 
 var geocoder = new MapboxGeocoder({
