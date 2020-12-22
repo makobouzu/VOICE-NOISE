@@ -179,16 +179,12 @@ function stopRecording(button) {
 
 function uploadRec() {
     const sample = document.getElementById("sample");
-
-    if(sample === null){
-        return;
-    }
-
     if(sample != null){
         audio_comfirm.removeChild(sample);
     }
 
     recorder && recorder.exportWAV(function(blob) {
+        console.log(blob);
         var url = URL.createObjectURL(blob);
         var au = document.createElement('audio');
 
