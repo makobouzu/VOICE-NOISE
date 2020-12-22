@@ -179,6 +179,11 @@ function stopRecording(button) {
 
 function uploadRec() {
     const sample = document.getElementById("sample");
+
+    if(sample === null){
+        return;
+    }
+
     if(sample != null){
         audio_comfirm.removeChild(sample);
     }
