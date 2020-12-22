@@ -363,7 +363,7 @@ function startUserMedia(stream) {
 
     recorder = new Recorder(rnnoise);
     __log('Recorder initialised.');
-    __log("Voice: 1.0 - Noise: 0.0");
+    __log("Voice: 0.5 - Noise: 0.5");
 }
 
 function updateNoise(rnnoise){
@@ -424,4 +424,12 @@ function dbUpload(dbName, lng, lat, path) {
         alert("データベースのアクセスに失敗しました。");
     });
 }
+
+iframe.document.addEventListener('click', function(event) {
+    gtag('event', 'Click', {
+        'event_label': 'intro_movie_on',
+        'event_category': 'intro_movie_on',
+        'non_interaction': true
+    });
+});
     
