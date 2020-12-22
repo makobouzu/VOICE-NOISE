@@ -379,7 +379,20 @@ function updateNoise(rnnoise){
             var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
             var voice = Math.round((1 - noise) * 10) / 10;
 			rnnoise.change(voice, noise);
-            __log("Voice: "+ voice +" - Noise: " + noise);   
+            __log("Voice: "+ voice +" - Noise: " + noise);
+            if(voice === 1.0){
+                gtag('event', 'Click', {
+                    'event_label': 'voice_on',
+                    'event_category': 'voice_on',
+                    'non_interaction': true
+                });
+            }else if(noise === 1.0){
+                gtag('event', 'Click', {
+                    'event_label': 'noise_on',
+                    'event_category': 'noise_on',
+                    'non_interaction': true
+                });
+            }  
 		});
     } catch (e) {
         context.close();
