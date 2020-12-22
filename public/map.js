@@ -39,26 +39,6 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
-map.on("load", () => {
-    document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
-        gtag('event', 'Click', {
-            'event_label': 'geocoder_on',
-            'event_category': 'geocoder_on',
-            'non_interaction': true
-        });
-    });
-});
-
-map.on("load", () => {
-    document.querySelector('.mapboxgl-ctrl-geolocate').addEventListener('click', () =>{
-        gtag('event', 'Click', {
-            'event_label': 'geolocate_on',
-            'event_category': 'geolocate_on',
-            'non_interaction': true
-        });
-    });
-});
-
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -73,5 +53,21 @@ map.on('load', () => {
     })
     .catch(err => {
         console.log(err);
+    });
+
+    document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
+        gtag('event', 'Click', {
+            'event_label': 'geocoder_on',
+            'event_category': 'geocoder_on',
+            'non_interaction': true
+        });
+    });
+
+    document.querySelector('.mapboxgl-ctrl-geolocate').addEventListener('click', () =>{
+        gtag('event', 'Click', {
+            'event_label': 'geolocate_on',
+            'event_category': 'geolocate_on',
+            'non_interaction': true
+        });
     });
 });
