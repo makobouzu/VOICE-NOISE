@@ -21,12 +21,8 @@ map.addControl(geocoder);
 geocoder.on('result', function(e) {
     geocoder_lng = e.result.center[0];
     geocoder_lat = e.result.center[1];
-    gtag('event', 'Click', {
-        'event_label': 'geocoder_on',
-        'event_category': 'geocoder_on',
-        'non_interaction': true
-    });
 });
+
 
 //検索結果 or GPSのデータを使用する場合
 var geolocate_lng, geolocate_lat;
@@ -36,15 +32,30 @@ map.addControl(new mapboxgl.NavigationControl());
 geoLocate.on('geoLocate', function(e) {
     geolocate_lng = e.coords.longitude;
     geolocate_lat = e.coords.latitude;
-    gtag('event', 'Click', {
-        'event_label': 'geolocate_on',
-        'event_category': 'geolocate_on',
-        'non_interaction': true
-    });
-    
+
     map.flyTo({
         center:[e.coords.longitude, e.coords.latitude], 
         zoom:16
+    });
+});
+
+map.on("load", () => {
+    document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
+        gtag('event', 'Click', {
+            'event_label': 'geocoder_on',
+            'event_category': 'geocoder_on',
+            'non_interaction': true
+        });
+    });
+});
+
+map.on("load", () => {
+    document.querySelector('.mapboxgl-ctrl-geolocate').addEventListener('click', () =>{
+        gtag('event', 'Click', {
+            'event_label': 'geolocate_on',
+            'event_category': 'geolocate_on',
+            'non_interaction': true
+        });
     });
 });
 
