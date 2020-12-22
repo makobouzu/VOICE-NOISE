@@ -63,7 +63,7 @@ function inputSound(button) {
           })
           .then(function(stream) {
               startUserMedia(stream);
-              document.getElementById("sound").style = "color: green;";
+              document.getElementById("sound").style = "color: lime;";
               gainNode.gain.value = 1;
               __log('Sound Input...');
               recNum = 1;
@@ -77,7 +77,7 @@ function inputSound(button) {
           });
     }else{
         if(volNum === 0){
-            document.getElementById("sound").style = "color: green;";
+            document.getElementById("sound").style = "color: lime;";
             gainNode.gain.value = 1;
             __log('Volume up...');
             volNum = 1;
@@ -137,7 +137,7 @@ function startRecording(button) {
           })
           .then(function(stream) {
               startUserMedia(stream);
-              document.getElementById("sound").style = "color: green;";
+              document.getElementById("sound").style = "color: lime;";
               gainNode.gain.value = 1;
               __log('Sound Input...');
               recNum = 1;
@@ -156,7 +156,7 @@ function startRecording(button) {
           });
     }else{
         if(volNum === 0){
-            document.getElementById("sound").style = "color: green;";
+            document.getElementById("sound").style = "color: lime;";
             gainNode.gain.value = 1;
             volNum = 1;
         }
