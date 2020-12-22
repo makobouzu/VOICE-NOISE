@@ -424,12 +424,4 @@ function dbUpload(dbName, lng, lat, path) {
         alert("データベースのアクセスに失敗しました。");
     });
 }
-
-document.getElementById("intro_movie").contentDocument.addEventListener('click', function(event) {
-    gtag('event', 'Click', {
-        'event_label': 'intro_movie_on',
-        'event_category': 'intro_movie_on',
-        'non_interaction': true
-    });
-});
     
