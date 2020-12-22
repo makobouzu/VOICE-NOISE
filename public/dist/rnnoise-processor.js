@@ -8,7 +8,7 @@
         outputChannelCount: [1]
       });
       b || (d = new Float32Array((b = (new WebAssembly.Instance(a.processorOptions.module)).exports).memory.buffer));
-      this.state = b.newState(1.0, 0.0);
+      this.state = b.newState(0.5, 0.5);
       this.alive = !0;
       this.port.onmessage = ({
         data: a

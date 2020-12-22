@@ -44,7 +44,7 @@
       inputBuffer: b,
       outputBuffer: a
     }) => {
-      f && (e.set(b.getChannelData(0), c.getInput(d) / 4), b = a.getChannelData(0), (a = c.pipe(d, b.length) / 4) && b.set(e.subarray(a, a + b.length))) // c.getInput(d)がsafariで引っかかる
+      f && (e.set(b.getChannelData(0), c.getInput(d) / 4), b = a.getChannelData(0), (a = c.pipe(d, b.length) / 4) && b.set(e.subarray(a, a + b.length)))
     };
 
     b.update = a => {
