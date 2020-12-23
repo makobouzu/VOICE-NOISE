@@ -7,9 +7,8 @@ zoom: 14
 });
 
 var lang = navigator.language;
-console.log(lang);
 
-// if(lang == 'ja_JP'){
+if(lang == 'ja'){
     var geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         language: 'ja',
@@ -19,17 +18,17 @@ console.log(lang);
         },
         mapboxgl: mapboxgl
     });
-// }else{
-    // var geocoder = new MapboxGeocoder({
-    //     accessToken: mapboxgl.accessToken,
-    //     language: 'ja',
-    //     placeholder: 'Recorded at.',
-    //     marker: {
-    //         color: '#727475'
-    //     },
-    //     mapboxgl: mapboxgl
-    // });
-// }
+}else{
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        language: 'en',
+        placeholder: 'Recorded at.',
+        marker: {
+            color: '#727475'
+        },
+        mapboxgl: mapboxgl
+    });
+}
 var geocoder_lng, geocoder_lat;
 map.addControl(geocoder);
 geocoder.on('result', function(e) {
