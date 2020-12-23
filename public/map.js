@@ -7,8 +7,7 @@ zoom: 14
 });
 
 var lang = navigator.language;
-
-if(lang == 'ja'){
+if(lang === 'ja'){
     var geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         language: 'ja',
@@ -29,6 +28,7 @@ if(lang == 'ja'){
         mapboxgl: mapboxgl
     });
 }
+
 var geocoder_lng, geocoder_lat;
 map.addControl(geocoder);
 geocoder.on('result', function(e) {
