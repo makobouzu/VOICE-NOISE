@@ -53,8 +53,7 @@ function inputSound(button) {
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
           } catch (e) {
-            alert('No web audio support in this browser!');
-            alert("このブラウザは対応していません。Safariをご利用ください。");
+            alert("このブラウザは対応していません。Safariをご利用ください。\n No web audio support in this browser. Please use Safari.");
           }
           
           navigator.mediaDevices.getUserMedia({
@@ -76,7 +75,7 @@ function inputSound(button) {
           })
           .catch(function(e) {
               __log('No live audio input: ' + e);
-              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\n Could not get audio input. Please reload again.");
               document.getElementById("sound").style = "color: black;";
               return;
           });
@@ -132,8 +131,7 @@ function startRecording(button) {
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
           } catch (e) {
-            alert('No web audio support in this browser!');
-            alert("このブラウザは対応していません。Safariをご利用ください。");
+            alert("このブラウザは対応していません。Safariをご利用ください。\n No web audio support in this browser. Please use Safari.");
           }
           
           navigator.mediaDevices.getUserMedia({
@@ -160,7 +158,7 @@ function startRecording(button) {
           })
           .catch(function(e) {
               __log('No live audio input: ' + e);
-              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。");
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\n Could not get audio input. Please reload again.");
               document.getElementById("sound").style = "color: black;";
               return;
           });
@@ -251,14 +249,14 @@ function uploadRecording(button) {
     const dbName = document.getElementById("db_filename").value;
     let lng, lat, path;
     if(dbName === ""){
-        alert("音声ファイルに名前をつけてください。");
+        alert("音声ファイルに名前をつけてください。\n Give a name to the audio file.");
         button.disabled = false;
         return;
     }
     //検索結果 or GPSのデータを使用する場合
     if((typeof geoLocate._lastKnownPosition === "undefined") && (typeof geocoder_lng === "undefined")){
         console.log("no value of lng & lat");
-        alert("現在地をオンにするか、対象とする地点を検索してください。");
+        alert("現在地をオンにするか、対象とする地点を検索してください。\n Turn on the current location or search for the target location.");
         console.log(dbName);
         button.disabled = false;
         return;
@@ -276,7 +274,7 @@ function uploadRecording(button) {
 
         if(typeof blob === "undefined"){
             button.disabled = true;
-            alert("データが取得できませんでした。");
+            alert("データが取得できませんでした。\n Could not retrieve data.");
             return;
         }
 
@@ -313,7 +311,7 @@ function uploadRecording(button) {
                 document.getElementById("close").disabled = false;
             })
             .catch(error => {
-                alert("ERROR " + JSON.stringify(error));
+                __log("ERROR " + JSON.stringify(error));
             });
         })
         .catch(error => {
@@ -340,7 +338,7 @@ function uploadRecording(button) {
         })
         .catch(function (error) {
             console.log(error);
-            alert("データベースのアクセスに失敗しました。");
+            alert("データベースのアクセスに失敗しました。\n Failed to access the database.");
         });
 
     });
@@ -397,7 +395,7 @@ function updateNoise(rnnoise){
     } catch (e) {
         context.close();
         console.error(e);
-        alert("RNNoiseの処理がアップデートできませんでした。");
+        alert("RNNoiseの処理がアップデートできませんでした。\n The RNNoise process could not be updated.");
 	}
 }
 
@@ -421,7 +419,7 @@ function dbUpload(dbName, lng, lat, path) {
     })
     .catch(function (error) {
         console.log(error);
-        alert("データベースのアクセスに失敗しました。");
+        alert("データベースのアクセスに失敗しました。\n Failed to access the database.");
     });
 }
     
