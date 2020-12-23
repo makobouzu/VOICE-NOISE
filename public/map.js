@@ -6,16 +6,30 @@ center: [136.6401445,35.3682434],
 zoom: 14
 });
 
-var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    // collapsed: true,
-    language: 'ja',
-    placeholder: 'Recorded at.',
-    marker: {
-        color: '#727475'
-    },
-    mapboxgl: mapboxgl
-});
+var lang = navigator.language;
+console.log(lang);
+
+// if(lang == 'ja_JP'){
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        language: 'ja',
+        placeholder: 'Recorded at.',
+        marker: {
+            color: '#727475'
+        },
+        mapboxgl: mapboxgl
+    });
+// }else{
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        language: 'ja',
+        placeholder: 'Recorded at.',
+        marker: {
+            color: '#727475'
+        },
+        mapboxgl: mapboxgl
+    });
+}
 var geocoder_lng, geocoder_lat;
 map.addControl(geocoder);
 geocoder.on('result', function(e) {
