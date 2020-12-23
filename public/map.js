@@ -47,7 +47,7 @@ map.on('load', () => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML(`<p class="fw-bold">${s.name}</p><audio src ="${s.path}" onplay="gtag('event', 'Click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
+                .setHTML(`<p class="fw-bold">${s.name}</p><audio src ="${s.path}" onplay="gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
         });
     })
@@ -56,7 +56,7 @@ map.on('load', () => {
     });
 
     document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
-        gtag('event', 'Click', {
+        gtag('event', 'geocoder_click', {
             'event_label': 'geocoder_on',
             'event_category': 'geocoder_on',
             'non_interaction': true
@@ -64,7 +64,7 @@ map.on('load', () => {
     });
 
     document.querySelector('.mapboxgl-ctrl-geolocate').addEventListener('click', () =>{
-        gtag('event', 'Click', {
+        gtag('event', 'geolocate_click', {
             'event_label': 'geolocate_on',
             'event_category': 'geolocate_on',
             'non_interaction': true

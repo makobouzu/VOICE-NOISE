@@ -19,7 +19,7 @@ window.onload = function init(){
 }
 
 function inputSound(button) {
-    gtag('event', 'Click', {
+    gtag('event', 'mic_click', {
         'event_label': 'mic_on',
         'event_category': 'mic_on',
         'non_interaction': true
@@ -97,7 +97,7 @@ function inputSound(button) {
 }
 
 function startRecording(button) {
-    gtag('event', 'Click', {
+    gtag('event', 'rec_click', {
         'event_label': 'rec_on',
         'event_category': 'rec_on',
         'non_interaction': true
@@ -179,7 +179,7 @@ function startRecording(button) {
 };
 
 function stopRecording(button) {
-    gtag('event', 'Click', {
+    gtag('event', 'stop_click', {
         'event_label': 'stop_on',
         'event_category': 'stop_on',
         'non_interaction': true
@@ -193,7 +193,7 @@ function stopRecording(button) {
 }
 
 function uploadRec() {
-    gtag('event', 'Click', {
+    gtag('event', 'submit_click', {
         'event_label': 'data_preview_on',
         'event_category': 'data_preview_on',
         'non_interaction': true
@@ -217,7 +217,7 @@ function uploadRec() {
 }
 
 function refresh(button){
-    gtag('event', 'Click', {
+    gtag('event', 'refresh_click', {
         'event_label': 'refresh_on',
         'event_category': 'refresh_on',
         'non_interaction': true
@@ -241,7 +241,7 @@ function reload(button){
 }
 
 function uploadRecording(button) {
-    gtag('event', 'Click', {
+    gtag('event', 'upload_click', {
         'event_label': 'upload_on',
         'event_category': 'upload_on',
         'non_interaction': true
@@ -381,13 +381,13 @@ function updateNoise(rnnoise){
 			rnnoise.change(voice, noise);
             __log("Voice: "+ voice +" - Noise: " + noise);
             if(voice === 1.0){
-                gtag('event', 'Click', {
+                gtag('event', 'voice_click', {
                     'event_label': 'voice_on',
                     'event_category': 'voice_on',
                     'non_interaction': true
                 });
             }else if(noise === 1.0){
-                gtag('event', 'Click', {
+                gtag('event', 'noise_click', {
                     'event_label': 'noise_on',
                     'event_category': 'noise_on',
                     'non_interaction': true
