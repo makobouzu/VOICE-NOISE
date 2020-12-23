@@ -20,16 +20,16 @@ console.log(lang);
         mapboxgl: mapboxgl
     });
 // }else{
-    var geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        language: 'ja',
-        placeholder: 'Recorded at.',
-        marker: {
-            color: '#727475'
-        },
-        mapboxgl: mapboxgl
-    });
-}
+    // var geocoder = new MapboxGeocoder({
+    //     accessToken: mapboxgl.accessToken,
+    //     language: 'ja',
+    //     placeholder: 'Recorded at.',
+    //     marker: {
+    //         color: '#727475'
+    //     },
+    //     mapboxgl: mapboxgl
+    // });
+// }
 var geocoder_lng, geocoder_lat;
 map.addControl(geocoder);
 geocoder.on('result', function(e) {
