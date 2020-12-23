@@ -24,6 +24,7 @@ function inputSound(button) {
         'event_category': 'mic_on',
         'non_interaction': true
     });
+    document.getElementById("voice-noise").disabled = false;
     document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -101,6 +102,7 @@ function startRecording(button) {
         'event_category': 'rec_on',
         'non_interaction': true
     });
+    document.getElementById("voice-noise").disabled = false;
     button.nextElementSibling.disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
