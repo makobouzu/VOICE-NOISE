@@ -25,6 +25,7 @@ function inputSound(button) {
         'non_interaction': true
     });
     document.getElementById("voice-noise").disabled = false;
+    document.getElementById("voice-noise").style = "background-color: #222529";
     document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
@@ -103,6 +104,7 @@ function startRecording(button) {
         'non_interaction': true
     });
     document.getElementById("voice-noise").disabled = false;
+    document.getElementById("voice-noise").style = "background-color: #222529";
     button.nextElementSibling.disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
