@@ -334,6 +334,8 @@ function uploadRecording(button) {
                 var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
                 document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
                 document.getElementById("progress").innerHTML = percentCompleted + "%";
+                document.getElementById("download").disabled = true;
+                document.getElementById("refresh").disabled = true;
                 document.getElementById("close").disabled = true;
             }
         })
