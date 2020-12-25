@@ -200,6 +200,7 @@ function uploadRec() {
         'event_category': 'data_preview_on',
         'non_interaction': true
     });
+    document.getElementById("download").disabled = false;
     const sample = document.getElementById("sample");
     if(sample != null){
         audio_comfirm.removeChild(sample);
@@ -218,6 +219,29 @@ function uploadRec() {
     });
 }
 
+document.getElementById("download").addEventListener('click', () => download());
+
+function download(){
+    document.getElementById("download").disabled = true;
+    gtag('event', 'download_click', {
+        'event_label': 'download_on',
+        'event_category': 'download_on',
+        'non_interaction': true
+    });
+
+    recorder && recorder.exportWAV(function(blob) {
+        if(blob.size > 45){
+            var url = document.getElementById("sample").src;
+            var hf = document.createElement('a');
+
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.click();
+        }
+    });
+    document.getElementById("download").disabled = false;
+}
+
 function refresh(button){
     gtag('event', 'refresh_click', {
         'event_label': 'refresh_on',
@@ -227,6 +251,7 @@ function refresh(button){
     if(typeof recorder != "undefined"){
         recorder.clear();
     }
+    document.getElementById("download").disabled = true;
     if(document.getElementById("progress").innerHTML === "0%"){
         button.disabled = false;
     }else if(document.getElementById("progress").innerHTML === "100%"){
@@ -249,6 +274,8 @@ function uploadRecording(button) {
         'non_interaction': true
     });
     button.disabled = true;
+    document.getElementById("download").disabled = true;
+    document.getElementById("refresh").disabled = true;
     const name = new Date().getTime().toString(16);
     const dbName = document.getElementById("db_filename").value;
     let lng, lat, path;
@@ -312,6 +339,8 @@ function uploadRecording(button) {
             axios.put(signedRequest,file,options)
             .then(result => {
                 __log("audio uploaded");
+                document.getElementById("download").disabled = false;
+                document.getElementById("refresh").disabled = false;
                 document.getElementById("close").disabled = false;
             })
             .catch(error => {
