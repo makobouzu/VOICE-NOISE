@@ -201,7 +201,7 @@ function uploadRec() {
         'non_interaction': true
     });
     document.getElementById("download").disabled = false;
-    ocument.getElementById("refresh").disabled = false;
+    document.getElementById("refresh").disabled = false;
     const sample = document.getElementById("sample");
     if(sample != null){
         audio_comfirm.removeChild(sample);
