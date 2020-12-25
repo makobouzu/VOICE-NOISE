@@ -55,7 +55,7 @@ function inputSound(button) {
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
           } catch (e) {
-            alert("このブラウザは対応していません。Safariをご利用ください。\n No web audio support in this browser. Please use Safari.");
+            alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
           }
           
           navigator.mediaDevices.getUserMedia({
@@ -77,7 +77,7 @@ function inputSound(button) {
           })
           .catch(function(e) {
               __log('No live audio input: ' + e);
-              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\n Could not get audio input. Please reload again.");
+              alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\nCould not get audio input. Please reload again.");
               document.getElementById("sound").style = "color: black;";
               return;
           });
@@ -135,7 +135,7 @@ function startRecording(button) {
             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
             RNNoiseNode.register(audio_context);
           } catch (e) {
-            alert("このブラウザは対応していません。Safariをご利用ください。\n No web audio support in this browser. Please use Safari.");
+            alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
           }
           
           navigator.mediaDevices.getUserMedia({
@@ -233,7 +233,7 @@ function download(){
             var hf = document.createElement('a');
             var name = document.getElementById("db_filename").value;
             if(name === ""){
-                alert("音声ファイルに名前をつけてください。\n Give a name to the audio file.");
+                alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
                 document.getElementById("download").disabled = false;
                 return;
             }
@@ -284,16 +284,19 @@ function uploadRecording(button) {
     const dbName = document.getElementById("db_filename").value;
     let lng, lat, path;
     if(dbName === ""){
-        alert("音声ファイルに名前をつけてください。\n Give a name to the audio file.");
+        alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
         button.disabled = false;
+        document.getElementById("download").disabled = false;
+        document.getElementById("refresh").disabled = false;
         return;
     }
     //検索結果 or GPSのデータを使用する場合
     if((typeof geoLocate._lastKnownPosition === "undefined") && (typeof geocoder_lng === "undefined")){
         console.log("no value of lng & lat");
-        alert("現在地をオンにするか、対象とする地点を検索してください。\n Turn on the current location or search for the target location.");
-        console.log(dbName);
+        alert("現在地をオンにするか、対象とする地点を検索してください。\nTurn on the current location or search for the target location.");
         button.disabled = false;
+        document.getElementById("download").disabled = false;
+        document.getElementById("refresh").disabled = false;
         return;
     }
     if(typeof geocoder_lng != "undefined"){
@@ -309,7 +312,9 @@ function uploadRecording(button) {
 
         if(typeof blob === "undefined"){
             button.disabled = true;
-            alert("データが取得できませんでした。\n Could not retrieve data.");
+            document.getElementById("download").disabled = false;
+        document.getElementById("refresh").disabled = false;
+            alert("データが取得できませんでした。Refreshを押してもう一度録音をしてください。\nCould not retrieve data.Press Refresh to record again.");
             return;
         }
 
@@ -375,7 +380,7 @@ function uploadRecording(button) {
         })
         .catch(function (error) {
             console.log(error);
-            alert("データベースのアクセスに失敗しました。\n Failed to access the database.");
+            alert("データベースのアクセスに失敗しました。\nFailed to access the database.");
         });
 
     });
@@ -432,7 +437,7 @@ function updateNoise(rnnoise){
     } catch (e) {
         context.close();
         console.error(e);
-        alert("RNNoiseの処理がアップデートできませんでした。\n The RNNoise process could not be updated.");
+        alert("RNNoiseの処理がアップデートできませんでした。\nThe RNNoise process could not be updated.");
 	}
 }
 
@@ -456,7 +461,7 @@ function dbUpload(dbName, lng, lat, path) {
     })
     .catch(function (error) {
         console.log(error);
-        alert("データベースのアクセスに失敗しました。\n Failed to access the database.");
+        alert("データベースのアクセスに失敗しました。\nFailed to access the database.");
     });
 }
     
