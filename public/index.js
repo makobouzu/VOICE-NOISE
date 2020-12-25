@@ -219,8 +219,6 @@ function uploadRec() {
     });
 }
 
-document.getElementById("download").addEventListener('click', () => download());
-
 function download(){
     document.getElementById("download").disabled = true;
     gtag('event', 'download_click', {
@@ -233,14 +231,20 @@ function download(){
         if(blob.size > 45){
             var url = document.getElementById("sample").src;
             var hf = document.createElement('a');
-
+            var name = document.getElementById("db_filename").value;
+            if(name === ""){
+                alert("音声ファイルに名前をつけてください。\n Give a name to the audio file.");
+                document.getElementById("download").disabled = false;
+                return;
+            }
             hf.href = url;
-            hf.download = new Date().toISOString() + '.wav';
+            hf.download = name + '.wav';
             hf.click();
         }
     });
     document.getElementById("download").disabled = false;
 }
+document.getElementById("download").addEventListener('click', () => download());
 
 function refresh(button){
     gtag('event', 'refresh_click', {
