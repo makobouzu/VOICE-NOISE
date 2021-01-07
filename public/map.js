@@ -3,7 +3,7 @@ var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/light-v10',
 center: [139.7023894,35.6598003],
-zoom: 12
+zoom: 8
 });
 
 var lang = navigator.language;
