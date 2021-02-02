@@ -194,23 +194,6 @@ window.onload = function init(){
 //     __log('Stopped recording.');
 //     recNum = 1;
 // }
-function audioForm(){
-    var files = document.getElementById("audioform");
-    var audio = document.createElement('audio');
-    var audioComfirm = document.getElementById("audio_comfirm");
-
-    const file = URL.createObjectURL(files.files[0]);
-    audio.controls = true;
-    audio.src = file;
-    audio.id = "sample"
-    audioComfirm.appendChild(audio);
-    // const audioBlob = new Blob([view], { type: 'audio/wav' })
-    // au.controls = true;
-    // au.id = "audioComfirm"
-    // au.src = URL.createObjectURL(audioBlob);
-    // audio_comfirm.appendChild(au);
-    // fileReader.readAsArrayBuffer(file);
-}
 
 function uploadRec() {
     gtag('event', 'submit_click', {
@@ -224,20 +207,21 @@ function uploadRec() {
     if(sample != null){
         audio_comfirm.removeChild(sample);
     }
-
-    recorder && recorder.exportWAV(function(blob) {
-        if(blob.size > 45){
-            var url = URL.createObjectURL(blob);
-            var au = document.createElement('audio');
-
-            au.controls = true;
-            au.src = url;
-            au.id = "sample"
-            audio_comfirm.appendChild(au);
-        }
-    });
 }
 
+function audioForm(){
+    var files = document.getElementById("audioform");
+    var audio = document.createElement('audio');
+    var audioComfirm = document.getElementById("audio_comfirm");
+
+    const file = URL.createObjectURL(files.files[0]);
+    audio.controls = true;
+    audio.src = file;
+    audio.id = "sample"
+    audioComfirm.appendChild(audio);
+}
+
+document.getElementById("download").addEventListener('click', () => download());
 function download(){
     document.getElementById("download").disabled = true;
     gtag('event', 'download_click', {
@@ -246,24 +230,19 @@ function download(){
         'non_interaction': true
     });
 
-    recorder && recorder.exportWAV(function(blob) {
-        if(blob.size > 45){
-            var url = document.getElementById("sample").src;
-            var hf = document.createElement('a');
-            var name = document.getElementById("db_filename").value;
-            if(name === ""){
-                alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
-                document.getElementById("download").disabled = false;
-                return;
-            }
-            hf.href = url;
-            hf.download = name + '.wav';
-            hf.click();
-        }
-    });
+    var url = document.getElementById("sample").src;
+    var hf = document.createElement('a');
+    var name = document.getElementById("db_filename").value;
+    if(name === ""){
+        alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
+        document.getElementById("download").disabled = false;
+        return;
+    }
+    hf.href = url;
+    hf.download = name + '.wav';
+    hf.click();
     document.getElementById("download").disabled = false;
 }
-document.getElementById("download").addEventListener('click', () => download());
 
 function refresh(button){
     gtag('event', 'refresh_click', {
@@ -271,9 +250,10 @@ function refresh(button){
         'event_category': 'refresh_on',
         'non_interaction': true
     });
-    if(typeof recorder != "undefined"){
-        recorder.clear();
-    }
+
+    document.getElementById("audioform").value = "";
+    document.getElementById("audio_comfirm").removeChild(document.getElementById("sample"));
+
     document.getElementById("download").disabled = true;
     if(document.getElementById("progress").innerHTML === "0%"){
         button.disabled = false;
@@ -327,85 +307,78 @@ function uploadRecording(button) {
         lat = geoLocate._lastKnownPosition.coords.latitude;
     }
 
-    recorder && recorder.exportWAV(function(blob) {
-
-        if(typeof blob === "undefined"){
-            button.disabled = true;
-            document.getElementById("download").disabled = false;
+    var files = document.getElementById("audioform");
+    if(!files){
+        button.disabled = true;
+        document.getElementById("download").disabled = false;
         document.getElementById("refresh").disabled = false;
-            alert("データが取得できませんでした。Refreshを押してもう一度録音をしてください。\nCould not retrieve data.Press Refresh to record again.");
-            return;
+        alert("データが取得できませんでした。Refreshを押してもう一度録音をしてください。\nCould not retrieve data.Press Refresh to record again.");
+        return;
+    }
+    const file = URL.createObjectURL(files.files[0]);
+    let fileName = file.name;
+    let fileType = file.type;
+
+    //aws s3 wavfile upload
+    axios.post("/sign_s3",{
+        fileName : fileName,
+        fileType : fileType
+    }, {
+        onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
+            document.getElementById("progress").innerHTML = percentCompleted + "%";
+            document.getElementById("download").disabled = true;
+            document.getElementById("refresh").disabled = true;
+            document.getElementById("close").disabled = true;
         }
-
-        const blobUrl = URL.createObjectURL(blob);
-
-        const file = new File([blob], name.valueOf(),{ type:"audio/wav" })
-        let fileName = file.name;
-        let fileType = file.type;
-
-        //aws s3 wavfile upload
-        axios.post("/sign_s3",{
-            fileName : fileName,
-            fileType : fileType
-        }, {
-            onUploadProgress: function (progressEvent) {
-                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
-                document.getElementById("progress").innerHTML = percentCompleted + "%";
-                document.getElementById("download").disabled = true;
-                document.getElementById("refresh").disabled = true;
-                document.getElementById("close").disabled = true;
+    })
+    .then(response => {
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var url = returnData.url;
+        var options = {
+            headers: {
+                'Content-Type': fileType
             }
-        })
-        .then(response => {
-            var returnData = response.data.data.returnData;
-            var signedRequest = returnData.signedRequest;
-            var url = returnData.url;
-            var options = {
-                headers: {
-                    'Content-Type': fileType
-                }
-            };
-            axios.put(signedRequest,file,options)
-            .then(result => {
-                __log("audio uploaded");
-                document.getElementById("download").disabled = false;
-                document.getElementById("refresh").disabled = false;
-                document.getElementById("close").disabled = false;
-            })
-            .catch(error => {
-                __log("ERROR " + JSON.stringify(error));
-            });
+        };
+        axios.put(signedRequest,file,options)
+        .then(result => {
+            __log("audio uploaded");
+            document.getElementById("download").disabled = false;
+            document.getElementById("refresh").disabled = false;
+            document.getElementById("close").disabled = false;
         })
         .catch(error => {
-            __log(JSON.stringify(error));
+            __log("ERROR " + JSON.stringify(error));
         });
-
-        //database upload
-        const dbData = new URLSearchParams();
-        dbData.append("name", dbName);
-        dbData.append("location", "(" + lng + "," + lat + ")");
-        path = "https://voicenoise.s3.amazonaws.com/" + fileName;
-        dbData.append("path", path);
-        dbData.append("num", 0);
-        const dbHead = {
-            method: 'post',
-            data: dbData,
-            'Content-Type': 'multipart/form-data'
-        };
-        axios.post("/sound", dbData, {
-            header: dbHead
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-            alert("データベースのアクセスに失敗しました。\nFailed to access the database.");
-        });
-
+    })
+    .catch(error => {
+        __log(JSON.stringify(error));
     });
-    recorder.clear();
+
+    //database upload
+    const dbData = new URLSearchParams();
+    dbData.append("name", dbName);
+    dbData.append("location", "(" + lng + "," + lat + ")");
+    path = "https://voicenoise.s3.amazonaws.com/" + fileName;
+    dbData.append("path", path);
+    dbData.append("num", 0);
+    const dbHead = {
+        method: 'post',
+        data: dbData,
+        'Content-Type': 'multipart/form-data'
+    };
+    axios.post("/sound", dbData, {
+        header: dbHead
+    })
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("データベースのアクセスに失敗しました。\nFailed to access the database.");
+    });
 }
 
 //detail
