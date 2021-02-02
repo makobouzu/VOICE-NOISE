@@ -34,7 +34,7 @@ window.onload = function init(){
     }
 }
 
-document.getElementById("marker_audio").addEventListener('loadedmetadata', () => audioConnect());
+document.querySelector('audio').addEventListener('loadedmetadata', () => audioConnect());
 
 function audioConnect(audio){
     console.log("audioConnect!!")
