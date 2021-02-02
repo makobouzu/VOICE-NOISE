@@ -195,9 +195,10 @@ window.onload = function init(){
 //     recNum = 1;
 // }
 function audioForm(){
+    var files = document.getElementById("audioform");
     var audio = document.createElement('audio');
 
-    const file = URL.createObjectURL(this.files[0]);
+    const file = URL.createObjectURL(files.files[0]);
     audio.src = file;
     audio_comfirm.appendChild(audio);
     // const audioBlob = new Blob([view], { type: 'audio/wav' })
