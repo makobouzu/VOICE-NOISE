@@ -68,7 +68,7 @@ map.on('load', () => {
         console.log(err);
     });
 
-    document.querySelector('.mapboxgl-marker').addEventListener('click', () =>{
+    document.querySelector('.mapboxgl-popup').addEventListener('click', () =>{
         if(num == 0){
             audioConnect();
         }
