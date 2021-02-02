@@ -32,12 +32,18 @@ window.onload = function init(){
     } catch (e) {
         alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
     }
+
+    var audioSamples = document.querySelector('audio');
+    audioSamples.addEventListener("canplay", function(event) { 
+        console.log(event.type);
+        playable = true;
+        audioConnect(audioSamples);
+      });
 }
 
-function audioConnect(){
+function audioConnect(audio){
     console.log("audioConnect!!")
-    var audioSamples = document.querySelector('audio');
-    var input = audio_context.createMediaElementSource(audioSamples);
+    var input = audio_context.createMediaElementSource(audio);
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     gainNode.gain.value = 1;
