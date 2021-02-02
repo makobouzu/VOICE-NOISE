@@ -3,6 +3,7 @@ function __log(e, data) {
 }
 
 var audio_context;
+var rnnoise;
 var gainNode;
 var recNum = 0;
 var volNum = 0;
@@ -51,7 +52,7 @@ function audioConnect(){
 }
 
 function audioPlay(name){
-    gtag('event', 'marker_click', {'event_category': 'marker_' + 'name', 'event_label': 'marker_'+ 'name', 'non_interaction': true});
+    gtag('event', 'marker_click', {'event_category': 'marker_' + name, 'event_label': 'marker_'+ name, 'non_interaction': true});
     updateNoise(rnnoise);
 }
 // function startUserMedia(stream) {
