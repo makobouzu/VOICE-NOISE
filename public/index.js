@@ -5,7 +5,6 @@ function __log(e, data) {
 var audio_context;
 var rnnoise;
 var gainNode;
-var num = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 localStorage.setItem('time1', 'First');
