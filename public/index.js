@@ -197,7 +197,7 @@ window.onload = function init(){
 function audioForm(){
     var audio = document.createElement('audio');
 
-    const file = ducumentGetElementById("audioform").value;
+    const file = documentGetElementById("audioform").value;
     console.log(file);
     audio.src = file;
     audio_comfirm.appendChild(audio);
