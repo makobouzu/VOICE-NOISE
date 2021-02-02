@@ -3,7 +3,6 @@ function __log(e, data) {
 }
 
 var audio_context;
-var recorder;
 var gainNode;
 var recNum = 0;
 var volNum = 0;
@@ -12,10 +11,45 @@ var now = new Date();
 localStorage.setItem('time1', 'First');
 
 window.onload = function init(){
+    document.getElementById("slider").style = "opacity: 1.0;";
+    document.getElementById("voice-noise").disabled = false;
+    document.getElementById("stop").disabled = false;
+    document.getElementById("upload").disabled = false;
+    document.getElementById("progress").style = "width: 0%;";
+    document.getElementById("progress").innerHTML = "0%";
+    document.getElementById("complete").style = "display: none;";
+
     if(localStorage.getItem('time2') === null){
         document.getElementById("info").click();
         localStorage.setItem('time2', 'Second');   
     }
+
+    try {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        audio_context = new AudioContext({sampleRate: 48000});
+        __log('Audio context set up.');
+        RNNoiseNode.register(audio_context);
+    } catch (e) {
+        alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
+    }
+    var audio = document.getElementById('marker_audio');
+    startUserMedia(audio);
+}
+
+function startUserMedia(stream) {
+    var input = audio_context.createMediaStreamSource(stream);
+    rnnoise = new RNNoiseNode(audio_context);
+    gainNode = audio_context.createGain();
+    gainNode.gain.value = 1;
+	input.connect(rnnoise);
+    audio_context.resume();
+    __log('Media stream created.');
+
+    rnnoise.connect(gainNode);
+    gainNode.connect(audio_context.destination);
+	updateNoise(rnnoise);
+    __log('Input connected to audio context destination.');
+    __log("Voice: 0.5 - Noise: 0.5");
 }
 
 // function inputSound(button) {
@@ -51,13 +85,13 @@ window.onload = function init(){
 //             }
 //             window.URL = window.URL || window.webkitURL;
       
-//             audio_context = new AudioContext({sampleRate: 48000});
-//             __log('Audio context set up.');
-//             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
-//             RNNoiseNode.register(audio_context);
-//           } catch (e) {
-//             alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
-//           }
+        //     audio_context = new AudioContext({sampleRate: 48000});
+        //     __log('Audio context set up.');
+        //     __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
+        //     RNNoiseNode.register(audio_context);
+        //   } catch (e) {
+        //     alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
+        //   }
           
 //           navigator.mediaDevices.getUserMedia({
 //               audio: {
@@ -382,24 +416,6 @@ function uploadRecording(button) {
 }
 
 //detail
-function startUserMedia(stream) {
-    var input = audio_context.createMediaStreamSource(stream);
-    rnnoise = new RNNoiseNode(audio_context);
-    gainNode = audio_context.createGain();
-	input.connect(rnnoise);
-    audio_context.resume();
-    __log('Media stream created.');
-
-    rnnoise.connect(gainNode);
-    gainNode.connect(audio_context.destination);
-	updateNoise(rnnoise);
-    __log('Input connected to audio context destination.');
-
-    recorder = new Recorder(rnnoise);
-    __log('Recorder initialised.');
-    __log("Voice: 0.5 - Noise: 0.5");
-}
-
 function updateNoise(rnnoise){
 	try{
         (function a() {
