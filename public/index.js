@@ -50,6 +50,10 @@ function audioConnect(){
     __log("Voice: 0.5 - Noise: 0.5");
 }
 
+function audioPlay(name){
+    gtag('event', 'marker_click', {'event_category': 'marker_' + 'name', 'event_label': 'marker_'+ 'name', 'non_interaction': true});
+    updateNoise(rnnoise);
+}
 // function startUserMedia(stream) {
 //     var input = audio_context.createMediaElementSource(stream);
 //     rnnoise = new RNNoiseNode(audio_context);
