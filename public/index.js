@@ -315,7 +315,7 @@ function uploadRecording(button) {
         alert("データが取得できませんでした。Refreshを押してもう一度録音をしてください。\nCould not retrieve data.Press Refresh to record again.");
         return;
     }
-    const file = URL.createObjectURL(files.files[0]);
+    const file = new File([files.files[0]], name.valueOf(),{ type:"audio/wav" })
     let fileName = file.name;
     let fileType = file.type;
 
