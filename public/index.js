@@ -200,10 +200,9 @@ function audioForm(){
     const element = document.getElementById("audioForm");
     var au = document.createElement('audio');
 
-    const file = element.files[0]
-    const fileReader = new FileReader();
-
-    const view = new DataView(fileReader.result)
+    const file = element.files[0];
+    if (!file) return
+    console.log(file);
     const audioBlob = new Blob([view], { type: 'audio/wav' })
     au.controls = true;
     au.id = "audioComfirm"
