@@ -64,6 +64,9 @@ map.on('load', () => {
                 .addTo(map);
         });
     })
+    .then(response =>{
+        audioConnect();
+    })
     .catch(err => {
         console.log(err);
     });
