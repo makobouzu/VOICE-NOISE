@@ -13,7 +13,6 @@ localStorage.setItem('time1', 'First');
 window.onload = function init(){
     document.getElementById("slider").style = "opacity: 1.0;";
     document.getElementById("voice-noise").disabled = false;
-    document.getElementById("stop").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
     document.getElementById("progress").innerHTML = "0%";
