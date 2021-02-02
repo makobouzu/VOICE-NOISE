@@ -31,12 +31,11 @@ window.onload = function init(){
     } catch (e) {
         alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
     }
-    var audio = document.getElementById('marker_audio');
-    startUserMedia(audio);
 }
 
-function startUserMedia(stream) {
-    var input = audio_context.createMediaElementSource(stream);
+function audioConnect(){
+    var audio = document.getElementById('marker_audio');
+    var input = audio_context.createMediaElementSource(audio);
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     gainNode.gain.value = 1;
@@ -50,6 +49,22 @@ function startUserMedia(stream) {
     __log('Input connected to audio context destination.');
     __log("Voice: 0.5 - Noise: 0.5");
 }
+
+// function startUserMedia(stream) {
+//     var input = audio_context.createMediaElementSource(stream);
+//     rnnoise = new RNNoiseNode(audio_context);
+//     gainNode = audio_context.createGain();
+//     gainNode.gain.value = 1;
+// 	input.connect(rnnoise);
+//     audio_context.resume();
+//     __log('Media stream created.');
+
+//     rnnoise.connect(gainNode);
+//     gainNode.connect(audio_context.destination);
+// 	updateNoise(rnnoise);
+//     __log('Input connected to audio context destination.');
+//     __log("Voice: 0.5 - Noise: 0.5");
+// }
 
 // function inputSound(button) {
 //     gtag('event', 'mic_click', {
