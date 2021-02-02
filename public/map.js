@@ -68,6 +68,13 @@ map.on('load', () => {
         console.log(err);
     });
 
+    document.querySelector('.mapboxgl-marker').addEventListener('click', () =>{
+        if(num == 0){
+            audioConnect();
+        }
+        num += 1;
+    });
+
     document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
         gtag('event', 'geocoder_click', {
             'event_label': 'geocoder_on',

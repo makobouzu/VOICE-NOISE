@@ -5,8 +5,7 @@ function __log(e, data) {
 var audio_context;
 var rnnoise;
 var gainNode;
-var recNum = 0;
-var volNum = 0;
+var num = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 localStorage.setItem('time1', 'First');
@@ -34,12 +33,10 @@ window.onload = function init(){
     }
 }
 
-document.querySelector('audio').addEventListener('loadedmetadata', () => audioConnect());
-
-function audioConnect(audio){
+function audioConnect(){
     console.log("audioConnect!!")
     var audioSamples = document.querySelector('audio');
-    var input = audio_context.createMediaElementSource(audio);
+    var input = audio_context.createMediaElementSource(audioSamples);
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     gainNode.gain.value = 1;
