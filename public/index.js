@@ -36,7 +36,7 @@ window.onload = function init(){
 
 function audioConnect(){
     console.log("audioConnect!!")
-    var audio = document.getElementById('marker_audio');
+    var audio = document.querySelector('audio');
     var input = audio_context.createMediaElementSource(audio);
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
