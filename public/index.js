@@ -194,15 +194,13 @@ window.onload = function init(){
 //     __log('Stopped recording.');
 //     recNum = 1;
 // }
-const input = document.querySelector("audioform");
-input.addEventListener('change', audioForm);
+function audioForm(){
+    var audio = document.createElement('audio');
 
-function audioForm(e){
-    var au = document.createElement('audio');
-
-    const file = e.files[0];
-    if (!file) return
+    const file = ducumentGetElementById("audioform").value;
     console.log(file);
+    audio.src = file;
+    audio_comfirm.appendChild(audio);
     // const audioBlob = new Blob([view], { type: 'audio/wav' })
     // au.controls = true;
     // au.id = "audioComfirm"
