@@ -5,6 +5,7 @@ function __log(e, data) {
 var audio_context;
 var rnnoise;
 var gainNode;
+var num = 0;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 localStorage.setItem('time1', 'First');
@@ -33,20 +34,23 @@ window.onload = function init(){
 }
 
 function audioConnect(){
-    console.log("audioConnect!!")
-    var audioSamples = document.querySelector('audio');
-    var input = audio_context.createMediaElementSource(audioSamples);
-    rnnoise = new RNNoiseNode(audio_context);
-    gainNode = audio_context.createGain();
-    gainNode.gain.value = 1;
-	input.connect(rnnoise);
-    audio_context.resume();
-    __log('Media stream created.');
+    if(num === 0){
+        console.log("audioConnect!!")
+        var audioSamples = document.querySelector('audio');
+        var input = audio_context.createMediaElementSource(audioSamples);
+        rnnoise = new RNNoiseNode(audio_context);
+        gainNode = audio_context.createGain();
+        gainNode.gain.value = 1;
+	    input.connect(rnnoise);
+        audio_context.resume();
+        __log('Media stream created.');
 
-    rnnoise.connect(gainNode);
-    gainNode.connect(audio_context.destination);
+        rnnoise.connect(gainNode);
+        gainNode.connect(audio_context.destination);
+        __log('Input connected to audio context destination.');
+    }
+    num += 1;
 	updateNoise(rnnoise);
-    __log('Input connected to audio context destination.');
     __log("Voice: 0.5 - Noise: 0.5");
 }
 
