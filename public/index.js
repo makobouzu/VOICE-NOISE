@@ -40,7 +40,6 @@ function audioConnect(){
         var input = audio_context.createMediaElementSource(audioSamples);
         rnnoise = new RNNoiseNode(audio_context);
         gainNode = audio_context.createGain();
-        gainNode.gain.value = 1;
 	    input.connect(rnnoise);
         audio_context.resume();
         __log('Media stream created.');
@@ -51,7 +50,7 @@ function audioConnect(){
         updateNoise(rnnoise);
         __log("Voice: 0.5 - Noise: 0.5");
     }
-    num += 1;
+    num = 1;
 }
 // function startUserMedia(stream) {
 //     var input = audio_context.createMediaElementSource(stream);
