@@ -194,25 +194,21 @@ window.onload = function init(){
 //     __log('Stopped recording.');
 //     recNum = 1;
 // }
-document.getElementById("audioform").addEventListener('change', () => audioForm());
+document.getElementById("audioform").addEventListener('change', audioForm());
 
 function audioForm(){
-    const element = document.getElementById("audioForm")
+    const element = document.getElementById("audioForm");
     var au = document.createElement('audio');
 
     const file = element.files[0]
-    const fileReader = new FileReader()
+    const fileReader = new FileReader();
 
-    fileReader.onload = () => {
-        const view = new DataView(fileReader.result)
-        const audioBlob = new Blob([view], { type: 'audio/wav' })
-        const myURL = window.URL || window.webkitURL
-        au.controls = true;
-        au.id = "audioComfirm"
-        au.src = myURL.createObjectURL(audioBlob)
-        audio_comfirm.appendChild(au);
-    }
-  
+    const view = new DataView(fileReader.result)
+    const audioBlob = new Blob([view], { type: 'audio/wav' })
+    au.controls = true;
+    au.id = "audioComfirm"
+    au.src = URL.createObjectURL(audioBlob);
+    audio_comfirm.appendChild(au);
     fileReader.readAsArrayBuffer(file);
 }
 
