@@ -197,8 +197,7 @@ window.onload = function init(){
 function audioForm(){
     var audio = document.createElement('audio');
 
-    const file = document.getElementById("audioform").value;
-    console.log(file);
+    const file = URL.createObjectURL(this.files[0]);
     audio.src = file;
     audio_comfirm.appendChild(audio);
     // const audioBlob = new Blob([view], { type: 'audio/wav' })
