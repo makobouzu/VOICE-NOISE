@@ -197,10 +197,13 @@ window.onload = function init(){
 function audioForm(){
     var files = document.getElementById("audioform");
     var audio = document.createElement('audio');
+    var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
+    audio.controls = true;
     audio.src = file;
-    audio_comfirm.appendChild(audio);
+    audio.id = "sample"
+    audioComfirm.appendChild(audio);
     // const audioBlob = new Blob([view], { type: 'audio/wav' })
     // au.controls = true;
     // au.id = "audioComfirm"
