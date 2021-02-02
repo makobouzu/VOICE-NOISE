@@ -194,21 +194,21 @@ window.onload = function init(){
 //     __log('Stopped recording.');
 //     recNum = 1;
 // }
-document.getElementById("audioform").addEventListener('change', audioForm());
+const input = document.querySelector("audioform");
+input.addEventListener('change', audioForm);
 
-function audioForm(){
-    const element = document.getElementById("audioForm");
+function audioForm(e){
     var au = document.createElement('audio');
 
-    const file = element.files[0];
+    const file = e.files[0];
     if (!file) return
     console.log(file);
-    const audioBlob = new Blob([view], { type: 'audio/wav' })
-    au.controls = true;
-    au.id = "audioComfirm"
-    au.src = URL.createObjectURL(audioBlob);
-    audio_comfirm.appendChild(au);
-    fileReader.readAsArrayBuffer(file);
+    // const audioBlob = new Blob([view], { type: 'audio/wav' })
+    // au.controls = true;
+    // au.id = "audioComfirm"
+    // au.src = URL.createObjectURL(audioBlob);
+    // audio_comfirm.appendChild(au);
+    // fileReader.readAsArrayBuffer(file);
 }
 
 function uploadRec() {
