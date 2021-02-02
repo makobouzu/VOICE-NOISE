@@ -51,8 +51,10 @@ function audioConnect(){
     __log('Input connected to audio context destination.');
     __log("Voice: 0.5 - Noise: 0.5");
 }
-updateNoise(rnnoise);
 
+function audioPlay(){
+    updateNoise(rnnoise);
+}
 // function startUserMedia(stream) {
 //     var input = audio_context.createMediaElementSource(stream);
 //     rnnoise = new RNNoiseNode(audio_context);
