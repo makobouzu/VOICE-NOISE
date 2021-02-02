@@ -36,7 +36,7 @@ window.onload = function init(){
 }
 
 function startUserMedia(stream) {
-    var input = audio_context.createMediaStreamSource(stream);
+    var input = audio_context.createMediaElementSource(stream);
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     gainNode.gain.value = 1;
