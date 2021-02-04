@@ -50,7 +50,7 @@ window.onload = function init(){
 
 }
 
-function finishedLoading(bufferList) {
+async function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     for (let i = 0; i < bufferList.length; ++i) {
