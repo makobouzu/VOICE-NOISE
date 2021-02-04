@@ -84,10 +84,10 @@ function plays(){
     var button = document.getElementById("play");
     updateNoise(rnnoise);
     if(button.innerText === "PLAY"){
-        sources[0].start(0);
+        sources[0].start();
         button.innerText = "PAUSE";
     }else if(button.innerText = "PAUSE"){
-        sources[0].stop(0);
+        sources[0].stop();
         updateList();
         button.innerText = "PLAY";
     }
