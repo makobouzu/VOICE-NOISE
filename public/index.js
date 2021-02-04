@@ -40,17 +40,17 @@ function audioConnect(){
         var input = audio_context.createMediaElementSource(audioSamples);
         rnnoise = new RNNoiseNode(audio_context);
         gainNode = audio_context.createGain();
-	    
-        __log('Input connected to audio context destination.');
-        __log("Voice: 0.5 - Noise: 0.5");
-    }
-    input.connect(rnnoise);
-    audio_context.resume();
-    __log('Media stream created.');
+	    input.connect(rnnoise);
+        audio_context.resume();
+        __log('Media stream created.');
 
-    rnnoise.connect(gainNode);
-    gainNode.connect(audio_context.destination);
-    updateNoise(rnnoise);
+        rnnoise.connect(gainNode);
+        gainNode.connect(audio_context.destination);
+        __log('Input connected to audio context destination.');
+        updateNoise(rnnoise);
+        __log("Voice: 0.5 - Noise: 0.5");
+        console.log(gainNode.gain.volume);
+    }
     num = 1;
 }
 // function startUserMedia(stream) {
