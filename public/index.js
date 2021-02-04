@@ -33,29 +33,100 @@ window.onload = function init(){
     } catch (e) {
         alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
     }
+
+    axios.get('/sound')
+    .then(response => {
+        const sounds = response.data;
+        sounds.map(s => {
+            buffer.push(`${s.path}`);
+        });
+        bufferLoader = new BufferLoader(audio_context, buffer,finishedLoading);
+        bufferLoader.load();
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
 }
 
-
-function audioConnect(){
-    if(num === 0){
-        console.log("audioConnect!!")
-        var audioSamples = document.querySelector('audio');
-        var input = audio_context.createMediaElementSource(audioSamples);
-        rnnoise = new RNNoiseNode(audio_context);
-        gainNode = audio_context.createGain();
-        __log('Media stream created.');
-
-        input.connect(rnnoise);
+function finishedLoading(bufferList) {
+    rnnoise = new RNNoiseNode(audio_context);
+    gainNode = audio_context.createGain();
+    bufferList.forEach(function(item, index, array) {
+        var source = audio_context.createBufferSource();
+        source.buffer = bufferList[item];
+        source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
-        __log('Input connected to audio context destination.');
-        audio_context.resume();
-        updateNoise(rnnoise);
-        __log("Voice: 0.5 - Noise: 0.5");
-    }
-    num = 1;
+      });
 }
 
+function BufferLoader(context, urlList, callback) {
+    this.context = context;
+    this.urlList = urlList;
+    this.onload = callback;
+    this.bufferList = new Array();
+    this.loadCount = 0;
+  }
+  
+  BufferLoader.prototype.loadBuffer = function(url, index) {
+    // Load buffer asynchronously
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.responseType = "arraybuffer";
+  
+    var loader = this;
+  
+    request.onload = function() {
+      // Asynchronously decode the audio file data in request.response
+      loader.context.decodeAudioData(
+        request.response,
+        function(buffer) {
+          if (!buffer) {
+            alert('error decoding file data: ' + url);
+            return;
+          }
+          loader.bufferList[index] = buffer;
+          if (++loader.loadCount == loader.urlList.length)
+            loader.onload(loader.bufferList);
+        },
+        function(error) {
+          console.error('decodeAudioData error', error);
+        }
+      );
+    }
+  
+    request.onerror = function() {
+      alert('BufferLoader: XHR error');
+    }
+  
+    request.send();
+  }
+  
+  BufferLoader.prototype.load = function() {
+    for (var i = 0; i < this.urlList.length; ++i)
+    this.loadBuffer(this.urlList[i], i);
+  }
+
+// function audioConnect(){
+//     if(num === 0){
+//         console.log("audioConnect!!")
+//         var audioSamples = document.querySelector('audio');
+//         var input = audio_context.createMediaElementSource(audioSamples);
+//         rnnoise = new RNNoiseNode(audio_context);
+//         gainNode = audio_context.createGain();
+//         __log('Media stream created.');
+
+//         input.connect(rnnoise);
+//         rnnoise.connect(gainNode);
+//         gainNode.connect(audio_context.destination);
+//         __log('Input connected to audio context destination.');
+//         audio_context.resume();
+//         updateNoise(rnnoise);
+//         __log("Voice: 0.5 - Noise: 0.5");
+//     }
+//     num = 1;
+// }
 // function startUserMedia(stream) {
 //     var input = audio_context.createMediaElementSource(stream);
 //     rnnoise = new RNNoiseNode(audio_context);
