@@ -65,7 +65,6 @@ async function finishedLoading(bufferList) {
 }
 
 function updateList(bufferList, sources){
-    bufferList = [];
     sources = [];
     for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
@@ -88,7 +87,7 @@ function plays(){
         button.innerText = "PAUSE";
     }else{
         sources[0].stop();
-        updateList(bufferList, sources);
+        updateList(buffer, sources);
         button.innerText = "PLAY";
     }
 }
