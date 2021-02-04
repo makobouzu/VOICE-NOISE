@@ -40,33 +40,48 @@ window.onload = function init(){
         sounds.map(s => {
             buffer.push(`${s.path}`);
         });
+        bufferLoader = new BufferLoader(audio_context, buffer,finishedLoading);
+        bufferLoader.load();
     })
     .catch(err => {
         console.log(err);
     });
-    console.log(buffer);
 
 }
 
-function audioConnect(){
-    if(num === 0){
-        console.log("audioConnect!!")
-        var audioSamples = document.querySelector('audio');
-        var input = audio_context.createMediaElementSource(audioSamples);
-        rnnoise = new RNNoiseNode(audio_context);
-        gainNode = audio_context.createGain();
-        __log('Media stream created.');
-
-        input.connect(rnnoise);
+function finishedLoading(bufferList) {
+    rnnoise = new RNNoiseNode(audio_context);
+    gainNode = audio_context.createGain();
+    bufferList.forEach(function(item, index, array) {
+        var source = context.createBufferSource();
+        source.buffer = bufferList[item];
+        source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
-        __log('Input connected to audio context destination.');
-        audio_context.resume();
-        updateNoise(rnnoise);
-        __log("Voice: 0.5 - Noise: 0.5");
-    }
-    num = 1;
+        console.log(item, index)
+        source.start(0);
+      });
 }
+
+// function audioConnect(){
+//     if(num === 0){
+//         console.log("audioConnect!!")
+//         var audioSamples = document.querySelector('audio');
+//         var input = audio_context.createMediaElementSource(audioSamples);
+//         rnnoise = new RNNoiseNode(audio_context);
+//         gainNode = audio_context.createGain();
+//         __log('Media stream created.');
+
+//         input.connect(rnnoise);
+//         rnnoise.connect(gainNode);
+//         gainNode.connect(audio_context.destination);
+//         __log('Input connected to audio context destination.');
+//         audio_context.resume();
+//         updateNoise(rnnoise);
+//         __log("Voice: 0.5 - Noise: 0.5");
+//     }
+//     num = 1;
+// }
 // function startUserMedia(stream) {
 //     var input = audio_context.createMediaElementSource(stream);
 //     rnnoise = new RNNoiseNode(audio_context);
