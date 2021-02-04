@@ -70,6 +70,12 @@ async function finishedLoading(bufferList) {
     updateNoise(rnnoise);
 }
 
+document.getElementById("audios").addEventListener('play', () => auplay());
+function auplay(){
+    audio_context.resume();
+    audioElement.play();
+}
+
 function updateList(bufferList, sources, num){
     var source = audio_context.createBufferSource();
     source.buffer = bufferList[num];
