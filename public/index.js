@@ -120,7 +120,7 @@ function play2(){
             console.log("onended!!");
         };
         button.innerText = "PLAY";
-        num2 = 0;
+        num2 = 2;
     }else if(num2 === 2){
         audio_context.resume();
         button.innerText = "PAUSE";
