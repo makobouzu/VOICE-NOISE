@@ -50,6 +50,7 @@ function audioConnect(){
         updateNoise(rnnoise);
         __log("Voice: 0.5 - Noise: 0.5");
     }
+    input.start();
     num = 1;
 }
 // function startUserMedia(stream) {
