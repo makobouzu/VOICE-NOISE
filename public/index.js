@@ -40,14 +40,28 @@ function audioConnect(){
         var input = audio_context.createMediaElementSource(audioSamples);
         rnnoise = new RNNoiseNode(audio_context);
         gainNode = audio_context.createGain();
-	    input.connect(rnnoise);
+	    input.connect(gainNode);
         audio_context.resume();
         __log('Media stream created.');
 
-        rnnoise.connect(gainNode);
+        var CurY;
+var HEIGHT = window.innerHeight;
+
+// マウスが動いたら新しいY座標を取得し、
+// ゲインの値を設定する
+document.onmousemove = updatePage;
+
+function updatePage(e) {
+    CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+
+    gainNode.gain.value = CurY/HEIGHT;
+}
+
+
+        // rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
         __log('Input connected to audio context destination.');
-        updateNoise(rnnoise);
+        // updateNoise(rnnoise);
         __log("Voice: 0.5 - Noise: 0.5");
         console.log(gainNode.gain.volume);
     }
