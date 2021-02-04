@@ -4,6 +4,7 @@ function __log(e, data) {
 
 var bufferLoader;
 var buffer = [];
+var sources = [];
 var audio_context;
 var rnnoise;
 var gainNode;
@@ -58,7 +59,14 @@ function finishedLoading(bufferList) {
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
+        sources.push(source);
+        console.log(sources);
       });
+}
+
+document.getElementById("play").addEventListener('click', () => play());
+function play(){
+    sources[0].start(0);
 }
 
 function BufferLoader(context, urlList, callback) {
