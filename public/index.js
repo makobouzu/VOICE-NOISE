@@ -83,8 +83,8 @@ function plays(){
     console.log("play!!!");
     var button = document.getElementById("play");
     if(num === 0){
-        sources[0].start();
         audio_context.resume();
+        sources[0].start();
         button.innerText = "PAUSE";
         num = 1;
     }else if(num === 1){
@@ -104,8 +104,8 @@ function play2(){
     console.log("play!!!");
     var button = document.getElementById("play2");
     if(num2 === 0){
-        sources[1].start();
         audio_context.resume();
+        sources[1].start();
         button.innerText = "PAUSE";
         num2 = 1;
     }else if(num2 === 1){
