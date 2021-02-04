@@ -64,15 +64,23 @@ function finishedLoading(bufferList) {
       });
 }
 
+document.getElementById("play").addEventListener('click', () => plays());
+function plays(){
+    sources.forEach(function(item, index, array) {
+        updateNoise(rnnoise);
+        item.start(0);
+    }
+}
+
 function BufferLoader(context, urlList, callback) {
     this.context = context;
     this.urlList = urlList;
     this.onload = callback;
     this.bufferList = new Array();
     this.loadCount = 0;
-  }
+}
   
-  BufferLoader.prototype.loadBuffer = function(url, index) {
+BufferLoader.prototype.loadBuffer = function(url, index) {
     // Load buffer asynchronously
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
@@ -104,12 +112,12 @@ function BufferLoader(context, urlList, callback) {
     }
   
     request.send();
-  }
+}
   
-  BufferLoader.prototype.load = function() {
+BufferLoader.prototype.load = function() {
     for (var i = 0; i < this.urlList.length; ++i)
     this.loadBuffer(this.urlList[i], i);
-  }
+}
 
 // function audioConnect(){
 //     if(num === 0){
