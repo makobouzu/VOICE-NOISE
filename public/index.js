@@ -88,6 +88,8 @@ function plays(){
         button.innerText = "PAUSE";
         num = 1;
     }else if(num === 1){
+        console.log(buffer);
+        console.log(bufferLoader.bufferList);
         sources[0].stop();
         audio_context.suspend();
         sources[0].onended = function() {
