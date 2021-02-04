@@ -88,10 +88,7 @@ function plays(){
     }else if(num === 1){
         sources[0].stop(0);
         audio_context.suspend();
-        sources[0].onended = function() {
-            updateList(bufferLoader.bufferList, sources, 0);
-            console.log("onended!!");
-        };
+        updateList(bufferLoader.bufferList, sources, 0);
         button.innerText = "PLAY";
         num = 0;
     }
@@ -109,10 +106,7 @@ function play2(){
     }else if(num2 === 1){
         sources[1].stop(0);
         audio_context.suspend();
-        sources[1].onended = function() {
-            updateList(bufferLoader.bufferList, sources, 1);
-            console.log("onended!!");
-        };
+        updateList(bufferLoader.bufferList, sources, 1);
         button.innerText = "PLAY";
         num2 = 0;
     }
