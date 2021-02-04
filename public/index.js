@@ -64,6 +64,20 @@ function finishedLoading(bufferList) {
     }
 }
 
+function updateList(){
+    bufferList = [];
+    sources = [];
+    for (let i = 0; i < bufferList.length; ++i) {
+        var source = audio_context.createBufferSource();
+        source.buffer = bufferList[i];
+        source.connect(rnnoise);
+        rnnoise.connect(gainNode);
+        gainNode.connect(audio_context.destination);
+        sources.push(source);
+        console.log(sources);
+    }
+}
+
 document.getElementById("play").addEventListener('click', () => plays());
 function plays(){
     console.log("play!!!");
@@ -74,10 +88,9 @@ function plays(){
         button.innerText = "PAUSE";
     }else if(button.innerText = "PAUSE"){
         sources[0].stop(0);
+        console.log(sources);
         button.innerText = "PLAY";
-        bufferList = [];
-        sources = [];
-        finishedLoading(bufferList);
+        updateList();
     }
 }
 
