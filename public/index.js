@@ -77,19 +77,21 @@ function updateList(bufferList, sources){
     }
 }
 
+var num = 0;
 document.getElementById("play").addEventListener('click', () => plays());
 function plays(){
     console.log("play!!!");
     var button = document.getElementById("play");
     updateNoise(rnnoise);
-    if(button.innerText === "PLAY"){
+    if(num === 0){
         sources[0].start();
         button.innerText = "PAUSE";
-    }else{
+        num = 1;
+    }else if(num === 1){
         sources[0].stop();
-        bufferLoader.load();
-        updateList(buffer, sources);f
+        updateList(buffer, sources);
         button.innerText = "PLAY";
+        num = 0;
     }
 }
 
