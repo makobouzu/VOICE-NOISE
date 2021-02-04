@@ -62,6 +62,7 @@ async function finishedLoading(bufferList) {
         sources.push(source);
         console.log(sources);
     }
+    updateNoise(rnnoise);
 }
 
 function updateList(bufferList, sources){
@@ -82,13 +83,13 @@ document.getElementById("play").addEventListener('click', () => plays());
 function plays(){
     console.log("play!!!");
     var button = document.getElementById("play");
-    updateNoise(rnnoise);
     if(num === 0){
-        sources[0].start();
+        audio_context.resume();
         button.innerText = "PAUSE";
         num = 1;
     }else if(num === 1){
-        sources[0].stop();
+        audio_context.suspend();
+        // sources[0].stop();
         sources[0].onended = function() {
             console.log("onended!!");
         };
