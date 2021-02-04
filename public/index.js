@@ -38,14 +38,14 @@ window.onload = function init(){
     .then(response => {
         const sounds = response.data;
         sounds.map(s => {
-            buffer.push(s.path);
+            buffer.push(`${s.path}`);
         });
+        console.log(buffer);
     })
     .catch(err => {
         console.log(err);
     });
 
-    console.log(buffer);
 }
 
 function audioConnect(){
