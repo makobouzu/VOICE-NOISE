@@ -40,11 +40,11 @@ window.onload = function init(){
         sounds.map(s => {
             buffer.push(`${s.path}`);
         });
-        console.log(buffer);
     })
     .catch(err => {
         console.log(err);
     });
+    console.log(buffer);
 
 }
 
