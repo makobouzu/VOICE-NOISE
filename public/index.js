@@ -104,7 +104,7 @@ var num2 = 0;
 document.getElementById("play2").addEventListener('click', () => play2());
 function play2(){
     console.log("play!!!");
-    var button = document.getElementById("play");
+    var button = document.getElementById("play2");
     if(num2 === 0){
         sources[1].start();
         audio_context.resume();
