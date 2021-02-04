@@ -64,13 +64,11 @@ async function finishedLoading(bufferList) {
     updateNoise(rnnoise);
 }
 
-function updateList(bufferLoader, sources){
+function updateList(bufferList, sources){
     sources = [];
-    bufferLoader.bufferList = [];
-    bufferLoader.load();
-    for (let i = 0; i < bufferLoader.bufferList.length; ++i) {
+    for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
-        source.buffer = bufferLoader.bufferList[i];
+        source.buffer = bufferList[i];
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
@@ -85,14 +83,14 @@ function plays(){
     console.log("play!!!");
     var button = document.getElementById("play");
     if(num === 0){
-        audio_context.resume();
         sources[0].start();
+        audio_context.resume();
         button.innerText = "PAUSE";
         num = 1;
     }else if(num === 1){
         sources[0].stop(audio_context.currentTime);
         audio_context.suspend();
-        updateList(bufferLoader, sources);
+        updateList(bufferLoader.bufferList, sources);
         sources[0].onended = function() {
             console.log("onended!!");
         };
@@ -106,8 +104,8 @@ function play2(){
     console.log("play!!!");
     var button = document.getElementById("play2");
     if(num2 === 0){
-        audio_context.resume();
         sources[1].start();
+        audio_context.resume();
         button.innerText = "PAUSE";
         num2 = 1;
     }else if(num2 === 1){
