@@ -76,6 +76,7 @@ function plays(){
         sources[0].stop(0);
         button.innerText = "PLAY";
         bufferList = [];
+        sources = [];
         finishedLoading(bufferList);
     }
 }
