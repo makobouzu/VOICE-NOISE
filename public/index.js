@@ -69,7 +69,7 @@ function plays(){
     sources.forEach(function(item, index, array) {
         updateNoise(rnnoise);
         item.start(0);
-    }
+    });
 }
 
 function BufferLoader(context, urlList, callback) {
