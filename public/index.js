@@ -41,7 +41,7 @@ window.onload = function init(){
         sounds.map(s => {
             buffer.push(`${s.path}`);
         });
-        bufferLoader = new BufferLoader(audio_context, buffer,finishedLoading);
+        bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
         bufferLoader.load();
     })
     .catch(err => {
@@ -86,7 +86,7 @@ function plays(){
         sources[0].start();
         button.innerText = "PAUSE";
     }else{
-        sources[0].stop();
+        sources[0].pause();
         updateList(buffer, sources);
         button.innerText = "PLAY";
     }
