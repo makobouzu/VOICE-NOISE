@@ -2,6 +2,8 @@ function __log(e, data) {
     console.log(e + " " + (data || ''));
 }
 
+var bufferLoader;
+var buffer = [];
 var audio_context;
 var rnnoise;
 var gainNode;
@@ -31,6 +33,19 @@ window.onload = function init(){
     } catch (e) {
         alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
     }
+
+    axios.get('/sound')
+    .then(response => {
+        const sounds = response.data;
+        sounds.map(s => {
+            buffer.push(s.path);
+        });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+    console.log(buffer);
 }
 
 function audioConnect(){
