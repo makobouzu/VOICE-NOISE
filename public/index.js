@@ -53,23 +53,24 @@ window.onload = function init(){
 function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
-    bufferList.forEach(function(item, index, array) {
+    // bufferList.forEach(function(item, index, array) {
         var source = audio_context.createBufferSource();
-        source.buffer = bufferList[item];
+        source.buffer = bufferList[0];
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
-      });
+    //   });
 }
 
 document.getElementById("play").addEventListener('click', () => plays());
 function plays(){
-    sources.forEach(function(item, index, array) {
+    console.log("play!!!");
+    // sources.forEach(function(item, index, array) {
         updateNoise(rnnoise);
-        item.start(0);
-    });
+        sources[0].start(0);
+    // });
 }
 
 function BufferLoader(context, urlList, callback) {
