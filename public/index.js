@@ -53,7 +53,7 @@ function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
     bufferList.forEach(function(item, index, array) {
-        var source = context.createBufferSource();
+        var source = audio_context.createBufferSource();
         source.buffer = bufferList[item];
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
