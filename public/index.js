@@ -61,6 +61,12 @@ async function finishedLoading(bufferList) {
         sources.push(source);
         console.log(sources);
     }
+    var au = document.getElementById("audios");
+    au.src = urlList[0];
+    const track = audioContext.createMediaElementSource(au);
+    track.connect(rnnoise);
+    rnnoise.connect(gainNode);
+    gainNode.connect(audio_context.destination);
     updateNoise(rnnoise);
 }
 
@@ -88,8 +94,8 @@ function plays(){
     }else if(num === 1){
         sources[0].stop(0);
         audio_context.suspend();
-        updateList(bufferLoader.bufferList, sources, 0);
         sources[0].onended = function() {
+            updateList(bufferLoader.bufferList, sources, 0);
             console.log("onended!!");
         };
         button.innerText = "PLAY";
@@ -109,8 +115,8 @@ function play2(){
     }else if(num2 === 1){
         sources[1].stop(0);
         audio_context.suspend();
-        updateList(bufferLoader.bufferList, sources, 1);
         sources[1].onended = function() {
+            updateList(bufferLoader.bufferList, sources, 1);
             console.log("onended!!");
         };
         button.innerText = "PLAY";
