@@ -86,7 +86,7 @@ function plays(){
     if(button.innerText === "PLAY"){
         sources[0].start();
         button.innerText = "PAUSE";
-    }else if(button.innerText === "PAUSE"){
+    }else{
         sources[0].stop();
         updateList(bufferList, sources);
         button.innerText = "PLAY";
