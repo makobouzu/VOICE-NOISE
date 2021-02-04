@@ -62,6 +62,7 @@ async function finishedLoading(bufferList) {
         sources.push(source);
         console.log(sources);
     }
+    sources[0].start();
     updateNoise(rnnoise);
 }
 
