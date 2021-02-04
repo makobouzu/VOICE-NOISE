@@ -43,7 +43,6 @@ window.onload = function init(){
         });
         bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
         bufferLoader.load();
-        au.src = bufferLoader.urlList[0];
     })
     .catch(err => {
         console.log(err);
