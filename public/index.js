@@ -61,6 +61,7 @@ function finishedLoading(bufferList) {
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
+        source.start(0);
       });
 }
 
