@@ -89,9 +89,9 @@ function plays(){
         num = 1;
     }else if(num === 1){
         sources[0].stop();
-        sources[0].disconnect();
-        bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
-        bufferLoader.load();
+        sources[0].onended = function() {
+            console.log("onended!!");
+        };
         button.innerText = "PLAY";
         num = 0;
     }
