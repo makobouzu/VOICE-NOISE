@@ -72,7 +72,7 @@ async function finishedLoading(bufferList) {
 document.getElementById("audios").addEventListener('play', () => auplay());
 function auplay(){
     audio_context.resume();
-    audioElement.play();
+    au.play();
 }
 
 function updateList(bufferList, sources, num){
