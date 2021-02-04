@@ -63,6 +63,7 @@ async function finishedLoading(bufferList) {
         console.log(sources);
     }
     const track = audio_context.createMediaElementSource(au);
+    console.log(track)
     track.connect(rnnoise);
     rnnoise.connect(gainNode);
     gainNode.connect(audio_context.destination);
