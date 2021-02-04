@@ -78,7 +78,6 @@ function plays(){
     }else if(button.innerText = "PAUSE"){
         sources[0].stop(0);
         button.innerText = "PLAY";
-        finishedLoading(bufferList);
     }
 }
 
