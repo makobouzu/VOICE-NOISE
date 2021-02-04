@@ -53,6 +53,9 @@ window.onload = function init(){
 function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
+    if(bufferList.length){
+        bufferList = [];
+    }
     for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
         source.buffer = bufferList[i];
@@ -75,6 +78,7 @@ function plays(){
     }else if(button.innerText = "PAUSE"){
         sources[0].stop(0);
         button.innerText = "PLAY";
+        finishedLoading(bufferList);
     }
 }
 
