@@ -61,8 +61,8 @@ async function finishedLoading(bufferList) {
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
+        source.start();
     }
-    sources[0].start();
     updateNoise(rnnoise);
 }
 
@@ -90,7 +90,6 @@ function plays(){
         num = 1;
     }else if(num === 1){
         audio_context.suspend();
-        // sources[0].stop();
         sources[0].onended = function() {
             console.log("onended!!");
         };
