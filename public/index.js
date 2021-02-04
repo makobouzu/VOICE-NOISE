@@ -89,7 +89,9 @@ function plays(){
         num = 1;
     }else if(num === 1){
         sources[0].stop();
-        updateList(buffer, sources);
+        bufferLoader = 0;
+        bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
+        bufferLoader.load();
         button.innerText = "PLAY";
         num = 0;
     }
