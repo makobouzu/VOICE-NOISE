@@ -8,6 +8,7 @@ var sources = [];
 var audio_context;
 var rnnoise;
 var gainNode;
+var au = document.getElementById("audios");
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 localStorage.setItem('time1', 'First');
@@ -42,6 +43,7 @@ window.onload = function init(){
         });
         bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
         bufferLoader.load();
+        au.src = bufferLoader.urlList[0];
     })
     .catch(err => {
         console.log(err);
@@ -61,8 +63,6 @@ async function finishedLoading(bufferList) {
         sources.push(source);
         console.log(sources);
     }
-    var au = document.getElementById("audios");
-    au.src = urlList[0];
     const track = audioContext.createMediaElementSource(au);
     track.connect(rnnoise);
     rnnoise.connect(gainNode);
