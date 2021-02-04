@@ -53,24 +53,29 @@ window.onload = function init(){
 function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
-    // bufferList.forEach(function(item, index, array) {
+    for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
-        source.buffer = bufferList[0];
+        source.buffer = bufferList[i];
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
-    //   });
+    }
 }
 
 document.getElementById("play").addEventListener('click', () => plays());
 function plays(){
     console.log("play!!!");
-    // sources.forEach(function(item, index, array) {
-        updateNoise(rnnoise);
+    var button = document.getElementById("play");
+    updateNoise(rnnoise);
+    if(button.innerText === "PLAY"){
         sources[0].start(0);
-    // });
+        button.innerText = "PAUSE";
+    }else if(button.innerText = "PAUSE"){
+        sources[0].stop(0);
+        button.innerText = "PLAY";
+    }
 }
 
 function BufferLoader(context, urlList, callback) {
