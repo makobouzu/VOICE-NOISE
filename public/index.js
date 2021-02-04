@@ -61,13 +61,7 @@ function finishedLoading(bufferList) {
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
-        source.start(0);
       });
-}
-
-document.getElementById("play").addEventListener('click', () => play());
-function play(){
-    sources[0].start(0);
 }
 
 function BufferLoader(context, urlList, callback) {
