@@ -31,31 +31,28 @@ window.onload = function init(){
         audio_context = new AudioContext({sampleRate: 48000});
         __log('Audio context set up.');
         RNNoiseNode.register(audio_context);
-
-        axios.get('/sound')
-        .then(response => {
-            const sounds = response.data;
-            sounds.map(s => {
-                buffer.push(`${s.path}`);
-            });
-            bufferLoader = new BufferLoader(audio_context, buffer,finishedLoading);
-            bufferLoader.load();
-        })
-        .catch(err => {
-            console.log(err);
-        });
     } catch (e) {
         alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
     }
+
+    axios.get('/sound')
+    .then(response => {
+        const sounds = response.data;
+        sounds.map(s => {
+            buffer.push(`${s.path}`);
+        });
+        bufferLoader = new BufferLoader(audio_context, buffer,finishedLoading);
+        bufferLoader.load();
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 }
 
 function finishedLoading(bufferList) {
     rnnoise = new RNNoiseNode(audio_context);
     gainNode = audio_context.createGain();
-    if(bufferList.length){
-        bufferList = [];
-    }
     for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
         source.buffer = bufferList[i];
@@ -78,6 +75,8 @@ function plays(){
     }else if(button.innerText = "PAUSE"){
         sources[0].stop(0);
         button.innerText = "PLAY";
+        bufferList = [];
+        finishedLoading(bufferList);
     }
 }
 
