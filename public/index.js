@@ -1,3 +1,5 @@
+const { startSession } = require("mongoose");
+
 function __log(e, data) {
     console.log(e + " " + (data || ''));
 }
@@ -61,7 +63,6 @@ async function finishedLoading(bufferList) {
         gainNode.connect(audio_context.destination);
         sources.push(source);
         console.log(sources);
-        source.start();
     }
     updateNoise(rnnoise);
 }
@@ -85,16 +86,38 @@ function plays(){
     console.log("play!!!");
     var button = document.getElementById("play");
     if(num === 0){
+        sources[0].start();
         audio_context.resume();
         button.innerText = "PAUSE";
         num = 1;
     }else if(num === 1){
+        sources[0].stop();
         audio_context.suspend();
         sources[0].onended = function() {
             console.log("onended!!");
         };
         button.innerText = "PLAY";
         num = 0;
+    }
+}
+var num2 = 0;
+document.getElementById("play2").addEventListener('click', () => play2());
+function play2(){
+    console.log("play!!!");
+    var button = document.getElementById("play");
+    if(num2 === 0){
+        sources[1].start();
+        audio_context.resume();
+        button.innerText = "PAUSE";
+        num2 = 1;
+    }else if(num2 === 1){
+        sources[1].stop();
+        audio_context.suspend();
+        sources[1].onended = function() {
+            console.log("onended!!");
+        };
+        button.innerText = "PLAY";
+        num2 = 0;
     }
 }
 
