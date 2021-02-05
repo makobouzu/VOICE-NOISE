@@ -68,15 +68,19 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
-                if(marker_play){
-                    sources[buffer_marker].stop(0);
-                    audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources, buffer_marker);
-                    document.getElementById("plus_marker").remove();
-                }
-                sources[marker_num].start();
-                audio_context.resume();
-                marker_play = true;
+                ({
+                    if(marker_play){
+                        sources[buffer_marker].stop(0);
+                        audio_context.suspend();
+                        updateList(bufferLoader.bufferList, sources, buffer_marker);
+                        document.getElementById("plus_marker").remove();
+                    }
+                })
+                .then(() => {
+                    sources[marker_num].start();
+                    audio_context.resume();
+                    marker_play = true;
+                });
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
