@@ -23,9 +23,8 @@
       }) => {
         if(this.alive){
           if(typeof a.voice != "undefined" && typeof a.noise != "undefined"){
-            console.log(a.voice);
+            b.updateState(this.state, a.voice, a.noise);
           }
-          // b.updateState(this.state, a[0], a[1]);
         }
       }
     }
