@@ -534,7 +534,7 @@ function updateNoise(rnnoise){
         document.getElementById("voice-noise").addEventListener("input", async () => {
             var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
             var voice = Math.round((1 - noise) * 10) / 10;
-			rnnoise.change(voice, noise);
+			rnnoise.change([voice, noise]);
             __log("Voice: "+ voice +" - Noise: " + noise);
             if(voice === 1.0){
                 gtag('event', 'voice_click', {

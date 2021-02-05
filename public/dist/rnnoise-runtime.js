@@ -36,9 +36,8 @@
       this.port.postMessage(a)
     }
 
-    change(m, n) {
-      this.port.postMessage(m);
-      this.port.postMessage(n);
+    change([m, n]) {
+      this.port.postMessage([m,n]);
     }
 
   } || (window.ScriptProcessorNode || (window.ScriptProcessorNode = window.webkitScriptProcessorNode)) && Object.assign(function (a) {
@@ -64,7 +63,7 @@
       }
     };
 
-    b.change = (m,n) =>{
+    b.change = ([m,n]) =>{
       if(f){
         c.updateState(d, m, n);
       }
