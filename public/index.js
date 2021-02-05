@@ -92,40 +92,17 @@ function audioForm(){
     var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
-    const fileFormat = String(file.name).split('.')[1];
+    const fileFormat = String(file.name);
     console.log(fileFormat);
     if(fileFormat != "wav" || fileFormat != "mp3"){
         alert("音声ファイル(wav/mp3)をアップロードしてください。\nUpload the audio file (wav/mp3).");
-        file.value = "";
+        files.value = "";
         return;
     }
     audio.controls = true;
     audio.src = file;
     audio.id = "sample"
     audioComfirm.appendChild(audio);
-}
-
-document.getElementById("download").addEventListener('click', () => download());
-function download(){
-    document.getElementById("download").disabled = true;
-    gtag('event', 'download_click', {
-        'event_label': 'download_on',
-        'event_category': 'download_on',
-        'non_interaction': true
-    });
-
-    var url = document.getElementById("sample").src;
-    var hf = document.createElement('a');
-    var name = document.getElementById("db_filename").value;
-    if(name === ""){
-        alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
-        document.getElementById("download").disabled = false;
-        return;
-    }
-    hf.href = url;
-    hf.download = name + '.wav';
-    hf.click();
-    document.getElementById("download").disabled = false;
 }
 
 function refresh(button){
