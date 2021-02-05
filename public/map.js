@@ -52,6 +52,7 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
+var buffer_marker;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -66,7 +67,7 @@ map.on('load', () => {
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
                 if(document.getElementById("plus_marker")){
-                    sources[marker_num].stop(0);
+                    sources[buffer_marker].stop(0);
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
@@ -81,9 +82,9 @@ map.on('load', () => {
                     updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
                 });
-
                 sources[marker_num].start();
                 audio_context.resume();
+                buffer_marker = marker_num;
             });
         });
     })
