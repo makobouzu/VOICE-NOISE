@@ -52,21 +52,27 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
+var marker;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
         const sounds = response.data;
         sounds.map(s => {
-            var marker = new mapboxgl.Marker({ "color": "#222529" })
+            marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
-                console.log(marker.getElement)
         });
+
+        console.log(marker);
     })
     .catch(err => {
         console.log(err);
+    });
+
+    document.querySelector('mapboxgl-marker').addEventListener('click', () =>{
+
     });
 
     document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
