@@ -59,6 +59,7 @@ map.on('load', () => {
     .then(response => {
         const sounds = response.data;
         var num = 0;
+        var plus_num = 0;
         sounds.map(s => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
@@ -67,8 +68,7 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
-                console.log(document.getElementById("plus_marker"));
-                if(document.getElementById("plus_marker")){
+                if(document.getElementById("plus_marker") !== null){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, marker_num);
