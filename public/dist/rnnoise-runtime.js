@@ -37,7 +37,10 @@
     }
 
     change([m, n]) {
-      this.port.postMessage([m,n]);
+      this.port.postMessage({
+        voice: m,
+        noise: n
+      });
     }
 
   } || (window.ScriptProcessorNode || (window.ScriptProcessorNode = window.webkitScriptProcessorNode)) && Object.assign(function (a) {
