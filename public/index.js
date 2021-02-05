@@ -55,6 +55,7 @@ async function finishedLoading(bufferList) {
     for (let i = 0; i < bufferList.length; ++i) {
         var source = audio_context.createBufferSource();
         source.buffer = bufferList[i];
+        source.loop = true;
         source.connect(rnnoise);
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);

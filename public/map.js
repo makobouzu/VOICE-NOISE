@@ -84,12 +84,6 @@ map.on('load', () => {
                 });
                 sources[marker_num].start();
                 audio_context.resume();
-                sources[marker_num].onended = function() { 
-                    console.log("onended")
-                    audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources, marker_num);
-                    plus.remove();
-                };
                 buffer_marker = marker_num;
             });
         });
