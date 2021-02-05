@@ -18,12 +18,10 @@
         }) : (this.alive = !1, b.deleteState(this.state)))
       }
 
-      this.port.onmessage = ({
-        data: a
-      }) => {
+      this.port.onmessage = (e) => {
         if(this.alive){
-          console.log(a);
-          console.log(a[0]);
+          console.log(e.data);
+          console.log(e);
           // b.updateState(this.state, a[0], a[1]);
         }
       }
