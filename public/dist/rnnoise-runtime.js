@@ -30,13 +30,6 @@
         this.dispatchEvent(b);
         if (this.onstatus) this.onstatus(b)
       }
-
-      this.port.onmessage = ({
-        data: l
-      }) =>{
-        console.log(l);
-        l[1].updateState(l[0], l[2], l[3]);
-      }
     }
 
     update(a) {
