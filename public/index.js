@@ -59,7 +59,6 @@ async function finishedLoading(bufferList) {
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
         sources.push(source);
-        console.log(sources);
     }
     updateNoise(rnnoise);
 }
@@ -93,7 +92,7 @@ function audioForm(){
     var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
-    console.log(file);
+    console.log(files);
     audio.controls = true;
     audio.src = file;
     audio.id = "sample"
