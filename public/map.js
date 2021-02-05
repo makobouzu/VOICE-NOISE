@@ -70,7 +70,8 @@ map.on('load', () => {
                 if(document.getElementById("plus_marker") !== null){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources);
+                    updateList(bufferLoader.bufferList, sources, buffer_marker);
+                    updateList(bufferLoader.bufferList, sources, marker_num);
                     document.getElementById("plus_marker").remove();
                 }
                 sources[marker_num].start();
@@ -82,7 +83,7 @@ map.on('load', () => {
                 plus.getElement().addEventListener('click', () => {
                     sources[marker_num].stop(0);
                     audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources);
+                    updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
                 });
                 buffer_marker = marker_num;
