@@ -159,6 +159,10 @@ BufferLoader.prototype.load = function() {
     this.loadBuffer(this.urlList[i], i);
 }
 
+function changeColor(){
+    console.log("marker clicked!!");
+}
+
 // function audioConnect(){
 //     if(num === 0){
 //         console.log("audioConnect!!")
