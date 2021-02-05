@@ -53,6 +53,7 @@ geoLocate.on('geoLocate', function(e) {
 });
 
 var buffer_marker;
+var plus;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -66,6 +67,7 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
+                console.log(document.getElementById("plus_marker"));
                 if(document.getElementById("plus_marker")){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
@@ -74,17 +76,17 @@ map.on('load', () => {
                 }
                 sources[marker_num].start();
                 audio_context.resume();
-                var plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
                 plus._element.id = "plus_marker";
-                plus.getElement().addEventListener('click', () => {
-                    sources[marker_num].stop(0);
-                    audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources, marker_num);
-                    plus.remove();
-                });
                 buffer_marker = marker_num;
+            });
+            plus.getElement().addEventListener('click', () => {
+                sources[marker_num].stop(0);
+                audio_context.suspend();
+                updateList(bufferLoader.bufferList, sources, marker_num);
+                plus.remove();
             });
         });
     })
