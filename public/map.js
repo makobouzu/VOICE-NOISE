@@ -52,7 +52,7 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
-var buffer_marker;
+var buffer_marker = 0;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -67,6 +67,7 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
+                console.log(buffer_marker);
                 // if(document.getElementById("plus_marker") !== null){
                 //     sources[buffer_marker].stop(0);
                 //     audio_context.suspend();
