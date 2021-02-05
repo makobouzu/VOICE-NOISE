@@ -52,24 +52,21 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
-var marker;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
         const sounds = response.data;
         var num = 0;
         sounds.map(s => {
-            var el = document.createElement('div');
-            el.className = 'marker';
-            el.id = "marker_" + num;
-            marker = new mapboxgl.Marker(el, { "color": "#222529" })
+            var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
+            marker._element.id = "marker_" + num;
+            num += 1;
+            console.log(marker);
         });
-        num += 1;
-        console.log(marker);
     })
     .catch(err => {
         console.log(err);
