@@ -22,7 +22,7 @@
         data: a
       }) => {
         if(this.alive){
-          console.log(a);
+          console.log(a.voice);
           // b.updateState(this.state, a[0], a[1]);
         }
       }
