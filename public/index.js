@@ -94,15 +94,16 @@ function audioForm(){
     const file = URL.createObjectURL(files.files[0]);
     const fileFormat = String(files.files[0].name).split('.')[1];
     console.log(fileFormat);
-    if(fileFormat != "wav" || fileFormat != "mp3"){
+    if(fileFormat === "wav" || fileFormat === "mp3"){
+        audio.controls = true;
+        audio.src = file;
+        audio.id = "sample";
+        audioComfirm.appendChild(audio);
+    }else{
         alert("音声ファイル(wav/mp3)をアップロードしてください。\nUpload the audio file (wav/mp3).");
         files.value = "";
         return;
     }
-    audio.controls = true;
-    audio.src = file;
-    audio.id = "sample"
-    audioComfirm.appendChild(audio);
 }
 
 function refresh(button){
