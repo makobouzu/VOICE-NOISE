@@ -92,7 +92,6 @@ function audioForm(){
 
     const file = URL.createObjectURL(files.files[0]);
     const fileFormat = String(files.files[0].name).split('.')[1];
-    console.log(fileFormat);
     if(fileFormat === "wav" || fileFormat === "WAV" || fileFormat === "mp3" || fileFormat === "MP3"){
         audio.controls = true;
         audio.src = file;
