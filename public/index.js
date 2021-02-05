@@ -78,7 +78,6 @@ function uploadRec() {
         'event_category': 'data_preview_on',
         'non_interaction': true
     });
-    document.getElementById("download").disabled = false;
     document.getElementById("refresh").disabled = false;
     const sample = document.getElementById("sample");
     if(sample != null){
@@ -94,7 +93,7 @@ function audioForm(){
     const file = URL.createObjectURL(files.files[0]);
     const fileFormat = String(files.files[0].name).split('.')[1];
     console.log(fileFormat);
-    if(fileFormat === "wav" || fileFormat === "mp3"){
+    if(fileFormat === "wav" || fileFormat === "WAV" || fileFormat === "mp3" || fileFormat === "MP3"){
         audio.controls = true;
         audio.src = file;
         audio.id = "sample";
@@ -116,7 +115,6 @@ function refresh(button){
     document.getElementById("audioform").value = "";
     document.getElementById("audio_comfirm").removeChild(document.getElementById("sample"));
 
-    document.getElementById("download").disabled = true;
     if(document.getElementById("progress").innerHTML === "0%"){
         button.disabled = false;
     }else if(document.getElementById("progress").innerHTML === "100%"){
@@ -139,7 +137,6 @@ function uploadRecording(button) {
         'non_interaction': true
     });
     button.disabled = true;
-    document.getElementById("download").disabled = true;
     document.getElementById("refresh").disabled = true;
     const name = new Date().getTime().toString(16);
     const dbName = document.getElementById("db_filename").value;
@@ -147,7 +144,6 @@ function uploadRecording(button) {
     if(dbName === ""){
         alert("音声ファイルに名前をつけてください。\nGive a name to the audio file.");
         button.disabled = false;
-        document.getElementById("download").disabled = false;
         document.getElementById("refresh").disabled = false;
         return;
     }
@@ -156,7 +152,6 @@ function uploadRecording(button) {
         console.log("no value of lng & lat");
         alert("現在地をオンにするか、対象とする地点を検索してください。\nTurn on the current location or search for the target location.");
         button.disabled = false;
-        document.getElementById("download").disabled = false;
         document.getElementById("refresh").disabled = false;
         return;
     }
@@ -172,7 +167,6 @@ function uploadRecording(button) {
     var files = document.getElementById("audioform");
     if(!files){
         button.disabled = true;
-        document.getElementById("download").disabled = false;
         document.getElementById("refresh").disabled = false;
         alert("データが取得できませんでした。Refreshを押してもう一度録音をしてください。\nCould not retrieve data.Press Refresh to record again.");
         return;
@@ -190,7 +184,6 @@ function uploadRecording(button) {
             var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
             document.getElementById("progress").style = "width: " +  percentCompleted + "%;";
             document.getElementById("progress").innerHTML = percentCompleted + "%";
-            document.getElementById("download").disabled = true;
             document.getElementById("refresh").disabled = true;
             document.getElementById("close").disabled = true;
         }
@@ -207,7 +200,6 @@ function uploadRecording(button) {
         axios.put(signedRequest,file,options)
         .then(result => {
             __log("audio uploaded");
-            document.getElementById("download").disabled = false;
             document.getElementById("refresh").disabled = false;
             document.getElementById("close").disabled = false;
         })
