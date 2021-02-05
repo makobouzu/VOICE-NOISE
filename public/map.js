@@ -52,6 +52,7 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
+var markers = [];
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -65,11 +66,16 @@ map.on('load', () => {
                 .addTo(map);
             marker._element.id = "marker_" + num;
             num += 1;
-            console.log(marker);
+            markers.push(marker);
         });
+        console.log(markers);
     })
     .catch(err => {
         console.log(err);
+    });
+
+    document.getElementById("marker_0").addEventListener('click', () =>{
+
     });
 
     document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
