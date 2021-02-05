@@ -17,6 +17,14 @@
           vadProb: b.getVadProb(this.state)
         }) : (this.alive = !1, b.deleteState(this.state)))
       }
+
+      this.port.onmessage = ({
+        data: m, n
+      }) => {
+        if(this.alive){
+          b.updateState(this.state, m, n);
+        }
+      }
     }
 
     process(a, c, e) {
