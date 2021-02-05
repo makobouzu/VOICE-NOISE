@@ -75,43 +75,6 @@ function updateList(bufferList, sources, num){
     console.log(sources);
 }
 
-var num = 0;
-document.getElementById("play").addEventListener('click', () => plays());
-function plays(){
-    console.log("play!!!");
-    var button = document.getElementById("play");
-    if(num === 0){
-        sources[0].start();
-        audio_context.resume();
-        button.innerText = "PAUSE";
-        num = 1;
-    }else if(num === 1){
-        sources[0].stop(0);
-        audio_context.suspend();
-        updateList(bufferLoader.bufferList, sources, 0);
-        button.innerText = "PLAY";
-        num = 0;
-    }
-}
-var num2 = 0;
-document.getElementById("play2").addEventListener('click', () => play2());
-function play2(){
-    console.log("play!!!");
-    var button = document.getElementById("play2");
-    if(num2 === 0){
-        sources[1].start();
-        audio_context.resume();
-        button.innerText = "PAUSE";
-        num2 = 1;
-    }else if(num2 === 1){
-        sources[1].stop(0);
-        audio_context.suspend();
-        updateList(bufferLoader.bufferList, sources, 1);
-        button.innerText = "PLAY";
-        num2 = 0;
-    }
-}
-
 function BufferLoader(context, urlList, callback) {
     this.context = context;
     this.urlList = urlList;

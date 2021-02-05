@@ -77,6 +77,7 @@ map.on('load', () => {
 
                 sources[marker_num].start();
                 audio_context.resume();
+                updateNoise(rnnoise);
             });
         });
         console.log(markers);
