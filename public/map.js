@@ -69,8 +69,8 @@ map.on('load', () => {
                 if(document.getElementById("plus_marker")){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
-                    document.getElementById("plus_marker").remove();
                     updateList(bufferLoader.bufferList, sources, marker_num);
+                    document.getElementById("plus_marker").remove();
                 }
                 sources[marker_num].start();
                 audio_context.resume();
