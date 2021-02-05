@@ -69,9 +69,9 @@ map.on('load', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
                 console.log(buffer_marker);
                 // if(document.getElementById("plus_marker") !== null){
-                //     sources[buffer_marker].stop(0);
-                //     audio_context.suspend();
-                //     updateList(bufferLoader.bufferList, sources, buffer_marker);
+                    sources[buffer_marker].stop(0);
+                    audio_context.suspend();
+                    updateList(bufferLoader.bufferList, sources, buffer_marker);
                 //     updateList(bufferLoader.bufferList, sources, marker_num);
                 //     document.getElementById("plus_marker").remove();
                 // }
