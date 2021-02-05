@@ -52,7 +52,8 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
-var buffer_marker = 0;
+var buffer_marker;
+var marker_play = false;
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -67,16 +68,15 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
-                console.log(buffer_marker);
-                // if(document.getElementById("plus_marker") !== null){
+                if(marker_play){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, buffer_marker);
-                //     updateList(bufferLoader.bufferList, sources, marker_num);
-                //     document.getElementById("plus_marker").remove();
-                // }
+                    document.getElementById("plus_marker").remove();
+                }
                 sources[marker_num].start();
                 audio_context.resume();
+                marker_play = true;
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
@@ -86,6 +86,7 @@ map.on('load', () => {
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
+                    marker_play = false;
                 });
                 buffer_marker = marker_num;
             });
