@@ -75,266 +75,6 @@ function updateList(bufferList, sources, num){
     console.log(sources);
 }
 
-function BufferLoader(context, urlList, callback) {
-    this.context = context;
-    this.urlList = urlList;
-    this.onload = callback;
-    this.bufferList = new Array();
-    this.loadCount = 0;
-}
-  
-BufferLoader.prototype.loadBuffer = function(url, index) {
-    // Load buffer asynchronously
-    var request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.responseType = "arraybuffer";
-  
-    var loader = this;
-  
-    request.onload = function() {
-      // Asynchronously decode the audio file data in request.response
-      loader.context.decodeAudioData(
-        request.response,
-        function(buffer) {
-          if (!buffer) {
-            alert('error decoding file data: ' + url);
-            return;
-          }
-          loader.bufferList[index] = buffer;
-          if (++loader.loadCount == loader.urlList.length)
-            loader.onload(loader.bufferList);
-        },
-        function(error) {
-          console.error('decodeAudioData error', error);
-        }
-      );
-    }
-  
-    request.onerror = function() {
-      alert('BufferLoader: XHR error');
-    }
-  
-    request.send();
-}
-  
-BufferLoader.prototype.load = function() {
-    for (var i = 0; i < this.urlList.length; ++i)
-    this.loadBuffer(this.urlList[i], i);
-}
-
-
-// function audioConnect(){
-//     if(num === 0){
-//         console.log("audioConnect!!")
-//         var audioSamples = document.querySelector('audio');
-//         var input = audio_context.createMediaElementSource(audioSamples);
-//         rnnoise = new RNNoiseNode(audio_context);
-//         gainNode = audio_context.createGain();
-//         __log('Media stream created.');
-
-//         input.connect(rnnoise);
-//         rnnoise.connect(gainNode);
-//         gainNode.connect(audio_context.destination);
-//         __log('Input connected to audio context destination.');
-//         audio_context.resume();
-//         updateNoise(rnnoise);
-//         __log("Voice: 0.5 - Noise: 0.5");
-//     }
-//     num = 1;
-// }
-// function startUserMedia(stream) {
-//     var input = audio_context.createMediaElementSource(stream);
-//     rnnoise = new RNNoiseNode(audio_context);
-//     gainNode = audio_context.createGain();
-//     gainNode.gain.value = 1;
-// 	input.connect(rnnoise);
-//     audio_context.resume();
-//     __log('Media stream created.');
-
-//     rnnoise.connect(gainNode);
-//     gainNode.connect(audio_context.destination);
-// 	updateNoise(rnnoise);
-//     __log('Input connected to audio context destination.');
-//     __log("Voice: 0.5 - Noise: 0.5");
-// }
-
-// function inputSound(button) {
-//     gtag('event', 'mic_click', {
-//         'event_label': 'mic_on',
-//         'event_category': 'mic_on',
-//         'non_interaction': true
-//     });
-//     document.getElementById("slider").style = "opacity: 1.0;";
-//     document.getElementById("voice-noise").disabled = false;
-//     document.getElementById("stop").disabled = false;
-//     document.getElementById("upload").disabled = false;
-//     document.getElementById("progress").style = "width: 0%;";
-//     document.getElementById("progress").innerHTML = "0%";
-//     document.getElementById("complete").style = "display: none;";
-
-//     if(recNum == 0){
-//         try {
-//             window.AudioContext = window.AudioContext || window.webkitAudioContext;
-//             if (navigator.mediaDevices === undefined) {
-//               navigator.mediaDevices = {};
-//             }
-//             if (navigator.mediaDevices.getUserMedia === undefined) {
-//                 navigator.mediaDevices.getUserMedia = function(constraints) {
-//                     let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-//                     if (!getUserMedia) {
-//                         return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-//                     }
-//                     return new Promise(function(resolve, reject) {
-//                         getUserMedia.call(navigator, constraints, resolve, reject);
-//                     });
-//                 }
-//             }
-//             window.URL = window.URL || window.webkitURL;
-      
-        //     audio_context = new AudioContext({sampleRate: 48000});
-        //     __log('Audio context set up.');
-        //     __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
-        //     RNNoiseNode.register(audio_context);
-        //   } catch (e) {
-        //     alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
-        //   }
-          
-//           navigator.mediaDevices.getUserMedia({
-//               audio: {
-//                   channelCount: { ideal: 1 },
-//                   noiseSuppression: { ideal: false },
-//                   echoCancellation: { ideal: true },
-//                   autoGainControl: { ideal: false },
-//                   sampleRate: { ideal: 48000 }
-//               }
-//           })
-//           .then(function(stream) {
-//               startUserMedia(stream);
-//               document.getElementById("sound").style = "color: limegreen;";
-//               gainNode.gain.value = 1;
-//               __log('Sound Input...');
-//               recNum = 1;
-//               volNum = 1;
-//           })
-//           .catch(function(e) {
-//               __log('No live audio input: ' + e);
-//               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\nCould not get audio input. Please reload again.");
-//               document.getElementById("sound").style = "color: black;";
-//               return;
-//           });
-//     }else{
-//         if(volNum === 0){
-//             document.getElementById("sound").style = "color: limegreen;";
-//             gainNode.gain.value = 1;
-//             __log('Volume up...');
-//             volNum = 1;
-            
-//         }else if(volNum === 1){
-//             document.getElementById("sound").style = "color: black;";
-//             gainNode.gain.value = 0;
-//             __log('Volume down...');
-//             volNum = 0;
-//         }
-//     }
-// }
-
-// function startRecording(button) {
-//     gtag('event', 'rec_click', {
-//         'event_label': 'rec_on',
-//         'event_category': 'rec_on',
-//         'non_interaction': true
-//     });
-//     document.getElementById("slider").style = "opacity: 1.0;";
-//     document.getElementById("voice-noise").disabled = false;
-//     button.nextElementSibling.disabled = false;
-//     document.getElementById("upload").disabled = false;
-//     document.getElementById("progress").style = "width: 0%;";
-//     document.getElementById("progress").innerHTML = "0%";
-//     document.getElementById("complete").style = "display: none;";
-
-//     if(recNum == 0){
-//         try {
-//             window.AudioContext = window.AudioContext || window.webkitAudioContext;
-//             if (navigator.mediaDevices === undefined) {
-//               navigator.mediaDevices = {};
-//             }
-//             if (navigator.mediaDevices.getUserMedia === undefined) {
-//                 navigator.mediaDevices.getUserMedia = function(constraints) {
-//                     let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-//                     if (!getUserMedia) {
-//                         return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-//                     }
-//                     return new Promise(function(resolve, reject) {
-//                         getUserMedia.call(navigator, constraints, resolve, reject);
-//                     });
-//                 }
-//             }
-//             window.URL = window.URL || window.webkitURL;
-      
-//             audio_context = new AudioContext({sampleRate: 48000});
-//             __log('Audio context set up.');
-//             __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
-//             RNNoiseNode.register(audio_context);
-//           } catch (e) {
-//             alert("このブラウザは対応していません。Safariをご利用ください。\nNo web audio support in this browser. Please use Safari.");
-//           }
-          
-//           navigator.mediaDevices.getUserMedia({
-//               audio: {
-//                   channelCount: { ideal: 1 },
-//                   noiseSuppression: { ideal: false },
-//                   echoCancellation: { ideal: true },
-//                   autoGainControl: { ideal: false },
-//                   sampleRate: { ideal: 48000 }
-//               }
-//           })
-//           .then(function(stream) {
-//               startUserMedia(stream);
-//               document.getElementById("sound").style = "color: limegreen;";
-//               gainNode.gain.value = 1;
-//               __log('Sound Input...');
-//               recNum = 1;
-//               volNum = 1;
-//               button.disabled = true;
-//               recorder && recorder.record();
-//               document.getElementById("start").style = "color: red;";
-//               recNum = 1;
-//               __log('Recording...');
-//           })
-//           .catch(function(e) {
-//               __log('No live audio input: ' + e);
-//               alert("オーディオの入力が取得できませんでした。もう一度リロードしてください。\n Could not get audio input. Please reload again.");
-//               document.getElementById("sound").style = "color: black;";
-//               return;
-//           });
-//     }else{
-//         if(volNum === 0){
-//             document.getElementById("sound").style = "color: limegreen;";
-//             gainNode.gain.value = 1;
-//             volNum = 1;
-//         }
-//         button.disabled = true;
-//         recorder && recorder.record();
-//         document.getElementById("start").style = "color: red;";
-//         recNum = 1;
-//         __log('Recording...');
-//     }
-// };
-
-// function stopRecording(button) {
-//     gtag('event', 'stop_click', {
-//         'event_label': 'stop_on',
-//         'event_category': 'stop_on',
-//         'non_interaction': true
-//     });
-//     recorder && recorder.stop();
-//     button.disabled = true;
-//     button.previousElementSibling.disabled = false;
-//     document.getElementById("start").style = "color: black;";
-//     __log('Stopped recording.');
-//     recNum = 1;
-// }
-
 function uploadRec() {
     gtag('event', 'submit_click', {
         'event_label': 'data_preview_on',
@@ -534,7 +274,7 @@ function updateNoise(rnnoise){
         document.getElementById("voice-noise").addEventListener("input", async () => {
             var noise = Math.round(document.getElementById("voice-noise").value * 10) / 10;
             var voice = Math.round((1 - noise) * 10) / 10;
-			rnnoise.change([voice, noise]);
+			rnnoise.change(voice, noise);
             __log("Voice: "+ voice +" - Noise: " + noise);
             if(voice === 1.0){
                 gtag('event', 'voice_click', {
@@ -579,5 +319,53 @@ function dbUpload(dbName, lng, lat, path) {
         console.log(error);
         alert("データベースのアクセスに失敗しました。\nFailed to access the database.");
     });
+}
+
+//-------BufferLoader---------
+function BufferLoader(context, urlList, callback) {
+    this.context = context;
+    this.urlList = urlList;
+    this.onload = callback;
+    this.bufferList = new Array();
+    this.loadCount = 0;
+}
+  
+BufferLoader.prototype.loadBuffer = function(url, index) {
+    // Load buffer asynchronously
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.responseType = "arraybuffer";
+  
+    var loader = this;
+  
+    request.onload = function() {
+      // Asynchronously decode the audio file data in request.response
+      loader.context.decodeAudioData(
+        request.response,
+        function(buffer) {
+          if (!buffer) {
+            alert('error decoding file data: ' + url);
+            return;
+          }
+          loader.bufferList[index] = buffer;
+          if (++loader.loadCount == loader.urlList.length)
+            loader.onload(loader.bufferList);
+        },
+        function(error) {
+          console.error('decodeAudioData error', error);
+        }
+      );
+    }
+  
+    request.onerror = function() {
+      alert('BufferLoader: XHR error');
+    }
+  
+    request.send();
+}
+  
+BufferLoader.prototype.load = function() {
+    for (var i = 0; i < this.urlList.length; ++i)
+    this.loadBuffer(this.urlList[i], i);
 }
     

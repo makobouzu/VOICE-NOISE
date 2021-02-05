@@ -36,7 +36,7 @@
       this.port.postMessage(a)
     }
 
-    change([m, n]) {
+    change(m, n) {
       this.port.postMessage({
         voice: m,
         noise: n
@@ -66,7 +66,7 @@
       }
     };
 
-    b.change = ([m,n]) =>{
+    b.change = (m,n) =>{
       if(f){
         c.updateState(d, m, n);
       }
