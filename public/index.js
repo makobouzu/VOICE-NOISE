@@ -159,7 +159,7 @@ BufferLoader.prototype.load = function() {
     this.loadBuffer(this.urlList[i], i);
 }
 
-document.getElementById('marker_0').addEventListener('click', () => changeColor()); 
+markers[0].getElement().addEventListener('click', () => changeColor()); 
 function changeColor(){
     console.log("marker clicked!!");
 }
