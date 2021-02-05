@@ -70,9 +70,7 @@ function updateList(bufferList, sources, num){
     source.connect(rnnoise);
     rnnoise.connect(gainNode);
     gainNode.connect(audio_context.destination);
-    console.log(sources);
     sources.splice(num, 1, source);
-    console.log(sources);
 }
 
 function uploadRec() {
@@ -95,6 +93,7 @@ function audioForm(){
     var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
+    console.log(file);
     audio.controls = true;
     audio.src = file;
     audio.id = "sample"
