@@ -22,7 +22,9 @@
         data: a
       }) => {
         if(this.alive){
-          console.log(a.voice);
+          if(a.voice != "undefined" && a.noise != "undefined"){
+            console.log(a.voice);
+          }
           // b.updateState(this.state, a[0], a[1]);
         }
       }
