@@ -21,8 +21,6 @@
       this.port.onmessage = ({
         data: m, n
       }) => {
-        console.log(m);
-        console.log(n);
         // if(this.alive){
         //   b.updateState(this.state, m, n);
         // }
