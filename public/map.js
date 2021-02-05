@@ -72,6 +72,8 @@ map.on('load', () => {
                     document.getElementById("plus_marker").remove();
                     updateList(bufferLoader.bufferList, sources, marker_num);
                 }
+                sources[marker_num].start();
+                audio_context.resume();
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
@@ -82,8 +84,6 @@ map.on('load', () => {
                     updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
                 });
-                sources[marker_num].start();
-                audio_context.resume();
                 buffer_marker = marker_num;
             });
         });
