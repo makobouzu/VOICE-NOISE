@@ -53,6 +53,7 @@ geoLocate.on('geoLocate', function(e) {
 });
 
 var markers = [];
+var markerOn = [];
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -63,16 +64,23 @@ map.on('load', () => {
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
-                .addTo(map);
-            marker.getElement().addEventListener('click', () => {
-                console.log(marker.getElement().id);
-                var ons = new mapboxgl.Marker({ "color": "#ff1622" })
-                .setLngLat([s.location.x, s.location.y])
-                .addTo(map);
-            }); 
+                .addTo(map); 
             marker._element.id = "marker_" + num;
             num += 1;
             markers.push(marker);
+            markerOn.push("false");
+            marker.getElement().addEventListener('click', () => {
+                const marker_num = marker.getElement().id.split('_')[1];
+                var plus;
+                if(markerOn[marker_num] === "true"){
+                    plus.remove();
+                }else{
+                    plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                    .setLngLat([s.location.x, s.location.y])
+                    .addTo(map);
+                    markerOn[marker_num] = "true"
+                }
+            });
         });
         console.log(markers);
     })
