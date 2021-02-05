@@ -22,7 +22,9 @@
         data: a
       }) => {
         if(this.alive){
-          b.updateState(this.state, a[0], a[1]);
+          console.log(a);
+          console.log(a[0]);
+          // b.updateState(this.state, a[0], a[1]);
         }
       }
     }
