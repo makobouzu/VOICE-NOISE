@@ -22,7 +22,7 @@
         data: a
       }) => {
         if(this.alive){
-          this.port.postMessage(b.updateState(this.state, a[0], a[1]));
+          b.updateState(this.state, a[0], a[1]);
         }
       }
     }
