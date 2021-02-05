@@ -70,7 +70,7 @@ map.on('load', () => {
                 if(document.getElementById("plus_marker") !== null){
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources, marker_num);
+                    updateList(bufferLoader.bufferList, sources, buffer_marker);
                     document.getElementById("plus_marker").remove();
                 }
                 sources[marker_num].start();
