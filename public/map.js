@@ -57,22 +57,23 @@ map.on('load', () => {
     axios.get('/sound')
     .then(response => {
         const sounds = response.data;
+        var num = 0;
         sounds.map(s => {
             marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
+            
+            var marker_class = document.getElementsByClassName('.mapboxgl-marker');
+            marker_class.id = "marker_" + num;
+            num += 1;
         });
 
         console.log(marker);
     })
     .catch(err => {
         console.log(err);
-    });
-
-    document.querySelector('mapboxgl-marker').addEventListener('click', () =>{
-
     });
 
     document.querySelector('.mapboxgl-ctrl-geocoder').addEventListener('click', () =>{
