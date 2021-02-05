@@ -69,10 +69,14 @@ map.on('load', () => {
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
                 plus.getElement().addEventListener('click', () => {
+                    sources[marker_num].stop(0);
+                    audio_context.suspend();
+                    updateList(bufferLoader.bufferList, sources, marker_num);
                     plus.remove();
                 });
 
-                
+                sources[marker_num].start();
+                audio_context.resume();
             });
         });
         console.log(markers);
