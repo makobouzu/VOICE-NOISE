@@ -92,7 +92,11 @@ function audioForm(){
     var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
-    console.log(files.files[0].name);
+    const fileFormat = file.name.split('.')[1];
+    if(fileFormat != "wav" || fileFormat != "mp3"){
+        alert("音声ファイル(wav/mp3)をアップロードしてください。\nUpload the audio file (wav/mp3).");
+        return;
+    }
     audio.controls = true;
     audio.src = file;
     audio.id = "sample"
