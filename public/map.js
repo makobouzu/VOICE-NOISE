@@ -59,17 +59,16 @@ map.on('load', () => {
         const sounds = response.data;
         var num = 0;
         sounds.map(s => {
-            marker = new mapboxgl.Marker({ "color": "#222529" })
+            var el = document.createElement('div');
+            el.className = 'marker';
+            el.id = "marker_" + num;
+            marker = new mapboxgl.Marker(el, { "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 .setPopup(new mapboxgl.Popup({ offset: 25 })
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
-            
-            var marker_class = document.getElementsByClassName('.mapboxgl-marker');
-            marker_class.id = "marker_" + num;
-            num += 1;
         });
-
+        num += 1;
         console.log(marker);
     })
     .catch(err => {
