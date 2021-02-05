@@ -53,7 +53,6 @@ geoLocate.on('geoLocate', function(e) {
 });
 
 var markers = [];
-var markerOn = [];
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -68,18 +67,13 @@ map.on('load', () => {
             marker._element.id = "marker_" + num;
             num += 1;
             markers.push(marker);
-            markerOn.push("false");
             marker.getElement().addEventListener('click', () => {
-                const marker_num = marker.getElement().id.split('_')[1];
-                var plus;
-                if(markerOn[marker_num] === "true"){
-                    plus.remove();
-                }else{
-                    plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
-                    markerOn[marker_num] = "true"
-                }
+                plus.getElement().addEventListener('click', () => {
+                    plus.remove();
+                });
             });
         });
         console.log(markers);
