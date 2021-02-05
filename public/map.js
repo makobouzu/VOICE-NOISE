@@ -65,7 +65,8 @@ map.on('load', () => {
                 .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map);
             marker.getElement().addEventListener('click', () => {
-                var clickon = new mapboxgl.Marker({ "color": "#ff1622" })
+                console.log(marker.getElement().id);
+                var ons = new mapboxgl.Marker({ "color": "#ff1622" })
                 .setLngLat([s.location.x, s.location.y])
                 .addTo(map);
             }); 
