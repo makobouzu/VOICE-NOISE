@@ -21,9 +21,9 @@
       this.port.onmessage = ({
         data: a
       }) => {
-        // if(this.alive){
-        //   b.updateState(this.state, m, n);
-        // }
+        if(this.alive){
+          this.port.postMessage(b.updateState(this.state, a[0], a[1]));
+        }
       }
     }
 
