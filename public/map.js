@@ -70,7 +70,7 @@ map.on('load', () => {
                     sources[buffer_marker].stop(0);
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, marker_num);
-                    plus.remove();
+                    document.getElementById("plus_marker").remove();
                 }
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
