@@ -52,7 +52,6 @@ geoLocate.on('geoLocate', function(e) {
     });
 });
 
-var markers = [];
 map.on('load', () => { 
     axios.get('/sound')
     .then(response => {
@@ -61,19 +60,19 @@ map.on('load', () => {
         sounds.map(s => {
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
-                .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML(`<p class="fw-bold">${s.name}</p><audio id="marker_audio" src ="${s.path}" gtag('event', 'marker_click', {'event_category': 'marker_${s.name}', 'event_label': 'marker_${s.name}', 'non_interaction': true});" controls>`))
                 .addTo(map); 
             marker._element.id = "marker_" + num;
             num += 1;
-            markers.push(marker);
             marker.getElement().addEventListener('click', () => {
-                plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                const marker_num = marker.getElement().id.split('_')[1];
+                var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
                     .addTo(map);
                 plus.getElement().addEventListener('click', () => {
                     plus.remove();
                 });
+
+                
             });
         });
         console.log(markers);
