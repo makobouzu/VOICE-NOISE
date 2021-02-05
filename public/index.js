@@ -92,7 +92,7 @@ function audioForm(){
     var audioComfirm = document.getElementById("audio_comfirm");
 
     const file = URL.createObjectURL(files.files[0]);
-    console.log(files);
+    console.log(files.files[0].name);
     audio.controls = true;
     audio.src = file;
     audio.id = "sample"
