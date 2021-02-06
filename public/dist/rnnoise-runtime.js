@@ -1,6 +1,6 @@
 'use strict'; {
   const g = document.currentScript.src.match(/(.*\/)?/)[0],
-    h = (WebAssembly.compileStreaming || (async a1 => await WebAssembly.compile(await (await a1).arrayBuffer())))(fetch("dist/rnnoise-processor.wasm"));//wasmファイル選択
+    h = (WebAssembly.compileStreaming || (async a1 => await WebAssembly.compile(await (await a1).arrayBuffer())))(fetch("dist/rnnoise-processor_bird.wasm"));//wasmファイル選択
   let k, c, e;
 
   window.RNNoiseNode = (window.AudioWorkletNode || (window.AudioWorkletNode = window.webkitAudioWorkletNode)) && class extends AudioWorkletNode {
