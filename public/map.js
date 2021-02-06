@@ -82,6 +82,7 @@ map.on('load', () => {
                 }, 5000);
                 promise.then((result) => {
                     sources[marker_num].start();
+                    sources[marker_num].playbackState = 2
                     audio_context.resume();
                     marker_play = true;
                     var plus = new mapboxgl.Marker({ "color": "#ff1622" })
