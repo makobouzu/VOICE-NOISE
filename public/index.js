@@ -13,8 +13,6 @@ var now = new Date();
 localStorage.setItem('time1', 'First');
 
 window.onload = function init(){
-    document.getElementById("slider").style = "opacity: 1.0;";
-    document.getElementById("voice-noise").disabled = false;
     document.getElementById("upload").disabled = false;
     document.getElementById("progress").style = "width: 0%;";
     document.getElementById("progress").innerHTML = "0%";
@@ -42,6 +40,15 @@ window.onload = function init(){
         });
         bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
         bufferLoader.load();
+        resolve('Audio Loaded!');
+    })
+    .then(value => {
+        console.log(value);
+        document.getElementById("slider").style = "opacity: 1.0;";
+        document.getElementById("voice-noise").disabled = false;
+        for(const i = 0; i < init_markers.length; ++i){
+            init_markers[i].remove();
+        }
     })
     .catch(err => {
         console.log(err);
