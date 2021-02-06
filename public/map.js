@@ -75,6 +75,7 @@ map.on('load', () => {
                         updateList(bufferLoader.bufferList, sources, buffer_marker);
                         document.getElementById("plus_marker").remove();
                     }
+                    resolve();
                 });
                 promise.then((result) => {
                     sources[marker_num].start();
@@ -92,7 +93,8 @@ map.on('load', () => {
                         marker_play = false;
                     });
                     buffer_marker = marker_num;
-                });
+                })
+                .catch((e) => console.log(e));
             });
         });
     })
