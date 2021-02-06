@@ -1,5 +1,3 @@
-const { SingleEntryPlugin } = require("webpack");
-
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFrb2JvdXp1IiwiYSI6ImNrYWF5and0MzFhYnMyc214ZGo3OWd3cHQifQ.pPCfwEss5pJhm4Yu7kvj1w';
 var map = new mapboxgl.Map({
 container: 'map',
