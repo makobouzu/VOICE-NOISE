@@ -62,7 +62,7 @@ map.on('load', () => {
         var plus_num = 0;
         sounds.map(s => {
             var popup = new mapboxgl.Popup({offset: 25})
-                .setHTML(`<p class="fw-bold" id ="marker_text">Title: ${s.name}</p>`);
+                .setHTML(`<p class="fw-bold" id ="marker_text">《${s.name}》</p>`);
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
                 // .setPopup(popup)
