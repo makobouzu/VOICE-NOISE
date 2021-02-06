@@ -40,10 +40,9 @@ window.onload = function init(){
         });
         bufferLoader = new BufferLoader(audio_context, buffer, finishedLoading);
         bufferLoader.load();
-        resolve('Audio Loaded!');
     })
     .then(value => {
-        console.log(value);
+        console.log('Audio Loaded!');
         document.getElementById("slider").style = "opacity: 1.0;";
         document.getElementById("voice-noise").disabled = false;
         for(const i = 0; i < init_markers.length; ++i){
