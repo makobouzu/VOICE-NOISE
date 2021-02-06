@@ -65,13 +65,14 @@ map.on('load', () => {
                 .setText(s.name);
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
-                .setPopup(popup)
+                // .setPopup(popup)
                 .addTo(map); 
             marker._element.id = "marker_" + num;
             num += 1;
 
             marker.getElement().addEventListener('click', () => {
                 if(sources.length){
+                    marker.setPopup(popup);
                     const marker_num = marker.getElement().id.split('_')[1];
                     if(marker_play){
                         sources[buffer_marker].stop();
