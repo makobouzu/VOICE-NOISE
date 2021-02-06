@@ -95,6 +95,7 @@ map.on('load', () => {
                     buffer_marker = marker_num;
                 }else{
                     alert("読み込みに時間がかかっています。少々お待ちください。\nPlease wait a moment.");
+                    document.getElementsByClassName("mapboxgl-popup-close-button").click();
                 }
             });
         });
