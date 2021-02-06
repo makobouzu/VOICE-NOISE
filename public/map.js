@@ -93,10 +93,8 @@ map.on('load', () => {
                         marker_play = false;
                     });
                     buffer_marker = marker_num;
-                    popup.addTo(map);
                 }else{
                     alert("音源ファイルの読み込みに時間がかかっています。少々お待ちください。\nLoading the sound file now. Please wait a moment.");
-                    // popup.remove();
                 }
             });
         });
