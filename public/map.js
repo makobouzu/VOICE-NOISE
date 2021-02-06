@@ -71,7 +71,7 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 console.log(sources);
-                if(!sources.length){
+                if(sources.length){
                     const marker_num = marker.getElement().id.split('_')[1];
                     if(marker_play){
                         sources[buffer_marker].stop();
