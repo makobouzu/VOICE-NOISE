@@ -78,6 +78,8 @@ map.on('load', () => {
                 marker_play = true;
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
                     .setLngLat([s.location.x, s.location.y])
+                    .setPopup(new mapboxgl.Popup({ offset: 25 })
+                    .setHTML(`<p class="fw-bold">${s.name}</p>`))
                     .addTo(map);
                 plus._element.id = "plus_marker";
                 plus.getElement().addEventListener('click', () => {
@@ -89,7 +91,6 @@ map.on('load', () => {
                 });
                 buffer_marker = marker_num;
             });
-            console.log(marker);
         });
     })
     .catch(err => {
