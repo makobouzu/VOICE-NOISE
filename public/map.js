@@ -94,7 +94,7 @@ map.on('load', () => {
                     buffer_marker = marker_num;
                 }else{
                     alert("音源ファイルの読み込みに時間がかかっています。少々お待ちください。\nLoading the sound file now. Please wait a moment.");
-                    document.getElementsByClassName("mapboxgl-popup-close-button").click();
+                    popup.remove();
                 }
             });
         });
