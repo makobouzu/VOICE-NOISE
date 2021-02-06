@@ -68,34 +68,26 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
-                const promise = new Promise((resolve, reject) => {
-                    if(marker_play){
-                        sources[buffer_marker].stop();
-                        updateList(bufferLoader.bufferList, sources, buffer_marker);
-                        document.getElementById("plus_marker").remove();
-                        resolve();
-                    }else{
-                        resolve();
-                    }
-                }, 5000);
-                promise.then((result) => {
-                    sources[marker_num].start(0);
-                    audio_context.resume();
-                    marker_play = true;
-                    var plus = new mapboxgl.Marker({ "color": "#ff1622" })
-                        .setLngLat([s.location.x, s.location.y])
-                        .addTo(map);
-                    plus._element.id = "plus_marker";
-                    plus.getElement().addEventListener('click', () => {
-                        sources[marker_num].stop();
-                        audio_context.suspend();
-                        updateList(bufferLoader.bufferList, sources, marker_num);
-                        plus.remove();
-                        marker_play = false;
-                    });
-                    buffer_marker = marker_num;
-                })
-                .catch((e) => console.log(e));
+                if(marker_play){
+                    sources[buffer_marker].stop();
+                    updateList(bufferLoader.bufferList, sources, buffer_marker);
+                    document.getElementById("plus_marker").remove();                    
+                }
+                sources[marker_num].start(0);
+                audio_context.resume();
+                marker_play = true;
+                var plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                    .setLngLat([s.location.x, s.location.y])
+                    .addTo(map);
+                plus._element.id = "plus_marker";
+                plus.getElement().addEventListener('click', () => {
+                    sources[marker_num].stop();
+                    audio_context.suspend();
+                    updateList(bufferLoader.bufferList, sources, marker_num);
+                    plus.remove();
+                    marker_play = false;
+                });
+                buffer_marker = marker_num;
             });
         });
     })
