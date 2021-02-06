@@ -89,6 +89,7 @@ map.on('load', () => {
                 });
                 buffer_marker = marker_num;
             });
+            console.log(marker);
         });
     })
     .catch(err => {
