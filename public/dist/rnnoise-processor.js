@@ -30,7 +30,13 @@
     }
 
     process(a, c) {
-      if (this.alive) return d.set(a[0][0], b.getInput(this.state) / 4), a = c[0][0], (c = b.pipe(this.state, a.length) / 4) && a.set(d.subarray(c, c + a.length)), !0;
+      if (this.alive) {
+        d.set(a[0][0], b.getInput(this.state) / 4);
+        const o = c[0][0], ptr4 = b.pipe(this.state, o.length) / 4;
+        if (ptr4)
+            o.set(d.subarray(ptr4, ptr4 + o.length));
+        return true;
+    }
     }
   })
 };
