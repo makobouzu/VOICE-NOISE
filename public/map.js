@@ -61,16 +61,18 @@ map.on('load', () => {
         var num = 0;
         var plus_num = 0;
         sounds.map(s => {
+            var popup = new mapboxgl.Popup({offset: 25})
+                .setText(`<p class="fw-bold" id="marker_text">${s.name}</p>`);
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
-                .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML(`<p class="fw-bold" id="marker_text">${s.name}</p>`))
+                .setPopup(popup)
                 .addTo(map); 
             marker._element.id = "marker_" + num;
 
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 if(sources.length){
+                    popup.addTo(map);
                     const marker_num = marker.getElement().id.split('_')[1];
                     if(marker_play){
                         sources[buffer_marker].stop();
@@ -93,8 +95,8 @@ map.on('load', () => {
                     });
                     buffer_marker = marker_num;
                 }else{
-                    popup.remove();
                     alert("音源ファイルの読み込みに時間がかかっています。少々お待ちください。\nLoading the sound file now. Please wait a moment.");
+                    popup.remove();
                 }
             });
         });
