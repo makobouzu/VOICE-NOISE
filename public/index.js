@@ -10,8 +10,10 @@ var rnnoise;
 var gainNode;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
-localStorage.setItem('time1', 'First');
-if(localStorage.getItem('time2') === null){
+if(typeof(localStorage.getItem("time1"))== 'undefined'){
+    localStorage.setItem('time1', 'First');
+}
+if(typeof(localStorage.getItem('time2')) === 'undefined'){
     document.getElementById("info").click();
     localStorage.setItem('time2', 'Second');
 }
