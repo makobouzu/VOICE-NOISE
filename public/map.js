@@ -69,26 +69,27 @@ map.on('load', () => {
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
                 if(marker_play){
-                    // sources[buffer_marker].stop(0);
+                    sources[buffer_marker].stop(0);
                     audio_context.suspend();
                     updateList(bufferLoader.bufferList, sources, buffer_marker);
                     document.getElementById("plus_marker").remove();
+                }else{
+                    sources[marker_num].start();
+                    audio_context.resume();
+                    var plus = new mapboxgl.Marker({ "color": "#ff1622" })
+                        .setLngLat([s.location.x, s.location.y])
+                        .addTo(map);
+                    plus._element.id = "plus_marker";
+                    plus.getElement().addEventListener('click', () => {
+                        sources[marker_num].stop(0);
+                        audio_context.suspend();
+                        updateList(bufferLoader.bufferList, sources, marker_num);
+                        plus.remove();
+                        marker_play = false;
+                    });
+                    buffer_marker = marker_num;
                 }
-                sources[marker_num].start();
-                audio_context.resume();
                 marker_play = true;
-                var plus = new mapboxgl.Marker({ "color": "#ff1622" })
-                    .setLngLat([s.location.x, s.location.y])
-                    .addTo(map);
-                plus._element.id = "plus_marker";
-                plus.getElement().addEventListener('click', () => {
-                    sources[marker_num].stop(0);
-                    audio_context.suspend();
-                    updateList(bufferLoader.bufferList, sources, marker_num);
-                    plus.remove();
-                    marker_play = false;
-                });
-                buffer_marker = marker_num;
             });
         });
     })
