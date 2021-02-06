@@ -65,7 +65,6 @@ map.on('load', () => {
                 .setHTML(`<p class="fw-bold" id ="marker_text">《${s.name}》</p>`);
             var marker = new mapboxgl.Marker({ "color": "#222529" })
                 .setLngLat([s.location.x, s.location.y])
-                // .setPopup(popup)
                 .addTo(map); 
             marker._element.id = "marker_" + num;
             num += 1;

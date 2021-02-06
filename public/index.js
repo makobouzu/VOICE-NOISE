@@ -11,6 +11,10 @@ var gainNode;
 document.getElementById("complete").style = "display: none;";
 var now = new Date();
 localStorage.setItem('time1', 'First');
+if(localStorage.getItem('time2') === null){
+    document.getElementById("info").click();
+    localStorage.setItem('time2', 'Second');
+}
 
 window.onload = function init(){
     document.getElementById("slider").style = "opacity: 1.0;";
@@ -19,11 +23,6 @@ window.onload = function init(){
     document.getElementById("progress").style = "width: 0%;";
     document.getElementById("progress").innerHTML = "0%";
     document.getElementById("complete").style = "display: none;";
-
-    if(localStorage.getItem('time2') === null){
-        document.getElementById("info").click();
-        localStorage.setItem('time2', 'Second');   
-    }
 
     try {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -296,7 +295,8 @@ function dbUpload(dbName, lng, lat, path) {
     });
 }
 
-//-------BufferLoader---------
+//-------------------------------------------------------------------------------------------
+//-------BufferLoader------------------------------------------------------------------------
 function BufferLoader(context, urlList, callback) {
     this.context = context;
     this.urlList = urlList;
@@ -306,7 +306,6 @@ function BufferLoader(context, urlList, callback) {
 }
   
 BufferLoader.prototype.loadBuffer = function(url, index) {
-    // Load buffer asynchronously
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
@@ -314,7 +313,6 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
     var loader = this;
   
     request.onload = function() {
-      // Asynchronously decode the audio file data in request.response
       loader.context.decodeAudioData(
         request.response,
         function(buffer) {
