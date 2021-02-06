@@ -75,7 +75,7 @@ map.on('load', () => {
                     updateList(bufferLoader.bufferList, sources, buffer_marker);
                     document.getElementById("plus_marker").remove();                    
                 }
-                sources[marker_num].start(0);
+                sources[marker_num].start();
                 audio_context.resume();
                 marker_play = true;
                 var plus = new mapboxgl.Marker({ "color": "#ff1622" })
