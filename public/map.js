@@ -70,7 +70,6 @@ map.on('load', () => {
 
             num += 1;
             marker.getElement().addEventListener('click', () => {
-                console.log(sources);
                 if(sources.length){
                     const marker_num = marker.getElement().id.split('_')[1];
                     if(marker_play){
@@ -94,8 +93,8 @@ map.on('load', () => {
                     });
                     buffer_marker = marker_num;
                 }else{
-                    alert("読み込みに時間がかかっています。少々お待ちください。\nPlease wait a moment.");
                     document.getElementsByClassName("mapboxgl-popup-close-button").click();
+                    alert("読み込みに時間がかかっています。少々お待ちください。\nPlease wait a moment.");
                 }
             });
         });
