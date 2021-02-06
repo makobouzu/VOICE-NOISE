@@ -71,7 +71,6 @@ map.on('load', () => {
                 const promise = new Promise((resolve, reject) => {
                     if(marker_play){
                         sources[buffer_marker].stop();
-                        audio_context.suspend();
                         updateList(bufferLoader.bufferList, sources, buffer_marker);
                         document.getElementById("plus_marker").remove();
                         resolve();
