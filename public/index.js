@@ -60,6 +60,7 @@ async function finishedLoading(bufferList) {
         rnnoise.connect(gainNode);
         gainNode.connect(audio_context.destination);
         sources.push(source);
+        source.loop = true;
     }
     updateNoise(rnnoise);
 }
