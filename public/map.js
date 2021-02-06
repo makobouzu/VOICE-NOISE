@@ -78,7 +78,7 @@ map.on('load', () => {
                     }else{
                         resolve();
                     }
-                });
+                }, 500);
                 promise.then((result) => {
                     sources[marker_num].start();
                     audio_context.resume();
