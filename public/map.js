@@ -70,10 +70,9 @@ map.on('load', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
                 const promise = new Promise((resolve, reject) => {
                     if(marker_play){
-                        sources[buffer_marker].stop(0);
+                        sources[buffer_marker].stop();
                         audio_context.suspend();
                         updateList(bufferLoader.bufferList, sources, buffer_marker);
-                        updateList(bufferLoader.bufferList, sources, marker_num);
                         document.getElementById("plus_marker").remove();
                         resolve();
                     }else{
@@ -89,13 +88,14 @@ map.on('load', () => {
                         .addTo(map);
                     plus._element.id = "plus_marker";
                     plus.getElement().addEventListener('click', () => {
-                        sources[marker_num].stop(0);
+                        sources[marker_num].stop();
                         audio_context.suspend();
                         updateList(bufferLoader.bufferList, sources, marker_num);
                         plus.remove();
                         marker_play = false;
                     });
                     buffer_marker = marker_num;
+                    console.log(buffer_marker);
                 })
                 .catch((e) => console.log(e));
             });
