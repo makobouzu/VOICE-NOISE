@@ -68,6 +68,7 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
+                console.log("初期: " + buffer_marker);
                 const promise = new Promise((resolve, reject) => {
                     if(marker_play){
                         sources[buffer_marker].stop();
@@ -95,7 +96,7 @@ map.on('load', () => {
                         marker_play = false;
                     });
                     buffer_marker = marker_num;
-                    console.log(buffer_marker);
+                    console.log("更新: " + buffer_marker);
                 })
                 .catch((e) => console.log(e));
             });
