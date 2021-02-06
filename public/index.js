@@ -71,6 +71,7 @@ function updateList(bufferList, sources, num){
     rnnoise.connect(gainNode);
     gainNode.connect(audio_context.destination);
     sources.splice(num, 1, source);
+    console.log(sources);
 }
 
 function uploadRec() {
