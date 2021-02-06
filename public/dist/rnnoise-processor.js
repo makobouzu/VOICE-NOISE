@@ -1,5 +1,5 @@
 'use strict'; {
-  let b, d, x, y;
+  let b, d;
   registerProcessor("rnnoise", class extends AudioWorkletProcessor {
     constructor(a) {
       super({ ...a,
@@ -29,8 +29,8 @@
       }
     }
 
-    process(a, c, e) {
-      if (this.alive) return d.set(a[0][0], b.getInput(this.state) / 4), a = c[0][0], (c = b.pipe(this.state, a.length) / 4) && a.set(d.subarray(c, c + a.length)), !0
+    process(a, c) {
+      if (this.alive) return d.set(a[0][0], b.getInput(this.state) / 4), a = c[0][0], (c = b.pipe(this.state, a.length) / 4) && a.set(d.subarray(c, c + a.length)), !0;
     }
   })
 };
