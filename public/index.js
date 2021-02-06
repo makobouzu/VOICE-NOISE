@@ -45,9 +45,9 @@ window.onload = function init(){
         console.log('Audio Loaded!');
         document.getElementById("slider").style = "opacity: 1.0;";
         document.getElementById("voice-noise").disabled = false;
-        for(const i = 0; i < init_markers.length; ++i){
-            init_markers[i].remove();
-        }
+        // for(const i = 0; i < init_markers.length; ++i){
+        //     init_markers[i].remove();
+        // }
     })
     .catch(err => {
         console.log(err);

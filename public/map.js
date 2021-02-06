@@ -69,11 +69,11 @@ map.on('load', () => {
                 .addTo(map); 
             marker._element.id = "marker_" + num;
 
-            var init_marker = new mapboxgl.Marker({ "color": "#d2d2d2" })
-            .setLngLat([s.location.x, s.location.y])
-            .addTo(map);
-            marker._element.id = "init_marker_" + num;
-            init_markers.push(init_marker);
+            // var init_marker = new mapboxgl.Marker({ "color": "#d2d2d2" })
+            // .setLngLat([s.location.x, s.location.y])
+            // .addTo(map);
+            // marker._element.id = "init_marker_" + num;
+            // init_markers.push(init_marker);
 
             num += 1;
             marker.getElement().addEventListener('click', () => {
