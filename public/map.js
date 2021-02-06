@@ -68,7 +68,6 @@ map.on('load', () => {
             num += 1;
             marker.getElement().addEventListener('click', () => {
                 const marker_num = marker.getElement().id.split('_')[1];
-                console.log("初期: " + buffer_marker);
                 const promise = new Promise((resolve, reject) => {
                     if(marker_play){
                         sources[buffer_marker].stop();
@@ -81,8 +80,7 @@ map.on('load', () => {
                     }
                 }, 5000);
                 promise.then((result) => {
-                    sources[marker_num].start();
-                    sources[marker_num].playbackState = 2
+                    sources[marker_num].start(0);
                     audio_context.resume();
                     marker_play = true;
                     var plus = new mapboxgl.Marker({ "color": "#ff1622" })
@@ -97,7 +95,6 @@ map.on('load', () => {
                         marker_play = false;
                     });
                     buffer_marker = marker_num;
-                    console.log("更新: " + buffer_marker);
                 })
                 .catch((e) => console.log(e));
             });
